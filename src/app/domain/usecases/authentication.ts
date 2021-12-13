@@ -1,4 +1,4 @@
-import { AccountModel } from '../models';
+import { AccountModel } from '../models'
 
 enum GrantType {
   PASSWORD_GRANT = 'password_grant',

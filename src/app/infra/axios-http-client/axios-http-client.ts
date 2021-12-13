@@ -1,6 +1,6 @@
+import axios, { AxiosResponse, AxiosError } from 'axios'
 import { HttpRequest, HttpResponse } from 'app/application/protocols/http'
 import type { HttpClient } from 'app/application/protocols/http'
-import axios, { AxiosResponse, AxiosError } from 'axios'
 
 export class AxiosHttpClient implements HttpClient {
   async request({
