@@ -9,7 +9,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
+    "test:watch": "yarn test --watch",
+    "test:cli": "yarn test --coverage",
     "update:packages": "yarn ncu -u"
   },
   "dependencies": {
