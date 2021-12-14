@@ -1,5 +1,5 @@
 import * as faker from 'faker'
-import { AuthenticationParams, GrantType } from '../usecases'
+import { AuthenticationParams, GrantType } from '@/domain/usecases'
 
 export const mockAuthentication = (): AuthenticationParams => ({
   grantType: GrantType.PASSWORD_GRANT,

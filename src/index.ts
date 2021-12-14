@@ -1,1 +1,1 @@
-import 'app/main/main'
+import '@/main/main'
