@@ -10,4 +10,9 @@ export default defineConfig({
       "@": resolve(resolve(), './src')
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: `@import "./src/presentation/pages/base-styles";` },
+    },
+  }
 })

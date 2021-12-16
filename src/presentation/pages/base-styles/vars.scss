@@ -1,0 +1,3 @@
+$mobile-small: 425px !default;
+
+$mobile-small-and-down: 'only screen and (max-width : #{$mobile-small})' !default;
