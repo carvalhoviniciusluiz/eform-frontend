@@ -7,12 +7,13 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": resolve(resolve(), './src')
+      "@": resolve(resolve(), './src'),
+      "~": resolve(resolve(), './public')
     },
   },
   css: {
     preprocessorOptions: {
-      scss: { additionalData: `@import "./src/presentation/pages/base-styles";` },
+      scss: { additionalData: `@import "./public/styles";` },
     },
   }
 })
