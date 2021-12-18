@@ -1,54 +1,69 @@
-import React from 'react'
-import { CreateAccount, Signin } from './components'
+import { SubmitButton } from '@/presentation/components'
+import { TextField } from '@/presentation/components/inputs'
 import './login-styles.scss'
 
 const Login = () => {
-  const [rightPanel, setRightPanel] = React.useState(false)
-
   return (
-    <>
-      <div className={rightPanel ? 'right-panel-active' : ''}>
-        <CreateAccount />
-        <Signin />
+    <div className='loginContainer'>
+      <div className='loginContainer__content'>
+        <div className='loginContainer__panel loginContainer__banner banner-color'>
+          <div className='loginContainer__panel__details'>
+            <h1>Welcome to eForm</h1>
 
-        <div className='overlay-container'>
-          <div className='overlay'>
-            <div className='overlay-panel overlay-left'>
-              <h1>Welcome Back!</h1>
-              <p>
-                To keep connected with us please login with your personal info
-              </p>
-              <button
-                className='ghost'
-                onClick={() => setRightPanel(!rightPanel)}
-              >
-                Sign In
-              </button>
-            </div>
-            <div className='overlay-panel overlay-right'>
-              <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start journey with us</p>
-              <button
-                className='ghost'
-                onClick={() => setRightPanel(!rightPanel)}
-              >
-                Sign Up
-              </button>
+            <p>The best way to build dynamic web forms</p>
+          </div>
+
+          <div className='loginContainer__panel__image' />
+        </div>
+
+        <div className='loginContainer__form'>
+          <div className='loginContainer__form__content'>
+            <div className='loginContainer__form__content__wrapper'>
+              <form action='#'>
+                <div className='title'>
+                  <h1>Sign In to Good</h1>
+                  <div className='actions'>
+                    New Here?
+                    <a href='#'>Create an Account</a>
+                  </div>
+                </div>
+
+                <TextField
+                  type='email'
+                  label={
+                    <div className='form-label textField__email'>
+                      <label className='form-label textField__email__label'>
+                        Email
+                      </label>
+                    </div>
+                  }
+                  name='email'
+                  onChange={() => console.log('input email')}
+                />
+
+                <TextField
+                  type='password'
+                  label={
+                    <div className='form-label textField__password'>
+                      <label className='form-label textField__password__label'>
+                        Password
+                      </label>
+                      <a href='#'>Forgot Password ?</a>
+                    </div>
+                  }
+                  name='password'
+                  onChange={() => console.log('input password')}
+                />
+
+                <div className='loginContainer__form__submit'>
+                  <SubmitButton />
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-
-      <footer>
-        <p>
-          Copyright © 2021{' '}
-          <a href='#' target='__blank'>
-            Devnort.
-          </a>{' '}
-          All rights reserved.
-        </p>
-      </footer>
-    </>
+    </div>
   )
 }
 

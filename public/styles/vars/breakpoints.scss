@@ -1,0 +1,10 @@
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+$mobile: 'only screen and (max-width : #{$sm})' !default;
+$tablet: 'only screen and (max-width : #{$md})' !default;
+$desktop: 'only screen and (min-width : #{$xl})' !default;
