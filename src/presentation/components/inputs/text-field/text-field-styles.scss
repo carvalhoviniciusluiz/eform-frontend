@@ -23,7 +23,7 @@
   }
 
   &.error {
-    border-color: #f06445!important;
+    border-color: $danger!important;
   }
 
   &.form-control-solid {
@@ -48,7 +48,7 @@
     input:focus {
       background-color: #f4f1eb;
       border-color: #f4f1eb;
-      color: #716d66;
+      color: $gray-700;
       transition: color .2s ease,background-color .2s ease;
     }
   }
