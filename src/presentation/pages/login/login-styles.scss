@@ -52,7 +52,7 @@
       min-height: 350px;
       width: 100%;
 
-      @media #{$mobile} {
+      @media #{$tablet} {
         min-height: 120px;
       }
     }
@@ -77,7 +77,7 @@
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
 
-    @media #{$mobile} {
+    @media #{$tablet} {
       padding-bottom: 0;
     }
 
