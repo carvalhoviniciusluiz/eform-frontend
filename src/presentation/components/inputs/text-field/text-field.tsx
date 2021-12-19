@@ -16,6 +16,10 @@ const TextField = (props: TextFieldProps) => {
 
   const classes = 'form-control form-control-lg form-control-solid'
 
+  const enableInput = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.readOnly = false
+  }
+
   return (
     <div {...rest} className='textField__container'>
       {label && label}
@@ -24,6 +28,8 @@ const TextField = (props: TextFieldProps) => {
         type={type}
         name={name}
         value={value}
+        readOnly
+        onFocus={enableInput}
         autoComplete='off'
       />
       {errorMessage && <div className='field-error'>{errorMessage}</div>}
