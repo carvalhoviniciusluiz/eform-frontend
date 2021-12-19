@@ -30,6 +30,11 @@
         font-size: calc(1.35rem + 1.2vw);
         padding-top: 3rem;
         padding-bottom: 2.5rem;
+
+        @media #{$tablet} {
+          padding-top: 1rem;
+          padding-bottom: 0;
+        }
       }
 
       & > p {
@@ -48,7 +53,7 @@
       width: 100%;
 
       @media #{$mobile} {
-        min-height: 297px;
+        min-height: 120px;
       }
     }
   }
@@ -72,6 +77,10 @@
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
 
+    @media #{$mobile} {
+      padding-bottom: 0;
+    }
+
     &__submit {
       text-align: center!important;
     }
@@ -88,6 +97,7 @@
 
         @media #{$tablet} {
           width: 400px;
+          padding: 2rem;
         }
 
         @media #{$mobile} {
