@@ -56,7 +56,7 @@ const Login = () => {
                 />
 
                 <div className='loginContainer__form__submit'>
-                  <SubmitButton />
+                  <SubmitButton loading={false} />
                 </div>
               </form>
             </div>

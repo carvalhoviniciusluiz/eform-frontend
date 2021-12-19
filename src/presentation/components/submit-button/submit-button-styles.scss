@@ -45,6 +45,12 @@
     font-size: 1.15rem!important;
   }
 
+  & > .loading {
+    font-size: 1.15rem !important;
+    display: flex;
+    justify-content: center;
+  }
+
   & > .progress {
     margin-left: 0.5rem;
   }
