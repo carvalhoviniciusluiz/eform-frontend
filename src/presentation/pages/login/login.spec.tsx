@@ -16,6 +16,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
+  validationSpy.errorMessage = faker.random.words()
   const sut = render(<Login validation={validationSpy} />)
   return {
     sut,
@@ -34,7 +35,7 @@ describe('Login component', () => {
     expect(submit.childElementCount).toBe(1)
     expect(submit.disabled).toBe(true)
     const emailInput = sut.getByTestId('email')
-    expect(emailInput.className.includes('error')).toBeFalsy()
+    expect(emailInput.className.includes('error')).toBeTruthy()
     const passwordInput = sut.getByTestId('password')
     expect(passwordInput.className.includes('error')).toBeFalsy()
   })
@@ -44,6 +45,9 @@ describe('Login component', () => {
     const emailInput = sut.getByTestId('email')
     const email = faker.internet.email()
     fireEvent.input(emailInput, { target: { value: email } })
+
+    console.log(validationSpy)
+
     expect(validationSpy.fieldName).toEqual('email')
     expect(validationSpy.fieldValue).toEqual(email)
   })
@@ -53,7 +57,18 @@ describe('Login component', () => {
     const passwordInput = sut.getByTestId('password')
     const password = faker.internet.password()
     fireEvent.input(passwordInput, { target: { value: password } })
+
+    console.log(validationSpy)
+
     expect(validationSpy.fieldName).toEqual('password')
     expect(validationSpy.fieldValue).toEqual(password)
+  })
+
+  test('should show email error if Validation fails', () => {
+    const { sut, validationSpy } = makeSut()
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+    const emailStatus = sut.getByTestId('email-status')
+    expect(emailStatus.textContent).toBe(validationSpy.errorMessage)
   })
 })
