@@ -50,6 +50,7 @@ const Login = () => {
                     }
                     name='email'
                     onChange={() => console.log('input email')}
+                    data-testid='email-status'
                   />
 
                   <TextField
@@ -64,6 +65,7 @@ const Login = () => {
                     }
                     name='password'
                     onChange={() => console.log('input password')}
+                    data-testid='password-status'
                   />
 
                   <div className='loginContainer__form__submit'>

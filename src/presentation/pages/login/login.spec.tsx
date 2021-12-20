@@ -1,21 +1,32 @@
-import { render, screen } from '@testing-library/react'
+import { render, RenderResult, screen } from '@testing-library/react'
 import Login from './login'
+
+type SutTypes = {
+  sut: RenderResult
+}
+
+const makeSut = (): SutTypes => {
+  const sut = render(<Login />)
+  return {
+    sut
+  }
+}
 
 describe('Login component', () => {
   test('should not render errors on start', () => {
-    render(<Login />)
+    makeSut()
     expect(screen.queryByTestId('error-wrap')).toBeNull()
   })
 
   test('should render continue label on start', () => {
-    const { getByTestId } = render(<Login />)
-    const submit = getByTestId('submit')
+    const { sut } = makeSut()
+    const submit = sut.getByTestId('submit')
     expect(submit.childElementCount).toBe(1)
   })
 
   test('should disabled submit button', () => {
-    const { getByTestId } = render(<Login />)
-    const submit = getByTestId('submit') as HTMLButtonElement
+    const { sut } = makeSut()
+    const submit = sut.getByTestId('submit') as HTMLButtonElement
     expect(submit.disabled).toBe(true)
   })
 })
