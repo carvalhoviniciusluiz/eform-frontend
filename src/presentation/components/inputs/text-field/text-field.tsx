@@ -31,9 +31,10 @@ const TextField = (props: TextFieldProps) => {
         readOnly
         onFocus={enableInput}
         autoComplete='off'
+        data-testid={name}
       />
       {errorMessage && (
-        <div className='field-error' data-testid='error-wrap'>
+        <div className='field-error' data-testid={`${name}-status`}>
           {errorMessage}
         </div>
       )}

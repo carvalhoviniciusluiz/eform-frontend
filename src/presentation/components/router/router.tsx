@@ -5,7 +5,10 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<Login />}></Route>
+        <Route
+          path='/login'
+          element={<Login validation={{ validate: () => '' }} />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   )
