@@ -43,7 +43,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (state.isLoading) {
+    if (state.isLoading || state.credentialError || state.passwordError) {
       return
     }
     setState((prevState) => ({ ...prevState, isLoading: 1 }))
@@ -72,7 +72,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
         <div className='loginContainer__form'>
           <div className='loginContainer__form__content'>
             <div className='loginContainer__form__content__wrapper'>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} data-testid='form'>
                 <div className='title'>
                   <h1>Sign In to Good</h1>
                   <div className='actions'>
