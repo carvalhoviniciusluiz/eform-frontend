@@ -3,16 +3,17 @@ import './submit-button-styles.scss'
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: number
+  disabled?: boolean
 }
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const { loading } = props
+  const { loading, disabled } = props
   return (
     <button
       {...props}
       type='submit'
       className='btn btn-lg btn-primary submit'
-      disabled
+      disabled={disabled}
       data-testid='submit'
     >
       {loading ? (

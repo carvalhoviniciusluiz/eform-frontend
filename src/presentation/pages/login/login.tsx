@@ -39,6 +39,8 @@ const Login = ({ validation }: LoginProps) => {
       [event.target.name]: event.target.value
     }))
 
+  const isDisabled = !(!!state.email || !!state.password)
+
   return (
     <div className='loginContainer'>
       <div className='loginContainer__content'>
@@ -94,7 +96,10 @@ const Login = ({ validation }: LoginProps) => {
                 />
 
                 <div className='loginContainer__form__submit'>
-                  <SubmitButton loading={state.isLoading} />
+                  <SubmitButton
+                    loading={state.isLoading}
+                    disabled={isDisabled}
+                  />
                 </div>
               </form>
             </div>
