@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Authentication, GrantType } from '@/domain/usecases'
 import { SubmitButton } from '@/presentation/components'
 import { TextField } from '@/presentation/components/inputs'
 import { Validation } from '@/presentation/protocols'
@@ -6,32 +7,33 @@ import './login-styles.scss'
 
 type StateProps = {
   isLoading: number
-  email: string
+  credential: string
   password: string
-  emailError: string
+  credentialError: string
   passwordError: string
 }
 
 type LoginProps = {
   validation: Validation
+  authentication: Authentication
 }
 
-const Login = ({ validation }: LoginProps) => {
+const Login = ({ validation, authentication }: LoginProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
-    email: '',
+    credential: '',
     password: '',
-    emailError: '',
+    credentialError: '',
     passwordError: ''
   })
 
   useEffect(() => {
     setState((prevState) => ({
       ...prevState,
-      emailError: validation.validate('email', state.email),
+      credentialError: validation.validate('credential', state.credential),
       passwordError: validation.validate('password', state.password)
     }))
-  }, [state.email, state.password])
+  }, [state.credential, state.password])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({
@@ -39,12 +41,17 @@ const Login = ({ validation }: LoginProps) => {
       [event.target.name]: event.target.value
     }))
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setState((prevState) => ({ ...prevState, isLoading: 1 }))
+    await authentication.auth({
+      grantType: GrantType.PASSWORD_GRANT,
+      credential: state.credential,
+      password: state.password
+    })
   }
 
-  const isDisabled = !(!!state.email || !!state.password)
+  const isDisabled = !(!!state.credential || !!state.password)
 
   return (
     <div className='loginContainer'>
@@ -74,15 +81,15 @@ const Login = ({ validation }: LoginProps) => {
                 <TextField
                   type='email'
                   label={
-                    <div className='form-label textField__email'>
-                      <label className='form-label textField__email__label'>
+                    <div className='form-label textField__credential'>
+                      <label className='form-label textField__credential__label'>
                         Email
                       </label>
                     </div>
                   }
-                  name='email'
+                  name='credential'
                   onChange={handleChange}
-                  errorMessage={state.emailError}
+                  errorMessage={state.credentialError}
                 />
 
                 <TextField

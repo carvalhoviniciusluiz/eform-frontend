@@ -7,7 +7,21 @@ const Router = () => {
       <Routes>
         <Route
           path='/login'
-          element={<Login validation={{ validate: () => '' }} />}
+          element={
+            <Login
+              validation={{ validate: () => '' }}
+              authentication={{
+                auth: async () => {
+                  return await Promise.resolve({
+                    accessToken: '',
+                    accessTokenExpiresIn: 0,
+                    refreshToken: '',
+                    refreshTokenExpiresIn: 0
+                  })
+                }
+              }}
+            />
+          }
         ></Route>
       </Routes>
     </BrowserRouter>
