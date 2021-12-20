@@ -31,9 +31,7 @@ describe('Login component', () => {
     const { sut, validationStub } = makeSut()
     const submit = sut.getByTestId('submit') as HTMLButtonElement
     expect(submit.childElementCount).toBe(1)
-
-    console.log(validationStub)
-
+    expect(submit.firstChild.textContent).toBe('Continue')
     expect(submit.disabled).toBe(true)
     const emailInput = sut.getByTestId('email')
     expect(emailInput.className.includes('error')).toBeTruthy()
