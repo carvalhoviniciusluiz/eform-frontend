@@ -11,6 +11,7 @@ type StateProps = {
   password: string
   credentialError: string
   passwordError: string
+  mainError: string
 }
 
 type LoginProps = {
@@ -24,7 +25,8 @@ const Login = ({ validation, authentication }: LoginProps) => {
     credential: '',
     password: '',
     credentialError: '',
-    passwordError: ''
+    passwordError: '',
+    mainError: ''
   })
 
   useEffect(() => {
@@ -43,15 +45,23 @@ const Login = ({ validation, authentication }: LoginProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (state.isLoading || state.credentialError || state.passwordError) {
-      return
+    try {
+      if (state.isLoading || state.credentialError || state.passwordError) {
+        return
+      }
+      setState((prevState) => ({ ...prevState, isLoading: 1 }))
+      await authentication.auth({
+        grantType: GrantType.PASSWORD_GRANT,
+        credential: state.credential,
+        password: state.password
+      })
+    } catch (error) {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: 0,
+        mainError: error.message
+      }))
     }
-    setState((prevState) => ({ ...prevState, isLoading: 1 }))
-    await authentication.auth({
-      grantType: GrantType.PASSWORD_GRANT,
-      credential: state.credential,
-      password: state.password
-    })
   }
 
   const isDisabled = !(!!state.credential || !!state.password)
@@ -81,7 +91,11 @@ const Login = ({ validation, authentication }: LoginProps) => {
                   </div>
                 </div>
 
-                <div className='alert alert__danger'>error</div>
+                {state.mainError && (
+                  <div className='alert alert__danger' data-testid='main-error'>
+                    {state.mainError}
+                  </div>
+                )}
 
                 <TextField
                   type='email'
