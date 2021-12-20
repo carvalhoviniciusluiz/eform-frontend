@@ -12,7 +12,8 @@ const SubmitButton = (props: SubmitButtonProps) => {
       {...props}
       type='submit'
       className='btn btn-lg btn-primary submit'
-      data-testid='error-wrap'
+      disabled
+      data-testid='submit'
     >
       {loading ? (
         <span className='label loading'>

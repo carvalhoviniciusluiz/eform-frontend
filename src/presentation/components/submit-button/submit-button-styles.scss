@@ -18,6 +18,16 @@
     box-shadow .15s ease-in-out;
   outline: 0!important;
 
+  &:disabled {
+    background-color: $gray-300!important;
+    border-color: $gray-300!important;
+
+    &:hover {
+      background-color: $gray-300!important;
+      border-color: $gray-300!important;
+    }
+  }
+
   &:hover {
     color: $white;
     border-color: $active-primary;
