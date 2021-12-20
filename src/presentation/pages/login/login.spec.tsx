@@ -3,9 +3,11 @@ import {
   RenderResult,
   screen,
   fireEvent,
-  cleanup
+  cleanup,
+  waitFor
 } from '@testing-library/react'
 import * as faker from 'faker'
+import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
 import { AuthenticationSpy, ValidationStub } from '@/presentation/test'
 
@@ -57,11 +59,12 @@ const simulateValidSubmit = (
   sut: RenderResult,
   credential = faker.internet.email(),
   password = faker.internet.password()
-) => {
+): HTMLButtonElement => {
   populateCredentialField(sut, credential)
   populatePasswordField(sut, password)
   const submitButton = sut.getByTestId('submit') as HTMLButtonElement
   fireEvent.click(submitButton)
+  return submitButton
 }
 
 const simulateStatusForField = (
@@ -81,10 +84,10 @@ describe('Login component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    const submit = sut.getByTestId('submit') as HTMLButtonElement
-    expect(submit.childElementCount).toBe(1)
-    expect(submit.firstChild.textContent).toBe('Continue')
-    expect(submit.disabled).toBe(true)
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submitButton.childElementCount).toBe(1)
+    expect(submitButton.firstChild.textContent).toBe('Continue')
+    expect(submitButton.disabled).toBe(true)
     simulateStatusForField(sut, 'credential', validationError)
     simulateStatusForField(sut, 'password', validationError)
   })
@@ -157,5 +160,19 @@ describe('Login component', () => {
     populateCredentialField(sut)
     fireEvent.submit(sut.getByTestId('form'))
     expect(authenticationSpy.callsCount).toBe(0)
+  })
+
+  test('should present error if Authentication fails', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.reject(error))
+    const submitButton = simulateValidSubmit(sut)
+    await waitFor(() => submitButton)
+    const mainError = sut.getByTestId('main-error')
+    expect(mainError.textContent).toBe(error.message)
+    expect(submitButton.childElementCount).toBe(1)
+    expect(submitButton.firstChild.textContent).toBe('Continue')
   })
 })
