@@ -7,12 +7,11 @@ type TextFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   name: string
   onClick?: MouseEventHandler
   onChange?: ChangeEventHandler
-  value?: string | number | undefined
   errorMessage?: string
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { label, type = 'text', name, value, errorMessage, ...rest } = props
+  const { label, type = 'text', name, errorMessage, ...rest } = props
 
   const classes = 'form-control form-control-lg form-control-solid'
 
@@ -27,7 +26,6 @@ const TextField = (props: TextFieldProps) => {
         className={errorMessage ? `${classes} error` : classes}
         type={type}
         name={name}
-        value={value}
         readOnly
         onFocus={enableInput}
         autoComplete='off'

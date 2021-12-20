@@ -9,6 +9,7 @@ type StateProps = {
   email: string
   password: string
   emailError: string
+  passwordError: string
 }
 
 type LoginProps = {
@@ -18,20 +19,19 @@ type LoginProps = {
 const Login = ({ validation }: LoginProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
-    email: null,
-    password: null,
-    emailError: null
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: ''
   })
 
   useEffect(() => {
     setState((prevState) => ({
       ...prevState,
-      emailError: validation.validate('email', state.email)
+      emailError: validation.validate('email', state.email),
+      passwordError: validation.validate('password', state.password)
     }))
-  }, [state.email])
-  useEffect(() => {
-    validation.validate('password', state.password)
-  }, [state.password])
+  }, [state.email, state.password])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({
@@ -74,7 +74,6 @@ const Login = ({ validation }: LoginProps) => {
                     </div>
                   }
                   name='email'
-                  value={state.email}
                   onChange={handleChange}
                   errorMessage={state.emailError}
                 />
@@ -90,8 +89,8 @@ const Login = ({ validation }: LoginProps) => {
                     </div>
                   }
                   name='password'
-                  value={state.password}
                   onChange={handleChange}
+                  errorMessage={state.passwordError}
                 />
 
                 <div className='loginContainer__form__submit'>
