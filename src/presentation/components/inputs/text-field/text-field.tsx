@@ -13,7 +13,7 @@ type TextFieldProps = React.HTMLAttributes<HTMLDivElement> & {
 const TextField = (props: TextFieldProps) => {
   const { label, type = 'text', name, errorMessage, ...rest } = props
 
-  const classes = 'form-control form-control-lg form-control-solid'
+  const classes = 'textField textField__lg textField__solid'
 
   const enableInput = (event: React.FocusEvent<HTMLInputElement>) => {
     event.target.readOnly = false
