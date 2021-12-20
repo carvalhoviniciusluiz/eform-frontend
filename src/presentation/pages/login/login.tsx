@@ -50,11 +50,12 @@ const Login = ({ validation, authentication }: LoginProps) => {
         return
       }
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
-      await authentication.auth({
+      const account = await authentication.auth({
         grantType: GrantType.PASSWORD_GRANT,
         credential: state.credential,
         password: state.password
       })
+      localStorage.setItem('accessToken', account.accessToken)
     } catch (error) {
       setState((prevState) => ({
         ...prevState,
