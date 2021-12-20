@@ -39,6 +39,11 @@ const Login = ({ validation }: LoginProps) => {
       [event.target.name]: event.target.value
     }))
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setState((prevState) => ({ ...prevState, isLoading: 1 }))
+  }
+
   const isDisabled = !(!!state.email || !!state.password)
 
   return (
@@ -57,7 +62,7 @@ const Login = ({ validation }: LoginProps) => {
         <div className='loginContainer__form'>
           <div className='loginContainer__form__content'>
             <div className='loginContainer__form__content__wrapper'>
-              <form action='#'>
+              <form onSubmit={handleSubmit}>
                 <div className='title'>
                   <h1>Sign In to Good</h1>
                   <div className='actions'>
