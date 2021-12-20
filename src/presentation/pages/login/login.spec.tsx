@@ -1,32 +1,58 @@
-import { render, RenderResult, screen } from '@testing-library/react'
-import Login from './login'
+import {
+  render,
+  RenderResult,
+  screen,
+  fireEvent,
+  cleanup
+} from '@testing-library/react'
+import { Login } from '@/presentation/pages'
+import { Validation } from '@/presentation/protocols'
 
 type SutTypes = {
   sut: RenderResult
+  validationSpy: ValidationSpy
+}
+
+class ValidationSpy implements Validation {
+  errorMessage: string
+  input: object
+  validate(input: object): string {
+    this.input = input
+    return this.errorMessage
+  }
 }
 
 const makeSut = (): SutTypes => {
-  const sut = render(<Login />)
+  const validationSpy = new ValidationSpy()
+  const sut = render(<Login validation={validationSpy} />)
   return {
-    sut
+    sut,
+    validationSpy
   }
 }
 
 describe('Login component', () => {
-  test('should not render errors on start', () => {
-    makeSut()
-    expect(screen.queryByTestId('error-wrap')).toBeNull()
-  })
+  afterEach(cleanup)
 
-  test('should render continue label on start', () => {
+  test('should start with initial state', () => {
     const { sut } = makeSut()
-    const submit = sut.getByTestId('submit')
-    expect(submit.childElementCount).toBe(1)
-  })
-
-  test('should disabled submit button', () => {
-    const { sut } = makeSut()
+    expect(screen.queryByTestId('email-wrap')).toBeNull()
+    expect(screen.queryByTestId('password-wrap')).toBeNull()
     const submit = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submit.childElementCount).toBe(1)
     expect(submit.disabled).toBe(true)
+    const emailInput = sut.getByTestId('email')
+    expect(emailInput.className.includes('error')).toBeFalsy()
+    const passwordInput = sut.getByTestId('password')
+    expect(passwordInput.className.includes('error')).toBeFalsy()
+  })
+
+  test('should call Validation with correct value', () => {
+    const { sut, validationSpy } = makeSut()
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: 'any_email' } })
+    expect(validationSpy.input).toEqual({
+      email: 'any_email'
+    })
   })
 })
