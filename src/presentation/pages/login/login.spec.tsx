@@ -6,11 +6,24 @@ import {
   cleanup
 } from '@testing-library/react'
 import * as faker from 'faker'
+import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
+import { Authentication, AuthenticationParams } from '@/domain/usecases'
 import { Login } from '@/presentation/pages'
 import { ValidationStub } from '@/presentation/test'
 
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel()
+  params: AuthenticationParams
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params
+    return await Promise.resolve(this.account)
+  }
+}
+
 type SutTypes = {
   sut: RenderResult
+  authenticationSpy: AuthenticationSpy
 }
 
 type SutParams = {
@@ -19,10 +32,14 @@ type SutParams = {
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
+  const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
-  const sut = render(<Login validation={validationStub} />)
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />
+  )
   return {
-    sut
+    sut,
+    authenticationSpy
   }
 }
 
@@ -36,23 +53,25 @@ describe('Login component', () => {
     expect(submit.childElementCount).toBe(1)
     expect(submit.firstChild.textContent).toBe('Continue')
     expect(submit.disabled).toBe(true)
-    const emailInput = sut.getByTestId('email')
-    expect(emailInput.className.includes('error')).toBeTruthy()
-    const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.textContent).toBe(validationError)
+    const credentialInput = sut.getByTestId('credential')
+    expect(credentialInput.className.includes('error')).toBeTruthy()
+    const credentialStatus = sut.getByTestId('credential-status')
+    expect(credentialStatus.textContent).toBe(validationError)
     const passwordInput = sut.getByTestId('password')
     expect(passwordInput.className.includes('error')).toBeTruthy()
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.textContent).toBe(validationError)
   })
 
-  test('should show email error if Validation fails', () => {
+  test('should show credential error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
-    const emailStatus = sut.getByTestId('email-status')
-    expect(emailStatus.textContent).toBe(validationError)
+    const credentialInput = sut.getByTestId('credential')
+    fireEvent.input(credentialInput, {
+      target: { value: faker.internet.email() }
+    })
+    const credentialStatus = sut.getByTestId('credential-status')
+    expect(credentialStatus.textContent).toBe(validationError)
   })
 
   test('should show password error if Validation fails', () => {
@@ -66,14 +85,14 @@ describe('Login component', () => {
     expect(passwordStatus.textContent).toBe(validationError)
   })
 
-  test('should show valid email state if Validation succeds', () => {
+  test('should show valid credential state if Validation succeds', () => {
     const { sut } = makeSut()
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, {
+    const credentialInput = sut.getByTestId('credential')
+    fireEvent.input(credentialInput, {
       target: { value: faker.internet.email() }
     })
-    expect(screen.queryByTestId('email-status')).toBeNull()
-    expect(emailInput.className.includes('error')).toBeFalsy()
+    expect(screen.queryByTestId('credential-status')).toBeNull()
+    expect(credentialInput.className.includes('error')).toBeFalsy()
   })
 
   test('should show valid password state if Validation succeds', () => {
@@ -88,8 +107,8 @@ describe('Login component', () => {
 
   test('should enable submit button if form is valid', () => {
     const { sut } = makeSut()
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, {
+    const credentialInput = sut.getByTestId('credential')
+    fireEvent.input(credentialInput, {
       target: { value: faker.internet.email() }
     })
     const passwordInput = sut.getByTestId('password')
@@ -102,8 +121,8 @@ describe('Login component', () => {
 
   test('should show spinner on submit', () => {
     const { sut } = makeSut()
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, {
+    const credentialInput = sut.getByTestId('credential')
+    fireEvent.input(credentialInput, {
       target: { value: faker.internet.email() }
     })
     const passwordInput = sut.getByTestId('password')
@@ -115,5 +134,26 @@ describe('Login component', () => {
     expect(submitButton.disabled).toBe(false)
     const spinner = sut.getByTestId('spinner')
     expect(spinner).toBeTruthy()
+  })
+
+  test('should call Authentication with correct values', () => {
+    const { sut, authenticationSpy } = makeSut()
+    const credentialInput = sut.getByTestId('credential')
+    const credential = faker.internet.email()
+    fireEvent.input(credentialInput, {
+      target: { value: credential }
+    })
+    const passwordInput = sut.getByTestId('password')
+    const password = faker.internet.password()
+    fireEvent.input(passwordInput, {
+      target: { value: password }
+    })
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    fireEvent.click(submitButton)
+    expect(authenticationSpy.params).toEqual({
+      grantType: 'password_grant',
+      credential,
+      password
+    })
   })
 })
