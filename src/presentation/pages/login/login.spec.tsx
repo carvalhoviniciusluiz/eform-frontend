@@ -29,8 +29,6 @@ describe('Login component', () => {
 
   test('should start with initial state', () => {
     const { sut, validationStub } = makeSut()
-    expect(screen.queryByTestId('email-wrap')).toBeNull()
-    expect(screen.queryByTestId('password-wrap')).toBeNull()
     const submit = sut.getByTestId('submit') as HTMLButtonElement
     expect(submit.childElementCount).toBe(1)
     expect(submit.disabled).toBe(true)
@@ -60,5 +58,16 @@ describe('Login component', () => {
     })
     const passwordStatus = sut.getByTestId('password-status')
     expect(passwordStatus.textContent).toBe(validationStub.errorMessage)
+  })
+
+  test('should show valid password state if Validation succeds', () => {
+    const { sut, validationStub } = makeSut()
+    validationStub.errorMessage = null
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
+    expect(screen.queryByTestId('password-status')).toBeNull()
+    expect(passwordInput.className.includes('error')).toBeFalsy()
   })
 })
