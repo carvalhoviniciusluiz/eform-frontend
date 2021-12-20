@@ -8,6 +8,7 @@ type StateProps = {
   isLoading: number
   email: string
   password: string
+  emailError: string
 }
 
 type LoginProps = {
@@ -17,12 +18,16 @@ type LoginProps = {
 const Login = ({ validation }: LoginProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
-    email: '',
-    password: ''
+    email: null,
+    password: null,
+    emailError: null
   })
 
   useEffect(() => {
-    validation.validate('email', state.email)
+    setState((prevState) => ({
+      ...prevState,
+      emailError: validation.validate('email', state.email)
+    }))
   }, [state.email])
   useEffect(() => {
     validation.validate('password', state.password)
@@ -71,6 +76,7 @@ const Login = ({ validation }: LoginProps) => {
                   name='email'
                   value={state.email}
                   onChange={handleChange}
+                  errorMessage={state.emailError}
                 />
 
                 <TextField
