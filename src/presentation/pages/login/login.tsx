@@ -22,10 +22,10 @@ const Login = ({ validation }: LoginProps) => {
   })
 
   useEffect(() => {
-    validation.validate({ email: state.email })
+    validation.validate('email', state.email)
   }, [state.email])
   useEffect(() => {
-    validation.validate({ password: state.password })
+    validation.validate('password', state.password)
   }, [state.password])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
