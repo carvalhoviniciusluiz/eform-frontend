@@ -116,6 +116,10 @@
             }
           }
 
+          & > .alert {
+            margin-bottom: 2rem;
+          }
+
           .actions {
             color: $gray-400;
             font-size: 1.25rem!important;

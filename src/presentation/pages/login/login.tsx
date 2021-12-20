@@ -43,6 +43,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (state.isLoading) {
+      return
+    }
     setState((prevState) => ({ ...prevState, isLoading: 1 }))
     await authentication.auth({
       grantType: GrantType.PASSWORD_GRANT,
@@ -77,6 +80,8 @@ const Login = ({ validation, authentication }: LoginProps) => {
                     <a href='#'>Create an Account</a>
                   </div>
                 </div>
+
+                <div className='alert alert__danger'>error</div>
 
                 <TextField
                   type='email'
