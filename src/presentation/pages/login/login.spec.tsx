@@ -31,6 +31,9 @@ describe('Login component', () => {
     const { sut, validationStub } = makeSut()
     const submit = sut.getByTestId('submit') as HTMLButtonElement
     expect(submit.childElementCount).toBe(1)
+
+    console.log(validationStub)
+
     expect(submit.disabled).toBe(true)
     const emailInput = sut.getByTestId('email')
     expect(emailInput.className.includes('error')).toBeTruthy()
@@ -80,5 +83,20 @@ describe('Login component', () => {
     })
     expect(screen.queryByTestId('password-status')).toBeNull()
     expect(passwordInput.className.includes('error')).toBeFalsy()
+  })
+
+  test('should enable submit button if form is valid', () => {
+    const { sut, validationStub } = makeSut()
+    validationStub.errorMessage = null
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() }
+    })
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() }
+    })
+    const submit = sut.getByTestId('submit') as HTMLButtonElement
+    expect(submit.disabled).toBe(false)
   })
 })
