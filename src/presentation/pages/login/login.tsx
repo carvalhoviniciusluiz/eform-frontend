@@ -7,6 +7,7 @@ import './login-styles.scss'
 type StateProps = {
   isLoading: number
   email: string
+  password: string
 }
 
 type LoginProps = {
@@ -16,11 +17,23 @@ type LoginProps = {
 const Login = ({ validation }: LoginProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
-    email: ''
+    email: '',
+    password: ''
   })
+
   useEffect(() => {
     validation.validate({ email: state.email })
   }, [state.email])
+  useEffect(() => {
+    validation.validate({ password: state.password })
+  }, [state.password])
+
+  const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
+    setState((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }))
+
   return (
     <div className='loginContainer'>
       <div className='loginContainer__content'>
@@ -57,12 +70,7 @@ const Login = ({ validation }: LoginProps) => {
                   }
                   name='email'
                   value={state.email}
-                  onChange={(event: React.FocusEvent<HTMLInputElement>) =>
-                    setState((prevState) => ({
-                      ...prevState,
-                      [event.target.name]: event.target.value
-                    }))
-                  }
+                  onChange={handleChange}
                 />
 
                 <TextField
@@ -76,7 +84,8 @@ const Login = ({ validation }: LoginProps) => {
                     </div>
                   }
                   name='password'
-                  onChange={() => console.log('input password')}
+                  value={state.password}
+                  onChange={handleChange}
                 />
 
                 <div className='loginContainer__form__submit'>
