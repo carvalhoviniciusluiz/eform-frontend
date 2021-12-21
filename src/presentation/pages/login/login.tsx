@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Authentication, GrantType } from '@/domain/usecases'
 import { SubmitButton } from '@/presentation/components'
 import { TextField } from '@/presentation/components/inputs'
@@ -88,7 +89,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
                   <h1>Sign In to Good</h1>
                   <div className='actions'>
                     New Here?
-                    <a href='#'>Create an Account</a>
+                    <Link to='/signup' data-testid='signup'>
+                      Create an Account
+                    </Link>
                   </div>
                 </div>
 
