@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Authentication, GrantType } from '@/domain/usecases'
 import { SubmitButton } from '@/presentation/components'
 import { TextField } from '@/presentation/components/inputs'
@@ -21,6 +21,7 @@ type LoginProps = {
 }
 
 const Login = ({ validation, authentication }: LoginProps) => {
+  const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
     credential: '',
@@ -57,6 +58,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
         password: state.password
       })
       localStorage.setItem('accessToken', account.accessToken)
+      navigate('/')
     } catch (error) {
       setState((prevState) => ({
         ...prevState,
