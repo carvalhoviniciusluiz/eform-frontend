@@ -17,12 +17,14 @@ const SubmitButton = (props: SubmitButtonProps) => {
       data-testid='submit'
     >
       {loading ? (
-        <span className='label loading'>
+        <span className='label loading' data-testid='label-wait'>
           Please wait...
           <Spinner />
         </span>
       ) : (
-        <span className='label'>Continue</span>
+        <span className='label' data-testid='label-continue'>
+          Continue
+        </span>
       )}
     </button>
   )
