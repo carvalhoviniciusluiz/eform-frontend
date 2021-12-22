@@ -7,7 +7,7 @@ export enum GrantType {
 }
 
 export type AuthenticationParams = {
-  grantType: GrantType
+  grant_type: GrantType
   credential: string
   password: string
 }

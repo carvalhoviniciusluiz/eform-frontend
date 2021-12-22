@@ -183,7 +183,7 @@ describe('Login component', () => {
     const password = faker.internet.password()
     await simulateValidSubmit(sut, credential, password)
     expect(authenticationSpy.params).toEqual({
-      grantType: 'password_grant',
+      grant_type: 'password_grant',
       credential,
       password
     })

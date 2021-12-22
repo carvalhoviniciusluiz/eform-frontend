@@ -1,5 +1,5 @@
 export enum HttpStatusCode {
-  ok = 200,
+  ok = 201,
   noContent = 204,
   badRequest = 400,
   unauthorized = 401,
@@ -9,5 +9,7 @@ export enum HttpStatusCode {
 
 export type HttpResponse<T> = {
   statusCode: HttpStatusCode
-  body?: T
+  body?: {
+    data: T
+  }
 }

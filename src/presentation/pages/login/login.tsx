@@ -53,7 +53,7 @@ const Login = ({ validation, authentication }: LoginProps) => {
       }
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
       const account = await authentication.auth({
-        grantType: GrantType.PASSWORD_GRANT,
+        grant_type: GrantType.PASSWORD_GRANT,
         credential: state.credential,
         password: state.password
       })

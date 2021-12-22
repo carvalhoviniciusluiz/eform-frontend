@@ -3,7 +3,7 @@ import { AuthenticationParams, GrantType } from '@/domain/usecases'
 import { AccountModel } from '../models'
 
 export const mockAuthentication = (): AuthenticationParams => ({
-  grantType: GrantType.PASSWORD_GRANT,
+  grant_type: GrantType.PASSWORD_GRANT,
   credential: faker.internet.email(),
   password: faker.internet.password()
 })
