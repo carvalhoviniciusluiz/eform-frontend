@@ -1,4 +1,4 @@
-import { InvalidaFieldError } from '@/validation/errors'
+import { InvalidFieldError } from '@/validation/errors'
 import { MinLengthValidation } from '@/validation/validators/min-length'
 import * as faker from 'faker'
 
@@ -9,7 +9,7 @@ describe('MinLengthValidation', () => {
   test('should return error if valud is invalid', () => {
     const sut = makeSut()
     const error = sut.validate(faker.random.alphaNumeric(3))
-    expect(error).toEqual(new InvalidaFieldError())
+    expect(error).toEqual(new InvalidFieldError())
   })
 
   test('should return error if valud is invalid', () => {

@@ -1,6 +1,6 @@
-export class InvalidaFieldError extends Error {
+export class InvalidFieldError extends Error {
   constructor(message = 'Invalid field') {
     super(message)
-    this.name = InvalidaFieldError.name
+    this.name = InvalidFieldError.name
   }
 }
