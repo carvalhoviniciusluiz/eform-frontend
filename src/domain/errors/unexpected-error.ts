@@ -1,6 +1,6 @@
 export class UnexpectedError extends Error {
-  constructor() {
-    super('Algo de errado aconteceu. Tente novamente em breve')
+  constructor(message = 'Something went wrong. Please try again soon') {
+    super(message)
     this.name = UnexpectedError.name
   }
 }
