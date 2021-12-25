@@ -1,4 +1,8 @@
-import { makeRemoteAuthentication, makeLoginValidation } from '@/main/factories'
+import {
+  makeRemoteAuthentication,
+  makeLoginValidation,
+  makeLocalSaveAccessToken
+} from '@/main/factories'
 import { Login } from '@/presentation/pages'
 
 export const makeLogin = () => {
@@ -6,6 +10,7 @@ export const makeLogin = () => {
     <Login
       authentication={makeRemoteAuthentication()}
       validation={makeLoginValidation()}
+      saveAccessToken={makeLocalSaveAccessToken()}
     />
   )
 }
