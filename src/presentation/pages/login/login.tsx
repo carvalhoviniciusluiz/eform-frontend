@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Authentication, GrantType, SaveAccessToken } from '@/domain/usecases'
+import { Authentication, GrantType, SaveAccessToken } from '@/domain'
 import { SubmitButton } from '@/presentation/components'
 import { TextField } from '@/presentation/components/inputs'
 import { Validation } from '@/presentation/protocols'
