@@ -1,1 +1,1 @@
-import '@/main/main'
+import '@/main'
