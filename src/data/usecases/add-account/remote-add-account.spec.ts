@@ -47,4 +47,8 @@ describe('RemoteAddAccount', () => {
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow(new EmailInUseError())
   })
+
+  test.todo(
+    'should throw DocumentNumberInUseError if HttpPostClient returns 403'
+  )
 })
