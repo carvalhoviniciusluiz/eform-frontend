@@ -12,7 +12,7 @@
     "test": "jest --passWithNoTests",
     "test:clear": "jest --clearCache",
     "test:watch": "yarn test --watch",
-    "test:cli": "yarn test --coverage",
+    "test:ci": "yarn test --coverage",
     "update:packages": "yarn ncu -u"
   },
   "dependencies": {
@@ -60,7 +60,11 @@
       "<rootDir>/src"
     ],
     "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{ts,tsx}"
+      "<rootDir>/src/**/*.{ts,tsx}",
+      "!<rootDir>/src/**/index.{ts,tsx}",
+      "!<rootDir>/src/main/**/*",
+      "!<rootDir>/src/presentation/components/router/**/*",
+      "!**/*.d.ts"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "jsdom",
