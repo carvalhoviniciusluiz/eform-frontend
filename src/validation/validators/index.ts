@@ -1,3 +1,4 @@
+export * from './compare-fields'
 export * from './builder'
 export * from './email'
 export * from './min-length'
