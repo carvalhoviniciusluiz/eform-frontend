@@ -1,3 +1,4 @@
 export const makeApiUrl = (path: string): string => {
-  return `http://localhost:3333${path}`
+  const { VITE_BASE_URL } = import.meta.env
+  return `${VITE_BASE_URL}${path}`
 }
