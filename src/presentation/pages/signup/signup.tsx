@@ -38,7 +38,7 @@ const Signup = ({ validation }: SignupProps) => {
     password: '',
     passwordConfirmation: '',
     firstNameError: '',
-    lastNameError: 'Required field',
+    lastNameError: '',
     documentNumberError: 'Required field',
     phoneError: 'Required field',
     emailError: 'Required field',
@@ -50,9 +50,10 @@ const Signup = ({ validation }: SignupProps) => {
   useEffect(() => {
     setState((prevState) => ({
       ...prevState,
-      firstNameError: validation.validate('firstName', state.firstName)
+      firstNameError: validation.validate('firstName', state.firstName),
+      lastNameError: validation.validate('lastName', state.firstName)
     }))
-  }, [state.firstName])
+  }, [state.firstName, state.lastName])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({
