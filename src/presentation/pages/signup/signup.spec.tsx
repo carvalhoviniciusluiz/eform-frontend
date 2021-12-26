@@ -30,7 +30,7 @@ describe('Signup Component', () => {
     Helper.testChildCount(sut, 'submit', 1)
     Helper.testElementText(sut, 'label-continue', 'Submit')
     Helper.testStatusForField(sut, 'firstName', validationError)
-    Helper.testStatusForField(sut, 'lastName', 'Required field')
+    Helper.testStatusForField(sut, 'lastName', validationError)
     Helper.testStatusForField(sut, 'documentNumber', 'Required field')
     Helper.testStatusForField(sut, 'phone', 'Required field')
     Helper.testStatusForField(sut, 'email', 'Required field')
@@ -43,5 +43,12 @@ describe('Signup Component', () => {
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'firstName')
     Helper.testStatusForField(sut, 'firstName', validationError)
+  })
+
+  test('should show lastName error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
+    Helper.populateField(sut, 'lastName')
+    Helper.testStatusForField(sut, 'lastName', validationError)
   })
 })
