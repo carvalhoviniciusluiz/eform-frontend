@@ -76,7 +76,7 @@ const Signup = () => {
                   <h1>Create an Account</h1>
                   <div className='actions'>
                     Already have an account?
-                    <Link to='/login' data-testid='signup'>
+                    <Link to='/login' data-testid='login'>
                       Sign in here
                     </Link>
                   </div>
