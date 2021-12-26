@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitButton } from '@/presentation/components'
 import { PasswordField, TextField } from '@/presentation/components/inputs'
 import './signup-styles.scss'
+import { Validation } from '@/presentation/protocols'
 
 type StateProps = {
   isLoading: number
@@ -22,7 +23,11 @@ type StateProps = {
   mainError: string
 }
 
-const Signup = () => {
+type SignupProps = {
+  validation: Validation
+}
+
+const Signup = ({ validation }: SignupProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
     firstName: '',
@@ -33,14 +38,21 @@ const Signup = () => {
     password: '',
     passwordConfirmation: '',
     firstNameError: '',
-    lastNameError: '',
-    documentNumberError: '',
-    phoneError: '',
-    emailError: '',
-    passwordError: '',
-    passwordConfirmationError: '',
+    lastNameError: 'Required field',
+    documentNumberError: 'Required field',
+    phoneError: 'Required field',
+    emailError: 'Required field',
+    passwordError: 'Required field',
+    passwordConfirmationError: 'Required field',
     mainError: ''
   })
+
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      firstNameError: validation.validate('firstName', state.firstName)
+    }))
+  }, [state.firstName])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({

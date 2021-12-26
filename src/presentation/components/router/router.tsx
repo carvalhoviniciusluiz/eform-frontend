@@ -11,7 +11,18 @@ const Router = ({ makeLogin: Login }: RouterProps) => {
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
+        <Route
+          path='/signup'
+          element={
+            <Signup
+              validation={{
+                validate: (fieldName: string, fieldValue: string) => {
+                  return null
+                }
+              }}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   )
