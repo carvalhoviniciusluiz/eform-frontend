@@ -83,6 +83,10 @@
 
     &__submit {
       text-align: center!important;
+
+      button {
+        width: 100%;
+      }
     }
 
     &__content {

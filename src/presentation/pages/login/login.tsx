@@ -134,10 +134,9 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
                 />
 
                 <div className='loginContainer__form__submit'>
-                  <SubmitButton
-                    loading={state.isLoading}
-                    disabled={isDisabled}
-                  />
+                  <SubmitButton loading={state.isLoading} disabled={isDisabled}>
+                    Continue
+                  </SubmitButton>
                 </div>
               </form>
             </div>
