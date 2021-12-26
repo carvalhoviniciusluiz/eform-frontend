@@ -2,7 +2,6 @@ import { Router } from 'react-router-dom'
 import {
   render,
   RenderResult,
-  screen,
   fireEvent,
   cleanup,
   waitFor
@@ -14,7 +13,8 @@ import { Login } from '@/presentation/pages'
 import {
   AuthenticationSpy,
   SaveAccessTokenMock,
-  ValidationStub
+  ValidationStub,
+  Helper
 } from '@/presentation/test'
 
 type SutTypes = {
@@ -96,36 +96,9 @@ const testStatusForField = (
   expect(credentialInput.className.includes('error')).toBeTruthy()
 }
 
-const testButtonIsDisable = (
-  sut: RenderResult,
-  buttonName: string,
-  isDisabled: boolean
-) => {
-  const button = sut.getByTestId(buttonName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
-}
-
-const testElementChildCount = (
-  sut: RenderResult,
-  fieldName: string,
-  count: number
-) => {
-  const el = sut.getByTestId(fieldName) as HTMLButtonElement
-  expect(el.childElementCount).toBe(count)
-}
-
 const testElementExists = (sut: RenderResult, fieldName: string) => {
   const el = sut.getByTestId(fieldName)
   expect(el).toBeTruthy()
-}
-
-const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string
-) => {
-  const el = sut.getByTestId(fieldName)
-  expect(el.textContent).toBe(text)
 }
 
 describe('Login component', () => {
@@ -134,9 +107,9 @@ describe('Login component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    testButtonIsDisable(sut, 'submit', true)
-    testElementChildCount(sut, 'submit', 1)
-    testElementText(sut, 'label-continue', 'Continue')
+    Helper.testButtonIsDisable(sut, 'submit', true)
+    Helper.testChildCount(sut, 'submit', 1)
+    Helper.testElementText(sut, 'label-continue', 'Continue')
     testStatusForField(sut, 'credential', validationError)
     testStatusForField(sut, 'password', validationError)
   })
@@ -158,14 +131,14 @@ describe('Login component', () => {
   test('should show valid credential state if Validation succeds', () => {
     const { sut } = makeSut()
     const credentialInput = populateCredentialField(sut)
-    expect(screen.queryByTestId('credential-status')).toBeNull()
+    Helper.testElementNotExists(sut, 'credential-status')
     expect(credentialInput.className.includes('error')).toBeFalsy()
   })
 
   test('should show valid password state if Validation succeds', () => {
     const { sut } = makeSut()
     const passwordInput = populatePasswordField(sut)
-    expect(screen.queryByTestId('password-status')).toBeNull()
+    Helper.testElementNotExists(sut, 'password-status')
     expect(passwordInput.className.includes('error')).toBeFalsy()
   })
 
@@ -173,15 +146,15 @@ describe('Login component', () => {
     const { sut } = makeSut()
     populateCredentialField(sut)
     populatePasswordField(sut)
-    testButtonIsDisable(sut, 'submit', false)
-    testElementText(sut, 'label-continue', 'Continue')
+    Helper.testButtonIsDisable(sut, 'submit', false)
+    Helper.testElementText(sut, 'label-continue', 'Continue')
   })
 
   test('should show spinner on submit', async () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
     testElementExists(sut, 'spinner')
-    testElementText(sut, 'label-wait', 'Please wait...')
+    Helper.testElementText(sut, 'label-wait', 'Please wait...')
   })
 
   test('should call Authentication with correct values', async () => {
@@ -217,10 +190,10 @@ describe('Login component', () => {
       .spyOn(authenticationSpy, 'auth')
       .mockReturnValueOnce(Promise.reject(error))
     await simulateValidSubmit(sut)
-    testElementText(sut, 'main-error', error.message)
-    testElementChildCount(sut, 'submit', 1)
-    testButtonIsDisable(sut, 'submit', false)
-    testElementText(sut, 'label-continue', 'Continue')
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'submit', 1)
+    Helper.testButtonIsDisable(sut, 'submit', false)
+    Helper.testElementText(sut, 'label-continue', 'Continue')
   })
 
   test('should call SaveAccessToken on success', async () => {
@@ -239,10 +212,10 @@ describe('Login component', () => {
       .spyOn(saveAccessTokenMock, 'save')
       .mockReturnValueOnce(Promise.reject(error))
     await simulateValidSubmit(sut)
-    testElementText(sut, 'main-error', error.message)
-    testElementChildCount(sut, 'submit', 1)
-    testButtonIsDisable(sut, 'submit', false)
-    testElementText(sut, 'label-continue', 'Continue')
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'submit', 1)
+    Helper.testButtonIsDisable(sut, 'submit', false)
+    Helper.testElementText(sut, 'label-continue', 'Continue')
   })
 
   test('should go to signup page', async () => {
