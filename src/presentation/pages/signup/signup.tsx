@@ -156,31 +156,33 @@ const Signup = () => {
                   errorMessage={state.emailError}
                 />
 
-                <PasswordField
-                  label={
-                    <div className='form-label textField__password'>
-                      <label className='form-label textField__password__label'>
-                        Password
-                      </label>
-                    </div>
-                  }
-                  name='password'
-                  onChange={handleChange}
-                  errorMessage={state.passwordError}
-                />
+                <div className='inputGroup'>
+                  <PasswordField
+                    label={
+                      <div className='form-label textField__password'>
+                        <label className='form-label textField__password__label'>
+                          Password
+                        </label>
+                      </div>
+                    }
+                    name='password'
+                    onChange={handleChange}
+                    errorMessage={state.passwordError}
+                  />
 
-                <PasswordField
-                  label={
-                    <div className='form-label textField__password'>
-                      <label className='form-label textField__password__label'>
-                        Password confirmation
-                      </label>
-                    </div>
-                  }
-                  name='passwordConfirmation'
-                  onChange={handleChange}
-                  errorMessage={state.passwordConfirmationError}
-                />
+                  <PasswordField
+                    label={
+                      <div className='form-label textField__password'>
+                        <label className='form-label textField__password__label'>
+                          Password confirmation
+                        </label>
+                      </div>
+                    }
+                    name='passwordConfirmation'
+                    onChange={handleChange}
+                    errorMessage={state.passwordConfirmationError}
+                  />
+                </div>
 
                 <div className='signupContainer__form__submit'>
                   <SubmitButton loading={state.isLoading} disabled={isDisabled}>

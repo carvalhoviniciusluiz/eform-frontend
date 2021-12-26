@@ -25,7 +25,7 @@ const PasswordField = (props: TextFieldProps) => {
   }
 
   return (
-    <div className='passwordField__contant'>
+    <div className='passwordField__content'>
       <TextField
         {...props}
         type={isHidden ? 'password' : 'text'}

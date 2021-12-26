@@ -91,6 +91,7 @@
     &__content {
       display: flex;
       flex-direction: column;
+      justify-content: center;
 
       height: 700px;
       overflow-x: hidden;
@@ -98,6 +99,7 @@
 
       @media #{$tablet} {
         height: 400px;
+        justify-content: flex-start;
       }
 
       &__wrapper {
