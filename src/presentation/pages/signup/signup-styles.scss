@@ -80,6 +80,12 @@
 
     &__submit {
       text-align: center!important;
+
+      button > span {
+        .spinner {
+          display: none
+        }
+      }
     }
 
     &__content {
