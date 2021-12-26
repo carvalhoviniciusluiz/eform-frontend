@@ -1,13 +1,16 @@
+import { ReactNode } from 'react'
 import { Spinner } from '@/presentation/components'
 import './submit-button-styles.scss'
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: number
   disabled?: boolean
+  children?: ReactNode
 }
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const { loading, disabled } = props
+  const { loading, disabled, children } = props
+
   return (
     <button
       {...props}
@@ -23,7 +26,7 @@ const SubmitButton = (props: SubmitButtonProps) => {
         </span>
       ) : (
         <span className='label' data-testid='label-continue'>
-          Continue
+          {children}
         </span>
       )}
     </button>
