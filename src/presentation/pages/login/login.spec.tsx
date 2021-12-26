@@ -51,49 +51,16 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const populateCredentialField = (
-  sut: RenderResult,
-  credential = faker.internet.email()
-): HTMLElement => {
-  const credentialInput = sut.getByTestId('credential')
-  fireEvent.input(credentialInput, {
-    target: { value: credential }
-  })
-  return credentialInput
-}
-
-const populatePasswordField = (
-  sut: RenderResult,
-  password = faker.internet.password()
-): HTMLElement => {
-  const passwordInput = sut.getByTestId('password')
-  fireEvent.input(passwordInput, {
-    target: { value: password }
-  })
-  return passwordInput
-}
-
 const simulateValidSubmit = async (
   sut: RenderResult,
   credential = faker.internet.email(),
   password = faker.internet.password()
 ): Promise<void> => {
-  populateCredentialField(sut, credential)
-  populatePasswordField(sut, password)
+  Helper.populateField(sut, 'credential', credential)
+  Helper.populateField(sut, 'password', password)
   const form = sut.getByTestId('form')
   fireEvent.submit(form)
   await waitFor(() => form)
-}
-
-const testStatusForField = (
-  sut: RenderResult,
-  fieldName: string,
-  validationError?: string
-) => {
-  const credentialStatus = sut.getByTestId(`${fieldName}-status`)
-  expect(credentialStatus.textContent).toBe(validationError)
-  const credentialInput = sut.getByTestId(fieldName)
-  expect(credentialInput.className.includes('error')).toBeTruthy()
 }
 
 const testElementExists = (sut: RenderResult, fieldName: string) => {
@@ -110,42 +77,42 @@ describe('Login component', () => {
     Helper.testButtonIsDisable(sut, 'submit', true)
     Helper.testChildCount(sut, 'submit', 1)
     Helper.testElementText(sut, 'label-continue', 'Continue')
-    testStatusForField(sut, 'credential', validationError)
-    testStatusForField(sut, 'password', validationError)
+    Helper.testStatusForField(sut, 'credential', validationError)
+    Helper.testStatusForField(sut, 'password', validationError)
   })
 
   test('should show credential error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    populateCredentialField(sut)
-    testStatusForField(sut, 'credential', validationError)
+    Helper.populateField(sut, 'credential')
+    Helper.testStatusForField(sut, 'credential', validationError)
   })
 
   test('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    populatePasswordField(sut)
-    testStatusForField(sut, 'password', validationError)
+    Helper.populateField(sut, 'password')
+    Helper.testStatusForField(sut, 'password', validationError)
   })
 
   test('should show valid credential state if Validation succeds', () => {
     const { sut } = makeSut()
-    const credentialInput = populateCredentialField(sut)
+    const credentialInput = Helper.populateField(sut, 'credential')
     Helper.testElementNotExists(sut, 'credential-status')
     expect(credentialInput.className.includes('error')).toBeFalsy()
   })
 
   test('should show valid password state if Validation succeds', () => {
     const { sut } = makeSut()
-    const passwordInput = populatePasswordField(sut)
+    const passwordInput = Helper.populateField(sut, 'password')
     Helper.testElementNotExists(sut, 'password-status')
     expect(passwordInput.className.includes('error')).toBeFalsy()
   })
 
   test('should enable submit button if form is valid', () => {
     const { sut } = makeSut()
-    populateCredentialField(sut)
-    populatePasswordField(sut)
+    Helper.populateField(sut, 'credential')
+    Helper.populateField(sut, 'password')
     Helper.testButtonIsDisable(sut, 'submit', false)
     Helper.testElementText(sut, 'label-continue', 'Continue')
   })

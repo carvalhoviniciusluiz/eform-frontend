@@ -26,11 +26,7 @@ const PasswordField = (props: TextFieldProps) => {
 
   return (
     <div className='passwordField__content'>
-      <TextField
-        {...props}
-        type={isHidden ? 'password' : 'text'}
-        name='field'
-      />
+      <TextField {...props} type={isHidden ? 'password' : 'text'} />
 
       <span onClick={handleClick} style={{ top: props.label ? 37 : 12 }}>
         {isHidden ? (
