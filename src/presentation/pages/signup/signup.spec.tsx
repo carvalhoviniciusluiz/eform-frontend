@@ -31,7 +31,7 @@ describe('Signup Component', () => {
     Helper.testElementText(sut, 'label-continue', 'Submit')
     Helper.testStatusForField(sut, 'firstName', validationError)
     Helper.testStatusForField(sut, 'lastName', validationError)
-    Helper.testStatusForField(sut, 'documentNumber', 'Required field')
+    Helper.testStatusForField(sut, 'documentNumber', validationError)
     Helper.testStatusForField(sut, 'phone', 'Required field')
     Helper.testStatusForField(sut, 'email', 'Required field')
     Helper.testStatusForField(sut, 'password', 'Required field')
@@ -50,5 +50,12 @@ describe('Signup Component', () => {
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'lastName')
     Helper.testStatusForField(sut, 'lastName', validationError)
+  })
+
+  test('should show documentNumber error if Validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = makeSut({ validationError })
+    Helper.populateField(sut, 'documentNumber')
+    Helper.testStatusForField(sut, 'documentNumber', validationError)
   })
 })
