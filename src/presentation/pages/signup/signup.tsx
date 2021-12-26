@@ -6,20 +6,40 @@ import './signup-styles.scss'
 
 type StateProps = {
   isLoading: number
-  credential: string
+  firstName: string
+  lastName: string
+  documentNumber: string
+  phone: string
+  email: string
   password: string
-  credentialError: string
+  passwordConfirmation: string
+  firstNameError: string
+  lastNameError: string
+  documentNumberError: string
+  phoneError: string
+  emailError: string
   passwordError: string
+  passwordConfirmationError: string
   mainError: string
 }
 
 const Signup = () => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
-    credential: '',
+    firstName: '',
+    lastName: '',
+    documentNumber: '',
+    phone: '',
+    email: '',
     password: '',
-    credentialError: '',
+    passwordConfirmation: '',
+    firstNameError: '',
+    lastNameError: '',
+    documentNumberError: '',
+    phoneError: '',
+    emailError: '',
     passwordError: '',
+    passwordConfirmationError: '',
     mainError: ''
   })
 
@@ -79,7 +99,7 @@ const Signup = () => {
                     }
                     name='firstName'
                     onChange={handleChange}
-                    errorMessage={state.credentialError}
+                    errorMessage={state.firstNameError}
                   />
                   <TextField
                     label={
@@ -91,7 +111,7 @@ const Signup = () => {
                     }
                     name='lastName'
                     onChange={handleChange}
-                    errorMessage={state.credentialError}
+                    errorMessage={state.lastNameError}
                   />
                 </div>
 
@@ -106,7 +126,7 @@ const Signup = () => {
                     }
                     name='documentNumber'
                     onChange={handleChange}
-                    errorMessage={state.credentialError}
+                    errorMessage={state.documentNumberError}
                   />
                   <TextField
                     label={
@@ -118,7 +138,7 @@ const Signup = () => {
                     }
                     name='phone'
                     onChange={handleChange}
-                    errorMessage={state.credentialError}
+                    errorMessage={state.phoneError}
                   />
                 </div>
 
@@ -133,7 +153,7 @@ const Signup = () => {
                   }
                   name='credential'
                   onChange={handleChange}
-                  errorMessage={state.credentialError}
+                  errorMessage={state.emailError}
                 />
 
                 <PasswordField
@@ -159,7 +179,7 @@ const Signup = () => {
                   }
                   name='passwordConfirmation'
                   onChange={handleChange}
-                  errorMessage={state.passwordError}
+                  errorMessage={state.passwordConfirmationError}
                 />
 
                 <div className='signupContainer__form__submit'>
