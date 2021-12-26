@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { SubmitButton } from '@/presentation/components'
 import { PasswordField, TextField } from '@/presentation/components/inputs'
 import './signup-styles.scss'
@@ -53,7 +52,7 @@ const Signup = () => {
     console.log('submit')
   }
 
-  const isDisabled = false
+  const isDisabled = true
 
   return (
     <div className='signupContainer'>
@@ -76,9 +75,9 @@ const Signup = () => {
                   <h1>Create an Account</h1>
                   <div className='actions'>
                     Already have an account?
-                    <Link to='/login' data-testid='login'>
+                    <a href='/login' data-testid='login'>
                       Sign in here
-                    </Link>
+                    </a>
                   </div>
                 </div>
 
@@ -151,7 +150,7 @@ const Signup = () => {
                       </label>
                     </div>
                   }
-                  name='credential'
+                  name='email'
                   onChange={handleChange}
                   errorMessage={state.emailError}
                 />
