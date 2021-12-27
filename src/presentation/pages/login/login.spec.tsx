@@ -63,11 +63,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form)
 }
 
-const testElementExists = (sut: RenderResult, fieldName: string) => {
-  const el = sut.getByTestId(fieldName)
-  expect(el).toBeTruthy()
-}
-
 describe('Login component', () => {
   afterEach(cleanup)
 
@@ -118,7 +113,7 @@ describe('Login component', () => {
   test('should show spinner on submit', async () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
-    testElementExists(sut, 'spinner')
+    Helper.testElementExists(sut, 'spinner')
     Helper.testElementText(sut, 'label-wait', 'Please wait...')
   })
 

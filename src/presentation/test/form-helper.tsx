@@ -64,3 +64,8 @@ export const testStatusForField = (
   const input = sut.getByTestId(fieldName)
   expect(input.className.includes('error')).toBeTruthy()
 }
+
+export const testElementExists = (sut: RenderResult, fieldName: string) => {
+  const el = sut.getByTestId(fieldName)
+  expect(el).toBeTruthy()
+}
