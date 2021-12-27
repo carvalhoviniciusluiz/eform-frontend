@@ -272,4 +272,12 @@ describe('Signup Component', () => {
     Helper.testButtonIsDisable(sut, 'submit', false)
     Helper.testElementText(sut, 'label-continue', 'Submit')
   })
+
+  test('should go to login page', async () => {
+    const { sut } = makeSut()
+    await simulateValidSubmit(sut)
+    const link = sut.getByTestId('login-link')
+    fireEvent.click(link)
+    expect(history.location.pathname).toBe('/login')
+  })
 })
