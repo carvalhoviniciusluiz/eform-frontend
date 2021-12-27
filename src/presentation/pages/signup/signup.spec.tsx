@@ -86,4 +86,10 @@ describe('Signup Component', () => {
     Helper.populateField(sut, 'passwordConfirmation')
     Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
   })
+
+  test('should show valid firstName state if Validation succeds', () => {
+    const { sut } = makeSut()
+    Helper.testElementNotExists(sut, 'firstName-status')
+    Helper.testCssElement(sut, 'firstName', 'error', false)
+  })
 })

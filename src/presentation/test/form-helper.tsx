@@ -32,6 +32,16 @@ export const testElementNotExists = (sut: RenderResult, fieldName: string) => {
   expect(screen.queryByTestId(fieldName)).toBeNull()
 }
 
+export const testCssElement = (
+  sut: RenderResult,
+  fieldName: string,
+  cssElementName: string,
+  exists = true
+) => {
+  const el = populateField(sut, fieldName)
+  expect(el.className.includes(cssElementName)).toBe(exists)
+}
+
 export const populateField = (
   sut: RenderResult,
   fieldName: string,

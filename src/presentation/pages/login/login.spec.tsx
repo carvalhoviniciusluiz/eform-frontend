@@ -97,16 +97,14 @@ describe('Login component', () => {
 
   test('should show valid credential state if Validation succeds', () => {
     const { sut } = makeSut()
-    const credentialInput = Helper.populateField(sut, 'credential')
     Helper.testElementNotExists(sut, 'credential-status')
-    expect(credentialInput.className.includes('error')).toBeFalsy()
+    Helper.testCssElement(sut, 'credential', 'error', false)
   })
 
   test('should show valid password state if Validation succeds', () => {
     const { sut } = makeSut()
-    const passwordInput = Helper.populateField(sut, 'password')
     Helper.testElementNotExists(sut, 'password-status')
-    expect(passwordInput.className.includes('error')).toBeFalsy()
+    Helper.testCssElement(sut, 'password', 'error', false)
   })
 
   test('should enable submit button if form is valid', () => {
