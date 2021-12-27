@@ -55,18 +55,25 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   })
 
   useEffect(() => {
-    const firstNameError = validation.validate('firstName', state.firstName)
-    const lastNameError = validation.validate('lastName', state.lastName)
-    const documentNumberError = validation.validate(
-      'documentNumber',
-      state.documentNumber
-    )
-    const phoneError = validation.validate('phone', state.phone)
-    const emailError = validation.validate('email', state.email)
-    const passwordError = validation.validate('password', state.password)
+    const { firstName, lastName, documentNumber, phone, email, password } =
+      state
+    const formData = {
+      firstName,
+      lastName,
+      documentNumber,
+      phone,
+      email,
+      password
+    }
+    const firstNameError = validation.validate('firstName', formData)
+    const lastNameError = validation.validate('lastName', formData)
+    const documentNumberError = validation.validate('documentNumber', formData)
+    const phoneError = validation.validate('phone', formData)
+    const emailError = validation.validate('email', formData)
+    const passwordError = validation.validate('password', formData)
     const passwordConfirmationError = validation.validate(
       'passwordConfirmation',
-      state.passwordConfirmation
+      formData
     )
 
     setState((prevState) => ({

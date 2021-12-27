@@ -35,8 +35,10 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   })
 
   useEffect(() => {
-    const credentialError = validation.validate('credential', state.credential)
-    const passwordError = validation.validate('password', state.password)
+    const { credential, password } = state
+    const formData = { credential, password }
+    const credentialError = validation.validate('credential', formData)
+    const passwordError = validation.validate('password', formData)
 
     setState((prevState) => ({
       ...prevState,

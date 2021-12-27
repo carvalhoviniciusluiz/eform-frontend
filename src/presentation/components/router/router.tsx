@@ -17,7 +17,7 @@ const Router = ({ makeLogin: Login }: RouterProps) => {
           element={
             <Signup
               validation={{
-                validate: (fieldName: string, fieldValue: string) => {
+                validate: (fieldName: string, input: object) => {
                   return null
                 }
               }}
