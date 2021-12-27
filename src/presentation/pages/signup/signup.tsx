@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { AddAccount, GrantType } from '@/domain'
+import { Link, useNavigate } from 'react-router-dom'
+import { AddAccount, GrantType, SaveAccessToken } from '@/domain'
 import { SubmitButton } from '@/presentation/components'
 import { PasswordField, TextField } from '@/presentation/components/inputs'
 import { Validation } from '@/presentation/protocols'
@@ -27,9 +28,11 @@ type StateProps = {
 type SignupProps = {
   validation: Validation
   addAccount: AddAccount
+  saveAccessToken: SaveAccessToken
 }
 
-const Signup = ({ validation, addAccount }: SignupProps) => {
+const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
+  const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
     firstName: '',
@@ -97,7 +100,7 @@ const Signup = ({ validation, addAccount }: SignupProps) => {
       )
         return
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
-      await addAccount.add({
+      const account = await addAccount.add({
         grant_type: GrantType.CREATE_CREDENTIALS,
         firstname: state.firstName,
         lastname: state.lastName,
@@ -106,6 +109,8 @@ const Signup = ({ validation, addAccount }: SignupProps) => {
         email: state.email,
         password: state.password
       })
+      await saveAccessToken.save(account.accessToken)
+      navigate('/')
     } catch (error) {
       setState((prevState) => ({
         ...prevState,
@@ -145,9 +150,9 @@ const Signup = ({ validation, addAccount }: SignupProps) => {
                   <h1>Create an Account</h1>
                   <div className='actions'>
                     Already have an account?
-                    <a href='/login' data-testid='login'>
+                    <Link to='/login' data-testid='login'>
                       Sign in here
-                    </a>
+                    </Link>
                   </div>
                 </div>
 

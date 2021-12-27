@@ -26,6 +26,11 @@ const Router = ({ makeLogin: Login }: RouterProps) => {
                   return null
                 }
               }}
+              saveAccessToken={{
+                save: (accessToken: string) => {
+                  return null
+                }
+              }}
             />
           }
         />
