@@ -43,7 +43,7 @@ const Signup = ({ validation }: SignupProps) => {
     phoneError: '',
     emailError: '',
     passwordError: '',
-    passwordConfirmationError: 'Required field',
+    passwordConfirmationError: '',
     mainError: ''
   })
 
@@ -58,7 +58,11 @@ const Signup = ({ validation }: SignupProps) => {
       ),
       phoneError: validation.validate('phone', state.phone),
       emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password)
+      passwordError: validation.validate('password', state.password),
+      passwordConfirmationError: validation.validate(
+        'passwordConfirmation',
+        state.passwordConfirmation
+      )
     }))
   }, [
     state.firstName,
@@ -66,7 +70,8 @@ const Signup = ({ validation }: SignupProps) => {
     state.documentNumber,
     state.phone,
     state.email,
-    state.password
+    state.password,
+    state.passwordConfirmation
   ])
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
