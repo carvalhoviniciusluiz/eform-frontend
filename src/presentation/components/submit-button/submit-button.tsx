@@ -1,11 +1,8 @@
-import { ReactNode } from 'react'
 import { Spinner } from '@/presentation/components'
 import './submit-button-styles.scss'
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: number
-  disabled?: boolean
-  children?: ReactNode
 }
 
 const SubmitButton = (props: SubmitButtonProps) => {

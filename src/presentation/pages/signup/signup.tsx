@@ -8,6 +8,7 @@ import './signup-styles.scss'
 
 type StateProps = {
   isLoading: number
+  isFormInvalid: boolean
   firstName: string
   lastName: string
   documentNumber: string
@@ -35,6 +36,7 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
+    isFormInvalid: false,
     firstName: '',
     lastName: '',
     documentNumber: '',
@@ -53,21 +55,37 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   })
 
   useEffect(() => {
+    const firstNameError = validation.validate('firstName', state.firstName)
+    const lastNameError = validation.validate('lastName', state.lastName)
+    const documentNumberError = validation.validate(
+      'documentNumber',
+      state.documentNumber
+    )
+    const phoneError = validation.validate('phone', state.phone)
+    const emailError = validation.validate('email', state.email)
+    const passwordError = validation.validate('password', state.password)
+    const passwordConfirmationError = validation.validate(
+      'passwordConfirmation',
+      state.passwordConfirmation
+    )
+
     setState((prevState) => ({
       ...prevState,
-      firstNameError: validation.validate('firstName', state.firstName),
-      lastNameError: validation.validate('lastName', state.lastName),
-      documentNumberError: validation.validate(
-        'documentNumber',
-        state.documentNumber
-      ),
-      phoneError: validation.validate('phone', state.phone),
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
-      passwordConfirmationError: validation.validate(
-        'passwordConfirmation',
-        state.passwordConfirmation
-      )
+      firstNameError,
+      lastNameError,
+      documentNumberError,
+      phoneError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+      isFormInvalid:
+        !!firstNameError ||
+        !!lastNameError ||
+        !!documentNumberError ||
+        !!phoneError ||
+        !!emailError ||
+        !!passwordError ||
+        !!passwordConfirmationError
     }))
   }, [
     state.firstName,
@@ -88,17 +106,7 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
-      if (
-        state.isLoading ||
-        !!state.firstNameError ||
-        !!state.lastNameError ||
-        !!state.documentNumberError ||
-        !!state.phoneError ||
-        !!state.emailError ||
-        !!state.passwordError ||
-        !!state.passwordConfirmationError
-      )
-        return
+      if (state.isLoading || state.isFormInvalid) return
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
       const account = await addAccount.add({
         grant_type: GrantType.CREATE_CREDENTIALS,
@@ -119,15 +127,6 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
       }))
     }
   }
-
-  const isDisabled =
-    !!state.firstNameError ||
-    !!state.lastNameError ||
-    !!state.documentNumberError ||
-    !!state.phoneError ||
-    !!state.emailError ||
-    !!state.passwordError ||
-    !!state.passwordConfirmationError
 
   return (
     <div className='signupContainer'>
@@ -259,7 +258,10 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
                 </div>
 
                 <div className='signupContainer__form__submit'>
-                  <SubmitButton loading={state.isLoading} disabled={isDisabled}>
+                  <SubmitButton
+                    loading={state.isLoading}
+                    disabled={state.isFormInvalid}
+                  >
                     Submit
                   </SubmitButton>
                 </div>

@@ -8,6 +8,7 @@ import './login-styles.scss'
 
 type StateProps = {
   isLoading: number
+  isFormInvalid: boolean
   credential: string
   password: string
   credentialError: string
@@ -25,6 +26,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
+    isFormInvalid: false,
     credential: '',
     password: '',
     credentialError: '',
@@ -33,10 +35,14 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   })
 
   useEffect(() => {
+    const credentialError = validation.validate('credential', state.credential)
+    const passwordError = validation.validate('password', state.password)
+
     setState((prevState) => ({
       ...prevState,
-      credentialError: validation.validate('credential', state.credential),
-      passwordError: validation.validate('password', state.password)
+      credentialError,
+      passwordError,
+      isFormInvalid: !!credentialError || !!passwordError
     }))
   }, [state.credential, state.password])
 
@@ -49,7 +55,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
-      if (state.isLoading || state.credentialError || state.passwordError) {
+      if (state.isLoading || state.isFormInvalid) {
         return
       }
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
@@ -68,8 +74,6 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
       }))
     }
   }
-
-  const isDisabled = !!state.credentialError || !!state.passwordError
 
   return (
     <div className='loginContainer'>
@@ -134,7 +138,10 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
                 />
 
                 <div className='loginContainer__form__submit'>
-                  <SubmitButton loading={state.isLoading} disabled={isDisabled}>
+                  <SubmitButton
+                    loading={state.isLoading}
+                    disabled={state.isFormInvalid}
+                  >
                     Continue
                   </SubmitButton>
                 </div>
