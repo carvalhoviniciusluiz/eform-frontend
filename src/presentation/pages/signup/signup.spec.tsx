@@ -128,4 +128,17 @@ describe('Signup Component', () => {
     Helper.testElementNotExists(sut, 'passwordConfirmation-status')
     Helper.testCssElement(sut, 'passwordConfirmation', 'error', false)
   })
+
+  test('should enable submit button if form is valid', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'firstName')
+    Helper.populateField(sut, 'lastName')
+    Helper.populateField(sut, 'documentNumber')
+    Helper.populateField(sut, 'phone')
+    Helper.populateField(sut, 'email')
+    Helper.populateField(sut, 'password')
+    Helper.populateField(sut, 'passwordConfirmation')
+    Helper.testButtonIsDisable(sut, 'submit', false)
+    Helper.testElementText(sut, 'label-continue', 'Submit')
+  })
 })
