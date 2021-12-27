@@ -92,7 +92,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
                   <h1>Sign In to Good</h1>
                   <div className='actions'>
                     New Here?
-                    <Link to='/signup' data-testid='signup'>
+                    <Link to='/signup' data-testid='signup-link'>
                       Create an Account
                     </Link>
                   </div>
