@@ -122,4 +122,10 @@ describe('Signup Component', () => {
     Helper.testElementNotExists(sut, 'password-status')
     Helper.testCssElement(sut, 'password', 'error', false)
   })
+
+  test('should show valid passwordConfirmation state if Validation succeds', () => {
+    const { sut } = makeSut()
+    Helper.testElementNotExists(sut, 'passwordConfirmation-status')
+    Helper.testCssElement(sut, 'passwordConfirmation', 'error', false)
+  })
 })
