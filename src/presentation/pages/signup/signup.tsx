@@ -84,7 +84,14 @@ const Signup = ({ validation }: SignupProps) => {
     console.log('submit')
   }
 
-  const isDisabled = true
+  const isDisabled =
+    !!state.firstNameError ||
+    !!state.lastNameError ||
+    !!state.documentNumberError ||
+    !!state.phoneError ||
+    !!state.emailError ||
+    !!state.passwordError ||
+    !!state.passwordConfirmationError
 
   return (
     <div className='signupContainer'>
