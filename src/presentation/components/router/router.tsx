@@ -1,39 +1,17 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { AddAccountParams } from '@/domain'
-import { Signup } from '@/presentation/pages'
 
-type RouterProps = {
+type Factory = {
   makeLogin: React.FC
+  makeSignUp: React.FC
 }
 
-const Router = ({ makeLogin: Login }: RouterProps) => {
+const Router = ({ makeLogin: Login, makeSignUp: SignUp }: Factory) => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route
-          path='/signup'
-          element={
-            <Signup
-              validation={{
-                validate: (fieldName: string, input: object) => {
-                  return null
-                }
-              }}
-              addAccount={{
-                add(params: AddAccountParams) {
-                  return null
-                }
-              }}
-              saveAccessToken={{
-                save: (accessToken: string) => {
-                  return null
-                }
-              }}
-            />
-          }
-        />
+        <Route path='/signup' element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   )
