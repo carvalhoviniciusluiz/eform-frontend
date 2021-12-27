@@ -9,7 +9,7 @@ import {
 import * as faker from 'faker'
 import { createMemoryHistory } from 'history'
 import { EmailInUseError } from '@/domain'
-import { Signup } from '@/presentation/pages'
+import { SignUp } from '@/presentation/pages'
 import {
   AddAccountSpy,
   Helper,
@@ -37,7 +37,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   const saveAccessTokenMock = new SaveAccessTokenMock()
   const sut = render(
     <Router navigator={history} location={history.location}>
-      <Signup
+      <SignUp
         validation={validationStub}
         addAccount={addAccountSpy}
         saveAccessToken={saveAccessTokenMock}
@@ -72,7 +72,7 @@ const simulateValidSubmit = async (
   await waitFor(() => form)
 }
 
-describe('Signup Component', () => {
+describe('SignUp Component', () => {
   afterEach(cleanup)
 
   test('should start with initial state', () => {

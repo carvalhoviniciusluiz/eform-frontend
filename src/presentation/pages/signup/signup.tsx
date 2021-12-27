@@ -26,13 +26,13 @@ type StateProps = {
   mainError: string
 }
 
-type SignupProps = {
+type SignUpProps = {
   validation: Validation
   addAccount: AddAccount
   saveAccessToken: SaveAccessToken
 }
 
-const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
+const SignUp = ({ validation, addAccount, saveAccessToken }: SignUpProps) => {
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
@@ -55,15 +55,23 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   })
 
   useEffect(() => {
-    const { firstName, lastName, documentNumber, phone, email, password } =
-      state
+    const {
+      firstName,
+      lastName,
+      documentNumber,
+      phone,
+      email,
+      password,
+      passwordConfirmation
+    } = state
     const formData = {
       firstName,
       lastName,
       documentNumber,
       phone,
       email,
-      password
+      password,
+      passwordConfirmation
     }
     const firstNameError = validation.validate('firstName', formData)
     const lastNameError = validation.validate('lastName', formData)
@@ -281,4 +289,4 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
   )
 }
 
-export default Signup
+export default SignUp
