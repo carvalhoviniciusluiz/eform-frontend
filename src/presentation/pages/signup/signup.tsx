@@ -81,7 +81,7 @@ const Signup = ({ validation }: SignupProps) => {
     }))
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('submit')
+    setState((prevState) => ({ ...prevState, isLoading: 1 }))
   }
 
   const isDisabled =
