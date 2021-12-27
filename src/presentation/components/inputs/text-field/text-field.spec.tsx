@@ -14,6 +14,14 @@ describe('TextField Component', () => {
     expect(el.childElementCount).toBe(1)
   })
 
+  test('should show label', () => {
+    const label = faker.random.word()
+    const field = faker.database.column()
+    const { getByTestId } = makeSut(field, label)
+    const el = getByTestId('textField')
+    expect(el.childElementCount).toBe(2)
+  })
+
   test('should begin with readOnly', () => {
     const field = faker.database.column()
     const { getByTestId } = makeSut(field)
