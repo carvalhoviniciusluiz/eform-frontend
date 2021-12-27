@@ -84,27 +84,35 @@ const Signup = ({ validation, addAccount }: SignupProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (
-      state.isLoading ||
-      !!state.firstNameError ||
-      !!state.lastNameError ||
-      !!state.documentNumberError ||
-      !!state.phoneError ||
-      !!state.emailError ||
-      !!state.passwordError ||
-      !!state.passwordConfirmationError
-    )
-      return
-    setState((prevState) => ({ ...prevState, isLoading: 1 }))
-    await addAccount.add({
-      grant_type: GrantType.CREATE_CREDENTIALS,
-      firstname: state.firstName,
-      lastname: state.lastName,
-      document_number: state.documentNumber,
-      phone: state.phone,
-      email: state.email,
-      password: state.password
-    })
+    try {
+      if (
+        state.isLoading ||
+        !!state.firstNameError ||
+        !!state.lastNameError ||
+        !!state.documentNumberError ||
+        !!state.phoneError ||
+        !!state.emailError ||
+        !!state.passwordError ||
+        !!state.passwordConfirmationError
+      )
+        return
+      setState((prevState) => ({ ...prevState, isLoading: 1 }))
+      await addAccount.add({
+        grant_type: GrantType.CREATE_CREDENTIALS,
+        firstname: state.firstName,
+        lastname: state.lastName,
+        document_number: state.documentNumber,
+        phone: state.phone,
+        email: state.email,
+        password: state.password
+      })
+    } catch (error) {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: 0,
+        mainError: error.message
+      }))
+    }
   }
 
   const isDisabled =
