@@ -28,7 +28,11 @@ const PasswordField = (props: TextFieldProps) => {
     <div className='passwordField__content'>
       <TextField {...props} type={isHidden ? 'password' : 'text'} />
 
-      <span onClick={handleClick} style={{ top: props.label ? 37 : 12 }}>
+      <span
+        onClick={handleClick}
+        style={{ top: props.label ? 37 : 12 }}
+        data-testid='toggle-button'
+      >
         {isHidden ? (
           <FaEyeSlash size={22}></FaEyeSlash>
         ) : (
