@@ -7,10 +7,11 @@ import {
 } from '@testing-library/react'
 import * as faker from 'faker'
 import { Signup } from '@/presentation/pages'
-import { Helper, ValidationStub } from '@/presentation/test'
+import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 
 type SutTypes = {
   sut: RenderResult
+  addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
@@ -20,9 +21,13 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
-  const sut = render(<Signup validation={validationStub} />)
+  const addAccountSpy = new AddAccountSpy()
+  const sut = render(
+    <Signup validation={validationStub} addAccount={addAccountSpy} />
+  )
   return {
-    sut
+    sut,
+    addAccountSpy
   }
 }
 
@@ -173,5 +178,33 @@ describe('Signup Component', () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
     Helper.testElementText(sut, 'label-wait', 'Please wait...')
+  })
+
+  test('should call AddAccount with correct values', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const firstName = faker.name.firstName()
+    const lastName = faker.name.lastName()
+    const documentNumber = faker.random.alphaNumeric(11)
+    const phone = faker.phone.phoneNumber()
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+    await simulateValidSubmit(
+      sut,
+      firstName,
+      lastName,
+      documentNumber,
+      phone,
+      email,
+      password
+    )
+    expect(addAccountSpy.params).toEqual({
+      grant_type: 'create_credentials',
+      firstname: firstName,
+      lastname: lastName,
+      document_number: documentNumber,
+      phone,
+      email,
+      password
+    })
   })
 })

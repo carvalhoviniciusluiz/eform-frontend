@@ -8,10 +8,9 @@ export const mockAddAccountParams = (): AddAccountParams => {
     grant_type: GrantType.CREATE_CREDENTIALS,
     firstname: faker.name.firstName(),
     lastname: faker.name.lastName(),
-    documentNumber: faker.random.alphaNumeric(11),
+    document_number: faker.random.alphaNumeric(11),
     phone: faker.phone.phoneNumber(),
     email: faker.internet.email(),
-    password,
-    passwordConfirmation: password
+    password
   }
 }
