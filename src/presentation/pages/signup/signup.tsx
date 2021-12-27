@@ -83,6 +83,8 @@ const Signup = ({ validation, addAccount }: SignupProps) => {
     }))
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (state.isLoading) return
     setState((prevState) => ({ ...prevState, isLoading: 1 }))
     await addAccount.add({
       grant_type: GrantType.CREATE_CREDENTIALS,
