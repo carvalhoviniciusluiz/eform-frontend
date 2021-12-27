@@ -181,8 +181,8 @@ describe('Login component', () => {
   test('should go to signup page', async () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
-    const signup = sut.getByTestId('signup')
-    fireEvent.click(signup)
+    const link = sut.getByTestId('signup-link')
+    fireEvent.click(link)
     expect(history.location.pathname).toBe('/signup')
   })
 })
