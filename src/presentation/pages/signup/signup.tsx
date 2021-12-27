@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { AddAccount, GrantType } from '@/domain'
 import { SubmitButton } from '@/presentation/components'
 import { PasswordField, TextField } from '@/presentation/components/inputs'
-import './signup-styles.scss'
 import { Validation } from '@/presentation/protocols'
+import './signup-styles.scss'
 
 type StateProps = {
   isLoading: number
@@ -25,9 +26,10 @@ type StateProps = {
 
 type SignupProps = {
   validation: Validation
+  addAccount: AddAccount
 }
 
-const Signup = ({ validation }: SignupProps) => {
+const Signup = ({ validation, addAccount }: SignupProps) => {
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
     firstName: '',
@@ -82,6 +84,15 @@ const Signup = ({ validation }: SignupProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setState((prevState) => ({ ...prevState, isLoading: 1 }))
+    await addAccount.add({
+      grant_type: GrantType.CREATE_CREDENTIALS,
+      firstname: state.firstName,
+      lastname: state.lastName,
+      document_number: state.documentNumber,
+      phone: state.phone,
+      email: state.email,
+      password: state.password
+    })
   }
 
   const isDisabled =

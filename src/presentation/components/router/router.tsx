@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AddAccountParams } from '@/domain'
 import { Signup } from '@/presentation/pages'
 
 type RouterProps = {
@@ -17,6 +18,11 @@ const Router = ({ makeLogin: Login }: RouterProps) => {
             <Signup
               validation={{
                 validate: (fieldName: string, fieldValue: string) => {
+                  return null
+                }
+              }}
+              addAccount={{
+                add(params: AddAccountParams) {
                   return null
                 }
               }}

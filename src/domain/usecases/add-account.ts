@@ -5,11 +5,10 @@ export type AddAccountParams = {
   grant_type: GrantType
   firstname: string
   lastname: string
-  documentNumber: string
+  document_number: string
   email: string
   phone: string
   password: string
-  passwordConfirmation: string
 }
 
 export interface AddAccount {
