@@ -36,7 +36,7 @@ export const testCssElement = (
   sut: RenderResult,
   fieldName: string,
   cssElementName: string,
-  exists = true
+  exists: boolean
 ) => {
   const el = populateField(sut, fieldName)
   expect(el.className.includes(cssElementName)).toBe(exists)
