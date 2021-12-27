@@ -6,6 +6,7 @@ import {
   waitFor
 } from '@testing-library/react'
 import * as faker from 'faker'
+import { EmailInUseError } from '@/domain'
 import { Signup } from '@/presentation/pages'
 import { AddAccountSpy, Helper, ValidationStub } from '@/presentation/test'
 
@@ -220,5 +221,16 @@ describe('Signup Component', () => {
     const { sut, addAccountSpy } = makeSut({ validationError })
     await simulateValidSubmit(sut)
     expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  test('should present error if AddAccount fails', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const error = new EmailInUseError()
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
+    await simulateValidSubmit(sut)
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'submit', 1)
+    Helper.testButtonIsDisable(sut, 'submit', false)
+    Helper.testElementText(sut, 'label-continue', 'Submit')
   })
 })
