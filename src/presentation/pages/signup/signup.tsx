@@ -150,7 +150,7 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps) => {
                   <h1>Create an Account</h1>
                   <div className='actions'>
                     Already have an account?
-                    <Link to='/login' data-testid='login'>
+                    <Link to='/login' data-testid='login-link'>
                       Sign in here
                     </Link>
                   </div>
