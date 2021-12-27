@@ -104,4 +104,10 @@ describe('Signup Component', () => {
     Helper.testElementNotExists(sut, 'documentNumber-status')
     Helper.testCssElement(sut, 'documentNumber', 'error', false)
   })
+
+  test('should show valid phone state if Validation succeds', () => {
+    const { sut } = makeSut()
+    Helper.testElementNotExists(sut, 'phone-status')
+    Helper.testCssElement(sut, 'phone', 'error', false)
+  })
 })
