@@ -69,7 +69,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
     }
   }
 
-  const isDisabled = !(!!state.credential || !!state.password)
+  const isDisabled = !!state.credentialError || !!state.passwordError
 
   return (
     <div className='loginContainer'>
