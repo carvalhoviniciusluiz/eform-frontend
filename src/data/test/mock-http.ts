@@ -1,4 +1,5 @@
 import * as faker from 'faker'
+import { HttpGetClient, HttpGetParams } from '@/data/protocols'
 import {
   HttpPostParams,
   HttpPostClient,
@@ -26,5 +27,12 @@ export class HttpPostClientSpy<BodyType, ResponseType>
     this.url = params.url
     this.body = params.body
     return await Promise.resolve(this.response)
+  }
+}
+
+export class HttpGetClientMock implements HttpGetClient {
+  url: string
+  async get(params: HttpGetParams): Promise<void> {
+    this.url = params.url
   }
 }
