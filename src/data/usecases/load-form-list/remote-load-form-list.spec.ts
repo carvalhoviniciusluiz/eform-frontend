@@ -1,26 +1,37 @@
 import * as faker from 'faker'
-import { HttpGetClientMock } from '@/data/test'
+import { FormModel, UnexpectedError } from '@/domain'
+import { HttpStatusCode } from '@/data/protocols'
+import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadFormList } from '@/data/usecases'
 
 type SutTypes = {
-  httpGetClientMock: HttpGetClientMock
+  httpGetClientSpy: HttpGetClientSpy<FormModel[]>
   sut: RemoteLoadFormList
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpGetClientMock = new HttpGetClientMock()
-  const sut = new RemoteLoadFormList(url, httpGetClientMock)
+  const httpGetClientSpy = new HttpGetClientSpy<FormModel[]>()
+  const sut = new RemoteLoadFormList(url, httpGetClientSpy)
   return {
     sut,
-    httpGetClientMock
+    httpGetClientSpy
   }
 }
 
 describe('RemoteLoadFormList', () => {
   test('should call HttpGetClient with correct URL', async () => {
     const url = faker.internet.url()
-    const { sut, httpGetClientMock } = makeSut(url)
+    const { sut, httpGetClientSpy } = makeSut(url)
     await sut.loadAll()
-    expect(httpGetClientMock.url).toBe(url)
+    expect(httpGetClientSpy.url).toBe(url)
+  })
+
+  test('should throw UnexpectedError if HttpPostClient returns 403', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden
+    }
+    const promise = sut.loadAll()
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })

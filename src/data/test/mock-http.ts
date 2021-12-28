@@ -30,9 +30,16 @@ export class HttpPostClientSpy<BodyType, ResponseType>
   }
 }
 
-export class HttpGetClientMock implements HttpGetClient {
+export class HttpGetClientSpy<ResponseType = any>
+  implements HttpGetClient<ResponseType>
+{
   url: string
-  async get(params: HttpGetParams): Promise<void> {
+  response: HttpResponse<ResponseType> = {
+    statusCode: HttpStatusCode.ok
+  }
+
+  async get(params: HttpGetParams): Promise<HttpResponse<ResponseType>> {
     this.url = params.url
+    return this.response
   }
 }
