@@ -12,6 +12,8 @@ export class RemoteLoadFormList implements LoadFormList {
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body?.data
+      case HttpStatusCode.noContent:
+        return []
       default:
         throw new UnexpectedError()
     }
