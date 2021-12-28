@@ -72,34 +72,36 @@ describe('Login component', () => {
     Helper.testButtonIsDisable(sut, 'submit', true)
     Helper.testChildCount(sut, 'submit', 1)
     Helper.testElementText(sut, 'label-continue', 'Continue')
-    Helper.testStatusForField(sut, 'credential', validationError)
-    Helper.testStatusForField(sut, 'password', validationError)
+    Helper.testStatusForField(sut, 'credential', 'error', true)
+    Helper.testMessageTitle(sut, 'credential-status', validationError)
+    Helper.testStatusForField(sut, 'password', 'error', true)
+    Helper.testMessageTitle(sut, 'password-status', validationError)
   })
 
   test('should show credential error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'credential')
-    Helper.testStatusForField(sut, 'credential', validationError)
+    Helper.testStatusForField(sut, 'credential', 'error', true)
+    Helper.testMessageTitle(sut, 'credential-status', validationError)
   })
 
   test('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'password')
-    Helper.testStatusForField(sut, 'password', validationError)
+    Helper.testStatusForField(sut, 'password', 'error', true)
+    Helper.testMessageTitle(sut, 'password-status', validationError)
   })
 
   test('should show valid credential state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'credential-status')
-    Helper.testCssElement(sut, 'credential', 'error', false)
+    Helper.testStatusForField(sut, 'credential', 'check', true)
   })
 
   test('should show valid password state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'password-status')
-    Helper.testCssElement(sut, 'password', 'error', false)
+    Helper.testStatusForField(sut, 'password', 'check', true)
   })
 
   test('should enable submit button if form is valid', () => {

@@ -26,7 +26,11 @@ const PasswordField = (props: TextFieldProps) => {
 
   return (
     <div className='passwordField__content'>
-      <TextField {...props} type={isHidden ? 'password' : 'text'} />
+      <TextField
+        {...props}
+        type={isHidden ? 'password' : 'text'}
+        showIcon={false}
+      />
 
       <span
         onClick={handleClick}

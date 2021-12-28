@@ -81,104 +81,117 @@ describe('SignUp Component', () => {
     Helper.testButtonIsDisable(sut, 'submit', true)
     Helper.testChildCount(sut, 'submit', 1)
     Helper.testElementText(sut, 'label-continue', 'Submit')
-    Helper.testStatusForField(sut, 'firstName', validationError)
-    Helper.testStatusForField(sut, 'lastName', validationError)
-    Helper.testStatusForField(sut, 'documentNumber', validationError)
-    Helper.testStatusForField(sut, 'phone', validationError)
-    Helper.testStatusForField(sut, 'email', validationError)
-    Helper.testStatusForField(sut, 'password', validationError)
-    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
+    Helper.testStatusForField(sut, 'firstName', 'error', true)
+    Helper.testMessageTitle(sut, 'firstName-status', validationError)
+
+    Helper.testStatusForField(sut, 'lastName', 'error', true)
+    Helper.testMessageTitle(sut, 'lastName-status', validationError)
+
+    Helper.testStatusForField(sut, 'documentNumber', 'error', true)
+    Helper.testMessageTitle(sut, 'documentNumber-status', validationError)
+
+    Helper.testStatusForField(sut, 'phone', 'error', true)
+    Helper.testMessageTitle(sut, 'phone-status', validationError)
+
+    Helper.testStatusForField(sut, 'email', 'error', true)
+    Helper.testMessageTitle(sut, 'email-status', validationError)
+
+    Helper.testStatusForField(sut, 'password', 'error', true)
+    Helper.testTextContent(sut, 'password-status', validationError)
+
+    Helper.testStatusForField(sut, 'passwordConfirmation', 'error', true)
+    Helper.testTextContent(sut, 'passwordConfirmation-status', validationError)
   })
 
   test('should show firstName error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'firstName')
-    Helper.testStatusForField(sut, 'firstName', validationError)
+    Helper.testStatusForField(sut, 'firstName', 'error', true)
+    Helper.testMessageTitle(sut, 'firstName-status', validationError)
   })
 
   test('should show lastName error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'lastName')
-    Helper.testStatusForField(sut, 'lastName', validationError)
+    Helper.testStatusForField(sut, 'lastName', 'error', true)
+    Helper.testMessageTitle(sut, 'lastName-status', validationError)
   })
 
   test('should show documentNumber error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'documentNumber')
-    Helper.testStatusForField(sut, 'documentNumber', validationError)
+    Helper.testStatusForField(sut, 'documentNumber', 'error', true)
+    Helper.testMessageTitle(sut, 'documentNumber-status', validationError)
   })
 
   test('should show phone error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'phone')
-    Helper.testStatusForField(sut, 'phone', validationError)
+    Helper.testStatusForField(sut, 'phone', 'error', true)
+    Helper.testMessageTitle(sut, 'phone-status', validationError)
   })
 
   test('should show email error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'email')
-    Helper.testStatusForField(sut, 'email', validationError)
+    Helper.testStatusForField(sut, 'email', 'error', true)
+    Helper.testMessageTitle(sut, 'email-status', validationError)
   })
 
   test('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'password')
-    Helper.testStatusForField(sut, 'password', validationError)
+    Helper.testStatusForField(sut, 'password', 'error', true)
+    Helper.testTextContent(sut, 'password-status', validationError)
   })
 
   test('should show passwordConfirmation error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
     Helper.populateField(sut, 'passwordConfirmation')
-    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
+    Helper.testStatusForField(sut, 'passwordConfirmation', 'error', true)
+    Helper.testTextContent(sut, 'passwordConfirmation-status', validationError)
   })
 
   test('should show valid firstName state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'firstName-status')
-    Helper.testCssElement(sut, 'firstName', 'error', false)
+    Helper.testStatusForField(sut, 'firstName', 'error', false)
   })
 
   test('should show valid lastName state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'lastName-status')
-    Helper.testCssElement(sut, 'lastName', 'error', false)
+    Helper.testStatusForField(sut, 'lastName', 'error', false)
   })
 
   test('should show valid documentNumber state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'documentNumber-status')
-    Helper.testCssElement(sut, 'documentNumber', 'error', false)
+    Helper.testStatusForField(sut, 'documentNumber', 'error', false)
   })
 
   test('should show valid phone state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'phone-status')
-    Helper.testCssElement(sut, 'phone', 'error', false)
+    Helper.testStatusForField(sut, 'phone', 'error', false)
   })
 
   test('should show valid email state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'email-status')
-    Helper.testCssElement(sut, 'email', 'error', false)
+    Helper.testStatusForField(sut, 'email', 'error', false)
   })
 
   test('should show valid password state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'password-status')
-    Helper.testCssElement(sut, 'password', 'error', false)
+    Helper.testTextContent(sut, `password-status`, '')
   })
 
   test('should show valid passwordConfirmation state if Validation succeds', () => {
     const { sut } = makeSut()
-    Helper.testElementNotExists(sut, 'passwordConfirmation-status')
-    Helper.testCssElement(sut, 'passwordConfirmation', 'error', false)
+    Helper.testTextContent(sut, `passwordConfirmation-status`, '')
   })
 
   test('should enable submit button if form is valid', () => {

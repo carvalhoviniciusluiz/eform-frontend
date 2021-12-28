@@ -1,4 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, ReactElement } from 'react'
+import { BsCheckLg } from 'react-icons/bs'
+import { RiErrorWarningLine } from 'react-icons/ri'
 import './text-field-styles.scss'
 
 type TextFieldProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -8,10 +10,18 @@ type TextFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   onClick?: MouseEventHandler
   onChange?: ChangeEventHandler
   errorMessage?: string
+  showIcon?: boolean
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { label, type = 'text', name, errorMessage, ...rest } = props
+  const {
+    label,
+    type = 'text',
+    name,
+    errorMessage,
+    showIcon = true,
+    ...rest
+  } = props
 
   const classes = 'textField textField__lg textField__solid'
 
@@ -22,17 +32,28 @@ const TextField = (props: TextFieldProps) => {
   return (
     <div {...rest} className='textField__container' data-testid='textField'>
       {label && <label>{label}</label>}
-      <input
-        className={errorMessage ? `${classes} error` : classes}
-        type={type}
-        name={name}
-        readOnly
-        onFocus={enableInput}
-        autoComplete='off'
-        data-testid={name}
-      />
-      {errorMessage && (
-        <div className='field-error' data-testid={`${name}-status`}>
+      <div>
+        <input
+          className={errorMessage ? `${classes} error` : classes}
+          type={type}
+          name={name}
+          readOnly
+          onFocus={enableInput}
+          autoComplete='off'
+          data-testid={name}
+        />
+        {showIcon && (
+          <span
+            className={errorMessage ? 'error' : 'check'}
+            title={errorMessage}
+            data-testid={`${name}-status`}
+          >
+            {errorMessage ? <RiErrorWarningLine /> : <BsCheckLg />}
+          </span>
+        )}
+      </div>
+      {!showIcon && (
+        <div className='textField__error' data-testid={`${name}-status`}>
           {errorMessage}
         </div>
       )}

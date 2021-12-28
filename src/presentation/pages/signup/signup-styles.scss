@@ -188,33 +188,3 @@
     }
   }
 }
-
-.inputGroup {
-  display: flex;
-  width: 100%;
-
-  @media #{$tablet} {
-    flex-direction: column;
-  }
-
-  div {
-    width: 100%;
-    & + div {
-      margin-left: 16px;
-    }
-
-    @media #{$tablet} {
-      & + div {
-        margin-left: 0;
-      }
-    }
-  }
-}
-
-.field-error {
-  width: 100%;
-  margin-top: 0.5rem;
-  font-size: .925rem;
-  color: $danger;
-  word-break: break-word;
-}

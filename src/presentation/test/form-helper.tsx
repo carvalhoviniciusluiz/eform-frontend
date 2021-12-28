@@ -1,4 +1,4 @@
-import { fireEvent, RenderResult, screen } from '@testing-library/react'
+import { fireEvent, RenderResult } from '@testing-library/react'
 import * as faker from 'faker'
 
 export const testChildCount = (
@@ -28,20 +28,6 @@ export const testElementText = (
   expect(el.textContent).toBe(text)
 }
 
-export const testElementNotExists = (sut: RenderResult, fieldName: string) => {
-  expect(screen.queryByTestId(fieldName)).toBeNull()
-}
-
-export const testCssElement = (
-  sut: RenderResult,
-  fieldName: string,
-  cssElementName: string,
-  exists: boolean
-) => {
-  const el = populateField(sut, fieldName)
-  expect(el.className.includes(cssElementName)).toBe(exists)
-}
-
 export const populateField = (
   sut: RenderResult,
   fieldName: string,
@@ -57,12 +43,29 @@ export const populateField = (
 export const testStatusForField = (
   sut: RenderResult,
   fieldName: string,
-  validationError?: string
+  cssElementName: string,
+  exists: boolean
 ) => {
-  const status = sut.getByTestId(`${fieldName}-status`)
-  expect(status.textContent).toBe(validationError)
-  const input = sut.getByTestId(fieldName)
-  expect(input.className.includes('error')).toBeTruthy()
+  const el = sut.getByTestId(`${fieldName}-status`)
+  expect(el.className.includes(cssElementName)).toBe(exists)
+}
+
+export const testMessageTitle = (
+  sut: RenderResult,
+  fieldName: string,
+  message: string
+) => {
+  const el = sut.getByTestId(fieldName)
+  expect(el.title).toBe(message)
+}
+
+export const testTextContent = (
+  sut: RenderResult,
+  fieldName: string,
+  message: string
+) => {
+  const el = sut.getByTestId(fieldName)
+  expect(el.textContent).toBe(message)
 }
 
 export const testElementExists = (sut: RenderResult, fieldName: string) => {

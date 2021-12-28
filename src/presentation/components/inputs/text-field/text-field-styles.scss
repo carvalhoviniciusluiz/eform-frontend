@@ -22,8 +22,12 @@
     outline-color: #f4f1eb;
   }
 
-  &.error {
-    border-color: $danger!important;
+  &__error {
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: .925rem;
+    color: $danger;
+    word-break: break-word;
   }
 
   &__solid {
@@ -35,7 +39,7 @@
 
   &__lg {
     min-height: calc(1.5em + 1.65rem + 2px);
-    padding: 0.825rem 1.5rem;
+    padding: 0.825rem 3.5rem 0.825rem 1.5rem;
     font-size: 1.15rem;
     border-radius: 0.95rem;
   }
@@ -49,6 +53,27 @@
       border-color: #f4f1eb;
       color: $gray-700;
       transition: color .2s ease,background-color .2s ease;
+    }
+
+    & > div {
+      display: flex;
+      position: relative;
+
+      & > span {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        position: absolute;
+        right: 10px;
+
+        &.error { color: $danger; }
+        &.check { color: $success; }
+
+        & > svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
   }
 }
