@@ -1,5 +1,6 @@
 import * as faker from 'faker'
 import { FormModel, UnexpectedError } from '@/domain'
+import { mockFormListModel } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadFormList } from '@/data/usecases'
@@ -51,5 +52,18 @@ describe('RemoteLoadFormList', () => {
     }
     const promise = sut.loadAll()
     await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  test('should return a list of FormModels if HttpGetClient returns 201', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    const httpResult = mockFormListModel()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: {
+        data: httpResult
+      }
+    }
+    const formList = await sut.loadAll()
+    expect(formList).toEqual(httpResult)
   })
 })
