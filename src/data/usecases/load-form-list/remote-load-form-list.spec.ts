@@ -66,4 +66,13 @@ describe('RemoteLoadFormList', () => {
     const formList = await sut.loadAll()
     expect(formList).toEqual(httpResult)
   })
+
+  test('should return an empty list of FormModels if HttpGetClient returns 204', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.noContent
+    }
+    const formList = await sut.loadAll()
+    expect(formList).toEqual([])
+  })
 })
