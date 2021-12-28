@@ -13,7 +13,8 @@
     "test:clear": "jest --clearCache",
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --coverage",
-    "update:packages": "yarn ncu -u"
+    "update:packages": "yarn ncu -u",
+    "reindent:all": "eslint 'src/**' --fix"
   },
   "dependencies": {
     "axios": "^0.24.0",
