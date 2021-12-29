@@ -7,9 +7,13 @@ import {
   HttpStatusCode
 } from '@/data/protocols/http'
 
-export const mockPostRequest = (): HttpPostParams<any> => ({
+export const mockPostRequest = (): HttpPostParams => ({
   url: faker.internet.url(),
   body: faker.random.objectElement()
+})
+
+export const mockGetRequest = (): HttpGetParams => ({
+  url: faker.internet.url()
 })
 
 export class HttpPostClientSpy<BodyType, ResponseType>
