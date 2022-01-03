@@ -5,7 +5,7 @@ import {
   useState
 } from 'react'
 import { FaEyeSlash, FaEye } from 'react-icons/fa'
-import { TextField } from '@/presentation/components/inputs'
+import { TextField } from '@/presentation/components'
 import './password-field-styles.scss'
 
 type TextFieldProps = React.HTMLAttributes<HTMLDivElement> & {

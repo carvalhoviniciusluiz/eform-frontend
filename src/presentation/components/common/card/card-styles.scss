@@ -1,0 +1,16 @@
+.card {
+  border: 1px dashed #e8e5dd;
+  margin-bottom: 1.25rem;
+  border-radius: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-color: rgba(248,246,242,.3);
+
+  &__body {
+    flex: 1 1 auto;
+    padding: 2rem 2.25rem;
+    padding-bottom: 0;
+    padding-top: 2.25rem;
+  }
+}

@@ -1,6 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react'
 import * as faker from 'faker'
-import { PasswordField } from '@/presentation/components/inputs'
+import { PasswordField } from '@/presentation/components'
 
 const makeSut = (fieldName: string): RenderResult => {
   return render(<PasswordField name={fieldName} />)

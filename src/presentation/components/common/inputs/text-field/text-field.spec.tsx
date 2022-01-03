@@ -1,6 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react'
 import * as faker from 'faker'
-import { TextField } from '@/presentation/components/inputs'
+import { TextField } from '@/presentation/components'
 
 const makeSut = (fieldName: string, label?: string): RenderResult => {
   return render(<TextField name={fieldName} label={label} />)

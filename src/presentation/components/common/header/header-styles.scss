@@ -1,0 +1,87 @@
+.header {
+  &__brand {
+    display: none;
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 15px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+
+    & > .page-title {
+      & > .h1 {
+        color: $gray-900;
+        font-weight: 600;
+        font-size: calc(1.275rem + .3vw)!important;
+        margin-bottom: 0;
+      }
+
+      & > .breadcrumb {
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        font-weight: 500;
+        font-size: .95rem;
+        padding-top: 0.25rem;
+
+        & > .breadcrumb-item {
+          display: flex;
+          align-items: center;
+          padding-left: 0;
+          padding-right: 0.5rem;
+
+        }
+
+        .text-muted {
+          color: $gray-500;
+        }
+
+        .bullet {
+          display: inline-block;
+          background-color: $gray-300;
+          border-radius: 6px;
+          width: 8px;
+          height: 4px;
+          flex-shrink: 0;
+
+          height: 2px;
+          width: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media #{$laptop} {
+
+  .header {
+    &__brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      height: 55px;
+      background-color: $gray-100;
+
+      img {
+        width: 92px;
+        height: 46px;
+      }
+
+      .menu-toggler {
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+
+      .menu-toggler:hover > svg {
+        fill: $primary;
+      }
+    }
+  }
+}

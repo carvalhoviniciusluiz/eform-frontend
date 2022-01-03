@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Authentication, GrantType, SaveAccessToken } from '@/domain'
-import { SubmitButton } from '@/presentation/components'
-import { TextField } from '@/presentation/components/inputs'
+import { SubmitButton, TextField } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols'
 import './login-styles.scss'
 
@@ -78,21 +77,21 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
   }
 
   return (
-    <div className='loginContainer'>
-      <div className='loginContainer__content'>
-        <div className='loginContainer__panel loginContainer__banner banner-color'>
-          <div className='loginContainer__panel__details'>
+    <div className='loginWrap'>
+      <div className='loginWrap__content'>
+        <div className='loginWrap__panel loginWrap__banner banner-color'>
+          <div className='loginWrap__panel__details'>
             <h1>Welcome to eForm</h1>
 
             <p>The best way to build dynamic web forms</p>
           </div>
 
-          <div className='loginContainer__panel__image' />
+          <div className='loginWrap__panel__image' />
         </div>
 
-        <div className='loginContainer__form'>
-          <div className='loginContainer__form__content'>
-            <div className='loginContainer__form__content__wrapper'>
+        <div className='loginWrap__form'>
+          <div className='loginWrap__form__content'>
+            <div className='loginWrap__form__content__wrapper'>
               <form onSubmit={handleSubmit} data-testid='form'>
                 <div className='title'>
                   <h1>Sign In to Good</h1>
@@ -139,7 +138,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps) => {
                   errorMessage={state.passwordError}
                 />
 
-                <div className='loginContainer__form__submit'>
+                <div className='loginWrap__form__submit'>
                   <SubmitButton
                     loading={state.isLoading}
                     disabled={state.isFormInvalid}

@@ -1,0 +1,49 @@
+.accordion {
+  width: 100%;
+  border: none;
+  padding: 18px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: $gray-800;
+  background-color: transparent;
+  outline: none;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:after {
+    content: '\2192';
+    color: $gray-800;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    transition: .3s;
+  }
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &.active {
+    background-color: transparent;
+    color: $primary;
+
+    &:after {
+      color: $primary;
+      content: "\2193";
+    }
+  }
+}
+
+.panel {
+  max-height: 0;
+  padding: 0 18px;
+  overflow: hidden;
+  background-color: transparent;
+  transition: max-height 0.2s ease-out;
+
+  &.open {
+    max-height: 100%;
+  }
+}
