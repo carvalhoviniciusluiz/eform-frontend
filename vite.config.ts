@@ -14,7 +14,9 @@ export default defineConfig(({ mode }) => {
         ['process.env.' + key]: `"${val}"`,
       }
     },
-    {},
+    {
+      'process.env': {}
+    },
   )
 
   return {
