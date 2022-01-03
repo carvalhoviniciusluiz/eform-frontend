@@ -7,20 +7,20 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
 
   // https://github.com/vitejs/vite/issues/1149#issuecomment-857686209
-  const envWithProcessPrefix = Object.entries(env).reduce(
-    (prev, [key, val]) => {
-      return {
-        ...prev,
-        ['process.env.' + key]: `"${val}"`,
-      }
-    },
-    {
-      'process.env': {}
-    },
-  )
+  const processEnvValues = {
+    'process.env': Object.entries(env).reduce(
+      (prev, [key, val]) => {
+        return {
+          ...prev,
+          [key]: val,
+        }
+      },
+      {},
+    )
+  }
 
   return {
-    define: envWithProcessPrefix,
+    define: processEnvValues,
     plugins: [react()],
     resolve: {
       alias: {
