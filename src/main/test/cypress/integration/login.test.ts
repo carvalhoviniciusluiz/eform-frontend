@@ -69,4 +69,21 @@ describe('Login', () => {
       .should('contain.text', 'Invalid credentials')
     cy.url().should('eq', baseUrl + '/login')
   })
+
+  it('should present save accessToken if valid credentials are provided', () => {
+    cy.getByTestId('credential').focus().type('carvalho.viniciusluiz@gmail.com')
+    cy.getByTestId('password').focus().type('123Change@')
+    cy.getByTestId('submit')
+      .click()
+      .getByTestId('spinner')
+      .should('exist')
+      .getByTestId('main-error')
+      .should('not.exist')
+      .getByTestId('spinner')
+      .should('not.exist')
+    cy.url().should('eq', baseUrl + '/')
+    cy.window().then((window) =>
+      assert.isOk(window.localStorage.getItem('@eform:account'))
+    )
+  })
 })
