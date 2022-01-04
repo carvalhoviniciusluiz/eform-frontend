@@ -48,7 +48,7 @@ const FormList = () => {
                     <tbody>
                       <tr>
                         <td>
-                          <div className='column min-w-180px'>
+                          <div className='column min-w-200px'>
                             <div className='color-panel'></div>
                             <strong className='text-dark'>
                               Happy Christmas
@@ -60,7 +60,7 @@ const FormList = () => {
                           <span className='badge badge-primary'>Published</span>
                         </td>
                         <td className='table-td-center'>
-                          <div className='imageGroup'>
+                          <div className='imageGroup min-w-180px'>
                             <div className='imageCircle'>
                               <img
                                 src='https://preview.keenthemes.com/good/assets/media/avatars/150-1.jpg'
