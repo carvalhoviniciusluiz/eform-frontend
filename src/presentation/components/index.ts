@@ -1,5 +1,6 @@
 export * from './common/icons'
 export * from './common/inputs'
+export * from './common/skeletons'
 
 export { default as Accordion } from './common/accordion/accordion'
 export { default as Card } from './common/card/card'
