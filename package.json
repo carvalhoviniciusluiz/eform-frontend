@@ -6,6 +6,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "tsc": "tsc",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
