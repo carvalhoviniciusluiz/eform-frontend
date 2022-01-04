@@ -30,4 +30,13 @@ describe('Login', () => {
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('main-error').should('not.exist')
   })
+
+  it('should present valid state if form is valid', () => {
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('credential-status').should('have.class', 'check')
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('password-status').should('have.class', 'check')
+    cy.getByTestId('submit').should('not.have.attr', 'disabled')
+    cy.getByTestId('main-error').should('not.exist')
+  })
 })
