@@ -13,6 +13,7 @@
     "test:clear": "jest --clearCache",
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --coverage",
+    "test:cypress": "cypress open",
     "update:packages": "yarn ncu -u",
     "reindent:all": "eslint 'src/**' --fix"
   },
@@ -69,6 +70,10 @@
       "!<rootDir>/src/presentation/components/common/router/**/*",
       "!<rootDir>/src/presentation/components/common/icons/**/*",
       "!**/*.d.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/main/test/cypress"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "jsdom",
