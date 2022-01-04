@@ -1,5 +1,7 @@
 import * as faker from 'faker'
 
+const baseUrl: string = Cypress.config().baseUrl
+
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('login')
@@ -38,5 +40,33 @@ describe('Login', () => {
     cy.getByTestId('password-status').should('have.class', 'check')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('main-error').should('not.exist')
+  })
+
+  it('should present error if invalid credentials are provided', () => {
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit')
+      .click()
+      .getByTestId('spinner')
+      .should('exist')
+      .getByTestId('main-error')
+      .should('not.exist')
+      .getByTestId('spinner')
+      .should('not.exist')
+      .getByTestId('main-error')
+      .should('exist')
+      .should('contain.text', 'Something went wrong. Please try again soon')
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
+    cy.getByTestId('submit')
+      .click()
+      .getByTestId('spinner')
+      .should('exist')
+      .getByTestId('main-error')
+      .should('exist')
+      .getByTestId('spinner')
+      .should('not.exist')
+      .getByTestId('main-error')
+      .should('contain.text', 'Invalid credentials')
+    cy.url().should('eq', baseUrl + '/login')
   })
 })
