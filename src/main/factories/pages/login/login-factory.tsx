@@ -1,7 +1,7 @@
 import {
   makeRemoteAuthentication,
   makeLoginValidation,
-  makeLocalSaveAccessToken
+  makeLocalUpdateCurrentAccount
 } from '@/main/factories'
 import { Login } from '@/presentation/pages'
 
@@ -10,7 +10,7 @@ export const makeLogin = () => {
     <Login
       authentication={makeRemoteAuthentication()}
       validation={makeLoginValidation()}
-      saveAccessToken={makeLocalSaveAccessToken()}
+      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   )
 }

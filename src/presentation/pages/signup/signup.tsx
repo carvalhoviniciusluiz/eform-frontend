@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AddAccount, GrantType, SaveAccessToken } from '@/domain'
+import { AddAccount, GrantType, UpdateCurrentAccount } from '@/domain'
 import {
   SubmitButton,
   PasswordField,
@@ -32,10 +32,14 @@ type StateProps = {
 type SignUpProps = {
   validation: Validation
   addAccount: AddAccount
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const SignUp = ({ validation, addAccount, saveAccessToken }: SignUpProps) => {
+const SignUp = ({
+  validation,
+  addAccount,
+  updateCurrentAccount
+}: SignUpProps) => {
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
@@ -135,7 +139,7 @@ const SignUp = ({ validation, addAccount, saveAccessToken }: SignUpProps) => {
         email: state.email,
         password: state.password
       })
-      await saveAccessToken.save(account.accessToken)
+      await updateCurrentAccount.save(account)
       navigate('/')
     } catch (error) {
       setState((prevState) => ({

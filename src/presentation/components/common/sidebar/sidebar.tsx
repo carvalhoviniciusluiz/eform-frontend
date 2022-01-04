@@ -1,5 +1,10 @@
 import Logo from '~/images/logo.png'
-import { Accordion, CloseIcon, PlusIcon } from '@/presentation/components'
+import {
+  Accordion,
+  CloseIcon,
+  PlusIcon
+  // CodeSkeleton
+} from '@/presentation/components'
 
 import './sidebar-styles.scss'
 
@@ -25,6 +30,8 @@ const SideBar = () => {
             </div>
             <div className='aside-menu'>
               <Accordion title='Questionnaires' isOpen={true}>
+                {/* <CodeSkeleton></CodeSkeleton> */}
+
                 <div className='subMenu'>
                   <div className='subMenu__item'>
                     <a href='#'>Project1</a>
@@ -51,6 +58,8 @@ const SideBar = () => {
             </div>
           </div>
           <footer className='aside-footer'>
+            {/* <CodeSkeleton></CodeSkeleton> */}
+
             <div className='aside-user'>
               <img
                 src='https://avatars.githubusercontent.com/u/22005684?v=4'

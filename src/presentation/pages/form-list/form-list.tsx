@@ -4,6 +4,7 @@ import {
   CardNavigation,
   Card,
   RightIcon
+  // CodeSkeleton
 } from '@/presentation/components'
 import './form-list-styles.scss'
 
@@ -34,6 +35,8 @@ const FormList = () => {
               <div className='dataGrid__body'>
                 <div className='separator'></div>
                 <div className='table-responsive'>
+                  {/* <CodeSkeleton></CodeSkeleton> */}
+
                   <table>
                     <thead className='d-none'>
                       <tr>

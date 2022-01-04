@@ -12,7 +12,7 @@ import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
 import {
   AuthenticationSpy,
-  SaveAccessTokenMock,
+  UpdateCurrentAccountMock,
   ValidationStub,
   Helper
 } from '@/presentation/test'
@@ -20,7 +20,7 @@ import {
 type SutTypes = {
   sut: RenderResult
   authenticationSpy: AuthenticationSpy
-  saveAccessTokenMock: SaveAccessTokenMock
+  updateCurrentAccountMock: UpdateCurrentAccountMock
 }
 
 type SutParams = {
@@ -34,20 +34,20 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const authenticationSpy = new AuthenticationSpy()
-  const saveAccessTokenMock = new SaveAccessTokenMock()
+  const updateCurrentAccountMock = new UpdateCurrentAccountMock()
   const sut = render(
     <Router navigator={history} location={history.location}>
       <Login
         validation={validationStub}
         authentication={authenticationSpy}
-        saveAccessToken={saveAccessTokenMock}
+        updateCurrentAccount={updateCurrentAccountMock}
       />
     </Router>
   )
   return {
     sut,
     authenticationSpy,
-    saveAccessTokenMock
+    updateCurrentAccountMock
   }
 }
 
@@ -159,19 +159,17 @@ describe('Login component', () => {
   })
 
   test('should call SaveAccessToken on success', async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
+    const { sut, authenticationSpy, updateCurrentAccountMock } = makeSut()
     await simulateValidSubmit(sut)
-    expect(saveAccessTokenMock.accessToken).toBe(
-      authenticationSpy.account.accessToken
-    )
+    expect(updateCurrentAccountMock.account).toEqual(authenticationSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 
   test('should present error if SaveAccessToken fails', async () => {
-    const { sut, saveAccessTokenMock } = makeSut()
+    const { sut, updateCurrentAccountMock } = makeSut()
     const error = new InvalidCredentialsError()
     jest
-      .spyOn(saveAccessTokenMock, 'save')
+      .spyOn(updateCurrentAccountMock, 'save')
       .mockReturnValueOnce(Promise.reject(error))
     await simulateValidSubmit(sut)
     Helper.testElementText(sut, 'main-error', error.message)
