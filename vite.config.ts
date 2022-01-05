@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
       preprocessorOptions: {
         scss: {
           charset: false,
-          additionalData: `@import "./src/presentation/scss/vars";`
+          additionalData: `@import "./src/presentation/assets/vars";`
         },
       },
     }

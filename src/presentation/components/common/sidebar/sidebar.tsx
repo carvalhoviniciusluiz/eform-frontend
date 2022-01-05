@@ -1,10 +1,10 @@
-import Logo from '~/images/logo.png'
 import {
-  Accordion,
   CloseIcon,
-  PlusIcon
+  PlusIcon,
+  Logo
   // CodeSkeleton
-} from '@/presentation/components'
+} from '@/presentation/assets'
+import { Accordion } from '@/presentation/components'
 
 import './sidebar-styles.scss'
 
@@ -18,7 +18,7 @@ const SideBar = () => {
       <div className='sidebar'>
         <header className='sidebar__header'>
           <div className='brand'>
-            <img src={Logo} alt='logo' />
+            <Logo />
           </div>
         </header>
         <div className='sidebar__content'>

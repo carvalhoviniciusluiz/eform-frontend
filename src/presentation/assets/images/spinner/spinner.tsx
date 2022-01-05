@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import './spinner-styles.scss'
 
 type SpinnerProps = React.HTMLAttributes<HTMLDivElement>
@@ -17,4 +18,4 @@ const Spinner = (props: SpinnerProps) => {
   )
 }
 
-export default Spinner
+export default memo(Spinner)

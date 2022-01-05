@@ -1,4 +1,4 @@
-import { Spinner } from '@/presentation/components'
+import { Spinner } from '@/presentation/assets'
 import './submit-button-styles.scss'
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,10 +1,12 @@
 import {
+  RightIcon
+  // CodeSkeleton
+} from '@/presentation/assets'
+import {
   Header,
   Sidebar,
   CardNavigation,
-  Card,
-  RightIcon
-  // CodeSkeleton
+  Card
 } from '@/presentation/components'
 import './form-list-styles.scss'
 

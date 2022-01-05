@@ -4,7 +4,7 @@ import {
   ReactElement,
   useState
 } from 'react'
-import { FaEyeSlash, FaEye } from 'react-icons/fa'
+import { EyeCloseIcon, EyeOpenIcon } from '@/presentation/assets'
 import { TextField } from '@/presentation/components'
 import './password-field-styles.scss'
 
@@ -37,11 +37,7 @@ const PasswordField = (props: TextFieldProps) => {
         style={{ top: props.label ? 37 : 12 }}
         data-testid='toggle-button'
       >
-        {isHidden ? (
-          <FaEyeSlash size={22}></FaEyeSlash>
-        ) : (
-          <FaEye size={22}></FaEye>
-        )}
+        {isHidden ? <EyeCloseIcon size={22} /> : <EyeOpenIcon size={22} />}
       </span>
     </div>
   )

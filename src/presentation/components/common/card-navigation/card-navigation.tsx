@@ -3,9 +3,9 @@ import {
   DownIcon,
   UpIcon,
   UserIcon,
-  MarketIcon,
-  Card
-} from '@/presentation/components'
+  MarketIcon
+} from '@/presentation/assets'
+import { Card } from '@/presentation/components'
 import './card-navigation-styles.scss'
 
 const CardNavigation = () => {

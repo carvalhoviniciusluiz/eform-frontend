@@ -1,12 +1,11 @@
-import Logo from '~/images/logo.png'
-import { BrandIcon } from '@/presentation/components'
+import { Logo, BrandIcon } from '@/presentation/assets'
 import './header-styles.scss'
 
 const Header = () => {
   return (
     <header className='header'>
       <div className='header__brand'>
-        <img src={Logo} alt='logo' />
+        <Logo />
 
         <label htmlFor='menu-toggle' className='menu-toggler'>
           <BrandIcon fill='#968e7e' />
