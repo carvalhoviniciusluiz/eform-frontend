@@ -71,4 +71,22 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('contain.text', 'Invalid credentials')
     cy.url().should('eq', baseUrl + '/login')
   })
+
+  it('should present UnexpectedError if invlaid data is returned', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 201,
+        body: {
+          invalidProperty: faker.datatype.uuid()
+        }
+      })
+    })
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error')
+      .should('exist')
+      .should('contain.text', 'Something went wrong. Please try again soon')
+  })
 })
