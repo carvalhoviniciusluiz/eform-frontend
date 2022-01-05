@@ -1,6 +1,8 @@
 import * as faker from 'faker'
 
 describe('Login', () => {
+  const baseUrl: string = Cypress.config().baseUrl
+
   beforeEach(() => {
     cy.visit('login')
   })
@@ -53,5 +55,20 @@ describe('Login', () => {
     cy.getByTestId('main-error')
       .should('exist')
       .should('contain.text', 'Something went wrong. Please try again soon')
+  })
+
+  it('should present InvalidCredentialsError on 401', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 401
+      })
+    })
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('main-error').should('exist')
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('contain.text', 'Invalid credentials')
+    cy.url().should('eq', baseUrl + '/login')
   })
 })
