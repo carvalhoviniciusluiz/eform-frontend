@@ -33,7 +33,7 @@ describe('LocalUpdateCurrentAccount', () => {
     await expect(promise).rejects.toThrow(new Error())
   })
 
-  test('should throw if accessToken if falsy', async () => {
+  test('should throw if response if falsy', async () => {
     const { sut } = makeSut()
     const promise = sut.save(undefined)
     await expect(promise).rejects.toThrow(new UnexpectedError())
