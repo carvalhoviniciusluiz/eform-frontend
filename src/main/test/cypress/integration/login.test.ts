@@ -1,7 +1,5 @@
 import * as faker from 'faker'
 
-const baseUrl: string = Cypress.config().baseUrl
-
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('login')
@@ -42,48 +40,18 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('not.exist')
   })
 
-  it('should present error if invalid credentials are provided', () => {
+  it('should present UnexpectedError on 400', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 400
+      })
+    })
     cy.getByTestId('credential').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
-    cy.getByTestId('submit')
-      .click()
-      .getByTestId('spinner')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('not.exist')
-      .getByTestId('spinner')
-      .should('not.exist')
-      .getByTestId('main-error')
+    cy.getByTestId('submit').click()
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error')
       .should('exist')
       .should('contain.text', 'Something went wrong. Please try again soon')
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
-    cy.getByTestId('submit')
-      .click()
-      .getByTestId('spinner')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('exist')
-      .getByTestId('spinner')
-      .should('not.exist')
-      .getByTestId('main-error')
-      .should('contain.text', 'Invalid credentials')
-    cy.url().should('eq', baseUrl + '/login')
-  })
-
-  it('should present save accessToken if valid credentials are provided', () => {
-    cy.getByTestId('credential').focus().type('carvalho.viniciusluiz@gmail.com')
-    cy.getByTestId('password').focus().type('123Change@')
-    cy.getByTestId('submit')
-      .click()
-      .getByTestId('spinner')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('not.exist')
-      .getByTestId('spinner')
-      .should('not.exist')
-    cy.url().should('eq', baseUrl + '/')
-    cy.window().then((window) =>
-      assert.isOk(window.localStorage.getItem('@eform:account'))
-    )
   })
 })
