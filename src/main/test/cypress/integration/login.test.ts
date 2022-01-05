@@ -118,24 +118,28 @@ describe('Login', () => {
     )
   })
 
-  it('should perevent multilple submit', () => {
+  it('should prevent multilple submit', () => {
     cy.intercept('POST', '/auth', (req) => {
       req.reply({
-        statusCode: 201,
-        body: {
-          data: {
-            accessToken: faker.datatype.uuid(),
-            accessTokenExpiresIn: 19,
-            refreshToken: faker.datatype.uuid(),
-            refreshTokenExpiresIn: 84,
-            tokenType: 'bearer'
-          }
-        }
+        statusCode: 201
       })
     }).as('request')
     cy.getByTestId('credential').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
     cy.getByTestId('submit').dblclick()
     cy.get('@request.all').should('have.length', 1)
+  })
+
+  it('should not call submit if form is invalid', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 201
+      })
+    }).as('request')
+    cy.getByTestId('credential')
+      .focus()
+      .type(faker.internet.email())
+      .type('{enter}')
+    cy.get('@request.all').should('have.length', 0)
   })
 })
