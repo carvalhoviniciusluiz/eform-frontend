@@ -115,4 +115,25 @@ describe('Login', () => {
       assert.isOk(window.localStorage.getItem('@eform:account'))
     )
   })
+
+  it('should perevent multilple submit', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 201,
+        body: {
+          data: {
+            accessToken: faker.datatype.uuid(),
+            accessTokenExpiresIn: 19,
+            refreshToken: faker.datatype.uuid(),
+            refreshTokenExpiresIn: 84,
+            tokenType: 'bearer'
+          }
+        }
+      })
+    }).as('request')
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
+    cy.getByTestId('submit').dblclick()
+    cy.get('@request.all').should('have.length', 1)
+  })
 })
