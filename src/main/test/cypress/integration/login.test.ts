@@ -89,4 +89,30 @@ describe('Login', () => {
       .should('exist')
       .should('contain.text', 'Something went wrong. Please try again soon')
   })
+
+  it('should present save accessToken if valid credentials are provided', () => {
+    cy.intercept('POST', '/auth', (req) => {
+      req.reply({
+        statusCode: 201,
+        body: {
+          data: {
+            accessToken: faker.datatype.uuid(),
+            accessTokenExpiresIn: 19,
+            refreshToken: faker.datatype.uuid(),
+            refreshTokenExpiresIn: 84,
+            tokenType: 'bearer'
+          }
+        }
+      })
+    })
+    cy.getByTestId('credential').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(8))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
+    cy.url().should('eq', baseUrl + '/')
+    cy.window().then((window) =>
+      assert.isOk(window.localStorage.getItem('@eform:account'))
+    )
+  })
 })
