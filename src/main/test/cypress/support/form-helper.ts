@@ -1,11 +1,19 @@
 const baseUrl: string = Cypress.config().baseUrl
 
-export const testInputStatus = (field: string, error?: string): void => {
+export const testInputStatus = (
+  field: string,
+  error?: string,
+  isContent = false
+): void => {
   const attr = `${error ? '' : 'not.'}have.attr`
 
-  cy.getByTestId(`${field}-status`)
-    .should(attr, 'title', error)
-    .should('have.class', error ? 'error' : 'check')
+  cy.getByTestId(`${field}-status`).should(
+    'have.class',
+    error ? (isContent ? 'textField__error' : 'error') : 'check'
+  )
+  isContent
+    ? cy.getByTestId(`${field}-status`).should('contain.text', error)
+    : cy.getByTestId(`${field}-status`).should(attr, 'title', error)
 }
 
 export const testMainError = (error: string): void => {
