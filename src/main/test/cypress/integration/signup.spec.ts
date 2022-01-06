@@ -101,4 +101,13 @@ describe('Signup', () => {
     FormHelper.testMainError('Something went wrong. Please try again soon')
     FormHelper.testUrl('/signup')
   })
+
+  it('should present save accessToken if valid credentials are provided', () => {
+    Http.mockOK()
+    sumulateValidSubmit()
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
+    FormHelper.testUrl('/')
+    FormHelper.testLocalStorageItem('@eform:account')
+  })
 })

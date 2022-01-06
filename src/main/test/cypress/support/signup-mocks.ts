@@ -13,3 +13,14 @@ export const mockInvalidData = (): void =>
       invalidProperty: faker.datatype.uuid()
     }
   })
+
+export const mockOK = (): void =>
+  Helper.mockOK('/auth', 'POST', {
+    data: {
+      accessToken: faker.datatype.uuid(),
+      accessTokenExpiresIn: 19,
+      refreshToken: faker.datatype.uuid(),
+      refreshTokenExpiresIn: 84,
+      tokenType: 'bearer'
+    }
+  })
