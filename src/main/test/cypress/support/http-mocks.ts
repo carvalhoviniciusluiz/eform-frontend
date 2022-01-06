@@ -9,6 +9,14 @@ export const mockInvalidCredentialsError = (url: string): void => {
   }).as('request')
 }
 
+export const mockEmailInUseError = (url: string): void => {
+  cy.intercept('POST', url, (req) => {
+    req.reply({
+      statusCode: 403
+    })
+  }).as('request')
+}
+
 export const mockUnexpectedError = (url: string, method: Method): void => {
   cy.intercept(method, url, (req) => {
     req.reply({

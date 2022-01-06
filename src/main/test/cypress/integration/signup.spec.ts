@@ -1,5 +1,18 @@
 import * as faker from 'faker'
 import * as FormHelper from '../support/form-helper'
+import * as Http from '../support/signup-mocks'
+
+const sumulateValidSubmit = (): void => {
+  const password = faker.random.alphaNumeric(8)
+  cy.getByTestId('firstName').focus().type(faker.name.firstName())
+  cy.getByTestId('lastName').focus().type(faker.name.lastName())
+  cy.getByTestId('documentNumber').focus().type(faker.random.alphaNumeric(11))
+  cy.getByTestId('phone').focus().type(faker.random.alphaNumeric(10))
+  cy.getByTestId('email').focus().type(faker.internet.email())
+  cy.getByTestId('password').focus().type(password)
+  cy.getByTestId('passwordConfirmation').focus().type(password)
+  cy.getByTestId('submit').click()
+}
 
 describe('Signup', () => {
   beforeEach(() => {
@@ -65,5 +78,13 @@ describe('Signup', () => {
     FormHelper.testInputStatusContent('passwordConfirmation')
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('main-error').should('not.exist')
+  })
+
+  it('should present InvalidCredentialsError on 403', () => {
+    Http.mockEmailInUseError()
+    sumulateValidSubmit()
+    cy.getByTestId('main-error').should('exist')
+    FormHelper.testMainError('this is the email already in use')
+    FormHelper.testUrl('/signup')
   })
 })
