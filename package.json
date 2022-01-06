@@ -68,7 +68,6 @@
       "<rootDir>/src/**/*.{ts,tsx}",
       "!<rootDir>/src/**/index.{ts,tsx}",
       "!<rootDir>/src/main/**/*",
-      "!<rootDir>/src/presentation/components/common/router/**/*",
       "!<rootDir>/src/presentation/assets/**/*",
       "!**/*.d.ts"
     ],
