@@ -9,6 +9,6 @@ export class LocalUpdateCurrentAccount implements UpdateCurrentAccount {
     if (!account?.accessToken) {
       throw new UnexpectedError()
     }
-    await this.setStorage.set('@eform:account', JSON.stringify(account))
+    this.setStorage.set('@eform:account', JSON.stringify(account))
   }
 }
