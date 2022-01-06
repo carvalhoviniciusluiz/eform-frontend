@@ -18,7 +18,7 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "src/main/test/cypress"
