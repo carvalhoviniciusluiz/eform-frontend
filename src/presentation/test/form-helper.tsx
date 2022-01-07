@@ -1,39 +1,29 @@
-import { fireEvent, RenderResult } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import * as faker from 'faker'
 
-export const testChildCount = (
-  sut: RenderResult,
-  fieldName: string,
-  count: number
-) => {
-  const el = sut.getByTestId(fieldName) as HTMLButtonElement
+export const testChildCount = (fieldName: string, count: number) => {
+  const el = screen.getByTestId(fieldName)
   expect(el.childElementCount).toBe(count)
 }
 
 export const testButtonIsDisable = (
-  sut: RenderResult,
   buttonName: string,
   isDisabled: boolean
 ) => {
-  const button = sut.getByTestId(buttonName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
+  const button = screen.getByTestId(buttonName)
+  expect((button as HTMLButtonElement).disabled).toBe(isDisabled)
 }
 
-export const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string
-) => {
-  const el = sut.getByTestId(fieldName)
+export const testElementText = (fieldName: string, text: string) => {
+  const el = screen.getByTestId(fieldName)
   expect(el.textContent).toBe(text)
 }
 
 export const populateField = (
-  sut: RenderResult,
   fieldName: string,
   value = faker.random.word()
 ): HTMLElement => {
-  const input = sut.getByTestId(fieldName)
+  const input = screen.getByTestId(fieldName)
   fireEvent.input(input, {
     target: { value }
   })
@@ -41,34 +31,25 @@ export const populateField = (
 }
 
 export const testStatusForField = (
-  sut: RenderResult,
   fieldName: string,
   cssElementName: string,
   exists: boolean
 ) => {
-  const el = sut.getByTestId(`${fieldName}-status`)
+  const el = screen.getByTestId(`${fieldName}-status`)
   expect(el.className.includes(cssElementName)).toBe(exists)
 }
 
-export const testMessageTitle = (
-  sut: RenderResult,
-  fieldName: string,
-  message: string
-) => {
-  const el = sut.getByTestId(fieldName)
+export const testMessageTitle = (fieldName: string, message: string) => {
+  const el = screen.getByTestId(fieldName)
   expect(el.title).toBe(message)
 }
 
-export const testTextContent = (
-  sut: RenderResult,
-  fieldName: string,
-  message: string
-) => {
-  const el = sut.getByTestId(fieldName)
+export const testTextContent = (fieldName: string, message: string) => {
+  const el = screen.getByTestId(fieldName)
   expect(el.textContent).toBe(message)
 }
 
-export const testElementExists = (sut: RenderResult, fieldName: string) => {
-  const el = sut.getByTestId(fieldName)
+export const testElementExists = (fieldName: string) => {
+  const el = screen.getByTestId(fieldName)
   expect(el).toBeTruthy()
 }
