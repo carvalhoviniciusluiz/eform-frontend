@@ -1,8 +1,4 @@
-import {
-  makeRemoteAddAccount,
-  makeSignUpValidation,
-  makeLocalUpdateCurrentAccount
-} from '@/main/factories'
+import { makeRemoteAddAccount, makeSignUpValidation } from '@/main/factories'
 import { SignUp } from '@/presentation/pages'
 
 export const makeSignUp = () => {
@@ -10,7 +6,6 @@ export const makeSignUp = () => {
     <SignUp
       addAccount={makeRemoteAddAccount()}
       validation={makeSignUpValidation()}
-      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   )
 }

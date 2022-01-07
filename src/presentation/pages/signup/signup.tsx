@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AddAccount, GrantType, UpdateCurrentAccount } from '@/domain'
+import { AddAccount, GrantType } from '@/domain'
 import {
   SubmitButton,
   PasswordField,
   TextField
 } from '@/presentation/components'
+import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import './signup-styles.scss'
 
@@ -32,14 +33,10 @@ type StateProps = {
 type SignUpProps = {
   validation: Validation
   addAccount: AddAccount
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const SignUp = ({
-  validation,
-  addAccount,
-  updateCurrentAccount
-}: SignUpProps) => {
+const SignUp = ({ validation, addAccount }: SignUpProps) => {
+  const { setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
@@ -139,7 +136,7 @@ const SignUp = ({
         email: state.email,
         password: state.password
       })
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
       navigate('/')
     } catch (error) {
       setState((prevState) => ({

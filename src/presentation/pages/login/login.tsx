@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Authentication, GrantType, UpdateCurrentAccount } from '@/domain'
+import { Authentication, GrantType } from '@/domain'
 import { SubmitButton, TextField } from '@/presentation/components'
+import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import './login-styles.scss'
 
@@ -18,14 +19,10 @@ type StateProps = {
 type LoginProps = {
   validation: Validation
   authentication: Authentication
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const Login = ({
-  validation,
-  authentication,
-  updateCurrentAccount
-}: LoginProps) => {
+const Login = ({ validation, authentication }: LoginProps) => {
+  const { setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
@@ -69,7 +66,7 @@ const Login = ({
         credential: state.credential,
         password: state.password
       })
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
       navigate('/')
     } catch (error) {
       setState((prevState) => ({
