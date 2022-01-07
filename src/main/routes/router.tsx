@@ -5,6 +5,7 @@ import {
 } from '@/main/adapters'
 import { makeLogin as Login } from '@/main/factories/pages/login/login-factory'
 import { makeSignUp as SignUp } from '@/main/factories/pages/signup/signup-factory'
+import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
 import { FormList } from '@/presentation/pages'
 
@@ -20,7 +21,14 @@ const Router = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/' element={<FormList />} />
+          <Route
+            path='/'
+            element={
+              <PrivateRoute>
+                <FormList />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ApiContext.Provider>
