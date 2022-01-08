@@ -61,120 +61,143 @@ describe('SignUp Component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-    Helper.testButtonIsDisable('submit', true)
-    Helper.testChildCount('submit', 1)
-    Helper.testElementText('label-continue', 'Submit')
-    Helper.testStatusForField('firstName', 'error', true)
-    Helper.testMessageTitle('firstName-status', validationError)
+    expect(screen.getByTestId('submit')).toBeDisabled()
+    expect(screen.getByTestId('submit').children).toHaveLength(1)
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Submit')
+    Helper.testStatusForField('firstName-status', validationError)
+    Helper.testStatusForField('lastName-status', validationError)
+    Helper.testStatusForField('documentNumber-status', validationError)
+    Helper.testStatusForField('phone-status', validationError)
+    Helper.testStatusForField('email-status', validationError)
 
-    Helper.testStatusForField('lastName', 'error', true)
-    Helper.testMessageTitle('lastName-status', validationError)
+    expect(screen.getByTestId(`password-status`)).toHaveAttribute(
+      'class',
+      'textField__error'
+    )
+    expect(screen.getByTestId('password-status')).toHaveTextContent(
+      validationError
+    )
 
-    Helper.testStatusForField('documentNumber', 'error', true)
-    Helper.testMessageTitle('documentNumber-status', validationError)
-
-    Helper.testStatusForField('phone', 'error', true)
-    Helper.testMessageTitle('phone-status', validationError)
-
-    Helper.testStatusForField('email', 'error', true)
-    Helper.testMessageTitle('email-status', validationError)
-
-    Helper.testStatusForField('password', 'error', true)
-    Helper.testTextContent('password-status', validationError)
-
-    Helper.testStatusForField('passwordConfirmation', 'error', true)
-    Helper.testTextContent('passwordConfirmation-status', validationError)
+    expect(screen.getByTestId(`passwordConfirmation-status`)).toHaveAttribute(
+      'class',
+      'textField__error'
+    )
+    expect(screen.getByTestId('passwordConfirmation-status')).toHaveTextContent(
+      validationError
+    )
   })
 
   test('should show firstName error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('firstName')
-    Helper.testStatusForField('firstName', 'error', true)
-    Helper.testMessageTitle('firstName-status', validationError)
+    Helper.testStatusForField('firstName-status', validationError)
   })
 
   test('should show lastName error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('lastName')
-    Helper.testStatusForField('lastName', 'error', true)
-    Helper.testMessageTitle('lastName-status', validationError)
+    Helper.testStatusForField('lastName-status', validationError)
   })
 
   test('should show documentNumber error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('documentNumber')
-    Helper.testStatusForField('documentNumber', 'error', true)
-    Helper.testMessageTitle('documentNumber-status', validationError)
+    Helper.testStatusForField('documentNumber-status', validationError)
   })
 
   test('should show phone error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('phone')
-    Helper.testStatusForField('phone', 'error', true)
-    Helper.testMessageTitle('phone-status', validationError)
+    Helper.testStatusForField('phone-status', validationError)
   })
 
   test('should show email error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('email')
-    Helper.testStatusForField('email', 'error', true)
-    Helper.testMessageTitle('email-status', validationError)
+    Helper.testStatusForField('email-status', validationError)
   })
 
   test('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('password')
-    Helper.testStatusForField('password', 'error', true)
-    Helper.testTextContent('password-status', validationError)
+    expect(screen.getByTestId(`password-status`)).toHaveAttribute(
+      'class',
+      'textField__error'
+    )
+    expect(screen.getByTestId('password-status')).toHaveTextContent(
+      validationError
+    )
   })
 
   test('should show passwordConfirmation error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('passwordConfirmation')
-    Helper.testStatusForField('passwordConfirmation', 'error', true)
-    Helper.testTextContent('passwordConfirmation-status', validationError)
+    expect(screen.getByTestId(`passwordConfirmation-status`)).toHaveAttribute(
+      'class',
+      'textField__error'
+    )
+    expect(screen.getByTestId('passwordConfirmation-status')).toHaveTextContent(
+      validationError
+    )
   })
 
   test('should show valid firstName state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('firstName', 'error', false)
+    expect(screen.getByTestId(`firstName-status`)).not.toHaveAttribute(
+      'class',
+      'error'
+    )
   })
 
   test('should show valid lastName state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('lastName', 'error', false)
+    expect(screen.getByTestId(`lastName-status`)).not.toHaveAttribute(
+      'class',
+      'error'
+    )
   })
 
   test('should show valid documentNumber state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('documentNumber', 'error', false)
+    expect(screen.getByTestId(`documentNumber-status`)).not.toHaveAttribute(
+      'class',
+      'error'
+    )
   })
 
   test('should show valid phone state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('phone', 'error', false)
+    expect(screen.getByTestId(`phone-status`)).not.toHaveAttribute(
+      'class',
+      'error'
+    )
   })
 
   test('should show valid email state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('email', 'error', false)
+    expect(screen.getByTestId(`email-status`)).not.toHaveAttribute(
+      'class',
+      'error'
+    )
   })
 
   test('should show valid password state if Validation succeds', () => {
     makeSut()
-    Helper.testTextContent(`password-status`, '')
+    expect(screen.getByTestId(`password-status`)).toHaveTextContent('')
   })
 
   test('should show valid passwordConfirmation state if Validation succeds', () => {
     makeSut()
-    Helper.testTextContent(`passwordConfirmation-status`, '')
+    expect(screen.getByTestId('passwordConfirmation-status')).toHaveTextContent(
+      ''
+    )
   })
 
   test('should enable submit button if form is valid', () => {
@@ -186,14 +209,14 @@ describe('SignUp Component', () => {
     Helper.populateField('email')
     Helper.populateField('password')
     Helper.populateField('passwordConfirmation')
-    Helper.testButtonIsDisable('submit', false)
-    Helper.testElementText('label-continue', 'Submit')
+    expect(screen.getByTestId('submit')).toBeEnabled()
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Submit')
   })
 
   test('should show spinner on submit', async () => {
     makeSut()
     await simulateValidSubmit()
-    Helper.testElementText('label-wait', 'Please wait...')
+    expect(screen.getByTestId('label-wait')).toHaveTextContent('Please wait...')
   })
 
   test('should call AddAccount with correct values', async () => {
@@ -242,10 +265,9 @@ describe('SignUp Component', () => {
     const error = new EmailInUseError()
     jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
     await simulateValidSubmit()
-    Helper.testElementText('main-error', error.message)
-    Helper.testChildCount('submit', 1)
-    Helper.testButtonIsDisable('submit', false)
-    Helper.testElementText('label-continue', 'Submit')
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
+    expect(screen.getByTestId('submit')).toBeEnabled()
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Submit')
   })
 
   test('should call SaveAccessToken on success', async () => {

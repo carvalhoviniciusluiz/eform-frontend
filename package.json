@@ -30,6 +30,7 @@
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@types/faker": "^5.5.9",
     "@types/jest": "^27.4.0",
@@ -76,6 +77,7 @@
       "<rootDir>/src/main/test/cypress"
     ],
     "coverageDirectory": "coverage",
+    "setupFilesAfterEnv": ["<rootDir>/src/main/config/jest-setup.ts"],
     "testEnvironment": "jsdom",
     "transform": {
       ".+\\.(ts|tsx)$": "ts-jest"

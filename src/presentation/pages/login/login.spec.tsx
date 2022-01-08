@@ -53,54 +53,56 @@ describe('Login component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
-    Helper.testButtonIsDisable('submit', true)
-    Helper.testChildCount('submit', 1)
-    Helper.testElementText('label-continue', 'Continue')
-    Helper.testStatusForField('credential', 'error', true)
-    Helper.testMessageTitle('credential-status', validationError)
-    Helper.testStatusForField('password', 'error', true)
-    Helper.testMessageTitle('password-status', validationError)
+    expect(screen.getByTestId('submit')).toBeDisabled()
+    expect(screen.getByTestId('submit').children).toHaveLength(1)
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Continue')
+    Helper.testStatusForField('credential-status', validationError)
+    Helper.testStatusForField('password-status', validationError)
   })
 
   test('should show credential error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('credential')
-    Helper.testStatusForField('credential', 'error', true)
-    Helper.testMessageTitle('credential-status', validationError)
+    Helper.testStatusForField('credential-status', validationError)
   })
 
   test('should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     makeSut({ validationError })
     Helper.populateField('password')
-    Helper.testStatusForField('password', 'error', true)
-    Helper.testMessageTitle('password-status', validationError)
+    Helper.testStatusForField('password-status', validationError)
   })
 
   test('should show valid credential state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('credential', 'check', true)
+    expect(screen.getByTestId(`credential-status`)).toHaveAttribute(
+      'class',
+      'check'
+    )
   })
 
   test('should show valid password state if Validation succeds', () => {
     makeSut()
-    Helper.testStatusForField('password', 'check', true)
+    expect(screen.getByTestId(`password-status`)).toHaveAttribute(
+      'class',
+      'check'
+    )
   })
 
   test('should enable submit button if form is valid', () => {
     makeSut()
     Helper.populateField('credential')
     Helper.populateField('password')
-    Helper.testButtonIsDisable('submit', false)
-    Helper.testElementText('label-continue', 'Continue')
+    expect(screen.getByTestId('submit')).toBeEnabled()
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Continue')
   })
 
   test('should show spinner on submit', async () => {
     makeSut()
     await simulateValidSubmit()
-    Helper.testElementExists('spinner')
-    Helper.testElementText('label-wait', 'Please wait...')
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument()
+    expect(screen.getByTestId('label-wait')).toHaveTextContent('Please wait...')
   })
 
   test('should call Authentication with correct values', async () => {
@@ -136,10 +138,10 @@ describe('Login component', () => {
       .spyOn(authenticationSpy, 'auth')
       .mockReturnValueOnce(Promise.reject(error))
     await simulateValidSubmit()
-    Helper.testElementText('main-error', error.message)
-    Helper.testChildCount('submit', 1)
-    Helper.testButtonIsDisable('submit', false)
-    Helper.testElementText('label-continue', 'Continue')
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
+    expect(screen.getByTestId('submit').children).toHaveLength(1)
+    expect(screen.getByTestId('submit')).toBeEnabled()
+    expect(screen.getByTestId('label-continue')).toHaveTextContent('Continue')
   })
 
   test('should call SaveAccessToken on success', async () => {
