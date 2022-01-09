@@ -35,7 +35,7 @@
             font-weight: 600;
             font-size: 1.25rem!important;
             padding-bottom: 0.75rem;
-            color: #968e7e;
+            color: $gray-500;
 
             &.active {
               color: $gray-900;
@@ -51,7 +51,7 @@
           margin: 0.5rem 0;
 
           a {
-            color: #fff;
+            color: $white;
             background-color: $primary;
             font-weight: 500;
             font-size: 1.1rem;
@@ -82,59 +82,6 @@
     }
   }
 
-  td {
-    .btn {
-      border: 0;
-      color: $gray-600;
-      border-color: $gray-100;
-      background-color: $gray-100;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      height: calc(1.5em + 1.5rem + 2px);
-      width: calc(1.5em + 1.5rem + 2px);
-      cursor: pointer;
-      outline: 0;
-      height: 25px;
-      width: 25px;
-      padding: 0.65rem 1.25rem;
-      font-size: .925rem;
-      border-radius: 0.475rem;
-
-      &:hover {
-        background-color: $primary;
-
-        span {
-          svg {
-            fill: $white;
-          }
-        }
-      }
-
-      span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-          height: 1.15rem;
-          width: 1.15rem;
-        }
-      }
-    }
-  }
-
-  .column {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-right: 1.75rem;
-    padding-left: 1.75rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
   .color-panel {
     border-radius: 0.95rem;
     background-color: rgba(79,85,218,1);
@@ -153,7 +100,7 @@
   }
 
   .p {
-    color: #968e7e;
+    color: $gray-500;
     font-weight: 600;
     font-size: .95rem;
   }
@@ -172,12 +119,5 @@
 
   .p-l-0 {
     padding-left: 0;
-  }
-
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
   }
 }

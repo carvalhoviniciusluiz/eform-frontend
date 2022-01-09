@@ -1,0 +1,26 @@
+.badge {
+  display: inline-block;
+  text-align: center;
+  font-size: .85rem;
+  font-weight: 600;
+  line-height: 1;
+  color: $white;
+  padding: 0.5em 0.85em;
+  border-radius: 0.475rem;
+
+  &-success {
+    color: $badge-color-success!important;
+    background-color: $badge-background-color-success;
+  }
+
+  &-primary {
+    color: $badge-color-primary!important;
+    background-color: $badge-background-color-primary;
+  }
+
+  &-warning {
+    color: $badge-color-warning!important;
+    background-color: $badge-background-color-warning;
+  }
+
+}

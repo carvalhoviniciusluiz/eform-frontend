@@ -1,0 +1,53 @@
+.imageGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 0.25rem;
+
+  &__circle {
+    border: 2px solid $white;
+    border-radius: 50%;
+    margin-left: -10px;
+    cursor: pointer;
+
+    & > .image {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &__noneImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: .95rem;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: $gray-100;
+    color: $gray-800;
+  }
+
+  &__remainingQuantity {
+    & > .number {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      background-color: $gray-100;
+      color: $gray-800;
+      font-size: .75rem!important;
+      color: $white!important;
+      background-color: rgba(33,31,28,1)!important;
+    }
+  }
+}
