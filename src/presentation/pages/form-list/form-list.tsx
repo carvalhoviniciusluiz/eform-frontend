@@ -9,7 +9,7 @@ import './form-list-styles.scss'
 
 const FormList = () => {
   return (
-    <div className='formListWrap'>
+    <div className='formListWrap' data-testid='form-list'>
       <Sidebar />
 
       <main className='main'>
@@ -34,8 +34,6 @@ const FormList = () => {
               <div className='dataGrid__body'>
                 <div className='separator'></div>
                 <div className='table-responsive'>
-                  {/* <CodeSkeleton></CodeSkeleton> */}
-
                   <DataGrid />
                 </div>
               </div>
