@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { LoadFormList } from '@/domain'
 import {
   Header,
   Sidebar,
@@ -7,7 +9,17 @@ import {
 import { DataGrid } from './components'
 import './form-list-styles.scss'
 
-const FormList = () => {
+type FormListProps = {
+  loadFormList: LoadFormList
+}
+
+const FormList = ({ loadFormList }: FormListProps) => {
+  useEffect(() => {
+    ;(async () => {
+      loadFormList.loadAll()
+    })()
+  }, [])
+
   return (
     <div className='formListWrap' data-testid='form-list'>
       <Sidebar />
