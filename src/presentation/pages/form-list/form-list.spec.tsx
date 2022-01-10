@@ -25,9 +25,9 @@ const makeSut = (): SutTypes => {
 describe('FormList Component', () => {
   test('should present skeleton on start', () => {
     makeSut()
-    const table = screen.getByTestId('table-responsive')
-    expect(table.childNodes.length).toBe(1)
-    expect(table.querySelector('svg').getAttribute('role')).toBe('img')
+    const tbody = screen.getByTestId('tbody')
+    expect(tbody.childNodes.length).toBe(1)
+    expect(tbody.querySelector('svg').getAttribute('role')).toBe('img')
   })
 
   test('should call LoadFormList', () => {
