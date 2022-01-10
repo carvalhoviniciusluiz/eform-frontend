@@ -5,9 +5,9 @@ import './data-grid-syles.scss'
 const DataList = () => {
   return (
     <>
-      {/* <CodeSkeleton></CodeSkeleton> */}
+      <CodeSkeleton></CodeSkeleton>
 
-      <table>
+      {/* <table>
         <thead className='d-none'>
           <tr>
             <th>Campaing</th>
@@ -61,7 +61,7 @@ const DataList = () => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </>
   )
 }

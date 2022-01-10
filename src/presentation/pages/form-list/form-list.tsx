@@ -33,7 +33,10 @@ const FormList = () => {
               </div>
               <div className='dataGrid__body'>
                 <div className='separator'></div>
-                <div className='table-responsive'>
+                <div
+                  className='table-responsive'
+                  data-testid='table-responsive'
+                >
                   <DataGrid />
                 </div>
               </div>
