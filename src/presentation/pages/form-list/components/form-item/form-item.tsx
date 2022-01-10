@@ -1,8 +1,13 @@
+import { FormModel } from '@/domain'
 import { RightIcon } from '@/presentation/assets'
 import { ImageGroup } from '@/presentation/components'
 import './form-item-styles.scss'
 
-const FormItem = () => {
+type FormItemProps = {
+  formItem: FormModel
+}
+
+const FormItem = ({ formItem }: FormItemProps) => {
   return (
     <tr>
       <td>
