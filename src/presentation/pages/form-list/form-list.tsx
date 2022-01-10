@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { LoadFormList } from '@/domain'
+import { CodeSkeleton } from '@/presentation/assets'
 import {
   Header,
   Sidebar,
   CardNavigation,
   Card
 } from '@/presentation/components'
-import { DataGrid } from './components'
 import './form-list-styles.scss'
 
 type FormListProps = {
@@ -21,7 +21,7 @@ const FormList = ({ loadFormList }: FormListProps) => {
   }, [])
 
   return (
-    <div className='formListWrap' data-testid='form-list'>
+    <div className='formListWrap'>
       <Sidebar />
 
       <main className='main'>
@@ -45,11 +45,26 @@ const FormList = ({ loadFormList }: FormListProps) => {
               </div>
               <div className='dataGrid__body'>
                 <div className='separator'></div>
-                <div
-                  className='table-responsive'
-                  data-testid='table-responsive'
-                >
-                  <DataGrid />
+                <div className='table-responsive'>
+                  <table>
+                    <thead className='d-none'>
+                      <tr>
+                        <th>Campaing</th>
+                        <th>Status</th>
+                        <th>Team</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody data-testid='tbody'>
+                      <tr>
+                        <td>
+                          <CodeSkeleton />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </Card>
