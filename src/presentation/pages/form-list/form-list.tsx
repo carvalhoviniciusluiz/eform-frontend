@@ -16,11 +16,17 @@ type FormListProps = {
 
 const FormList = ({ loadFormList }: FormListProps) => {
   const [state, setState] = useState({
-    forms: [] as FormModel[]
+    forms: [] as FormModel[],
+    error: ''
   })
 
   useEffect(() => {
-    loadFormList.loadAll().then((forms) => setState({ forms }))
+    loadFormList
+      .loadAll()
+      .then((forms) => setState((prevState) => ({ ...prevState, forms })))
+      .catch((error) =>
+        setState((prevState) => ({ ...prevState, error: error.message }))
+      )
   }, [])
 
   return (
@@ -48,32 +54,42 @@ const FormList = ({ loadFormList }: FormListProps) => {
               </div>
               <div className='dataGrid__body'>
                 <div className='separator'></div>
-                <div className='table-responsive'>
-                  <table>
-                    <thead className='d-none'>
-                      <tr>
-                        <th>Campaing</th>
-                        <th>Status</th>
-                        <th>Team</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-
-                    <tbody data-testid='tbody'>
-                      {state.forms.length ? (
-                        state.forms.map((form: FormModel) => (
-                          <FormItem key={form.id} item={form} />
-                        ))
-                      ) : (
+                <div
+                  className='table-responsive'
+                  data-testid='table-responsive'
+                >
+                  {state.error ? (
+                    <div>
+                      <span data-testid='error'>{state.error}</span>
+                      <button>Reload</button>
+                    </div>
+                  ) : (
+                    <table data-testid='table'>
+                      <thead className='d-none'>
                         <tr>
-                          <td>
-                            <CodeSkeleton />
-                          </td>
+                          <th>Campaing</th>
+                          <th>Status</th>
+                          <th>Team</th>
+                          <th>Date</th>
+                          <th>Actions</th>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
+                      </thead>
+
+                      <tbody data-testid='tbody'>
+                        {state.forms.length ? (
+                          state.forms.map((form: FormModel) => (
+                            <FormItem key={form.id} item={form} />
+                          ))
+                        ) : (
+                          <tr>
+                            <td>
+                              <CodeSkeleton />
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               </div>
             </Card>
