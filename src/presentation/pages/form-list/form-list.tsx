@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 import { FormModel, LoadFormList } from '@/domain'
-import { CodeSkeleton } from '@/presentation/assets'
 import {
   Header,
   Sidebar,
   CardNavigation,
   Card
 } from '@/presentation/components'
+import {
+  FormContext,
+  FormError,
+  FormListItems
+} from '@/presentation/pages/form-list/components'
 import './form-list-styles.scss'
-import { FormItem } from './components'
 
 type FormListProps = {
   loadFormList: LoadFormList
@@ -58,38 +61,9 @@ const FormList = ({ loadFormList }: FormListProps) => {
                   className='table-responsive'
                   data-testid='table-responsive'
                 >
-                  {state.error ? (
-                    <div>
-                      <span data-testid='error'>{state.error}</span>
-                      <button>Reload</button>
-                    </div>
-                  ) : (
-                    <table data-testid='table'>
-                      <thead className='d-none'>
-                        <tr>
-                          <th>Campaing</th>
-                          <th>Status</th>
-                          <th>Team</th>
-                          <th>Date</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-
-                      <tbody data-testid='tbody'>
-                        {state.forms.length ? (
-                          state.forms.map((form: FormModel) => (
-                            <FormItem key={form.id} item={form} />
-                          ))
-                        ) : (
-                          <tr>
-                            <td>
-                              <CodeSkeleton />
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  )}
+                  <FormContext.Provider value={{ state, setState }}>
+                    {state.error ? <FormError /> : <FormListItems />}
+                  </FormContext.Provider>
                 </div>
               </div>
             </Card>

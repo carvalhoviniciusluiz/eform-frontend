@@ -1,7 +1,7 @@
 import { FormModel, FormStatusEnum } from '@/domain'
 import { RightIcon } from '@/presentation/assets'
 import { ImageGroup } from '@/presentation/components'
-import './form-item-styles.scss'
+import './item-styles.scss'
 
 type FormItemProps = {
   item: FormModel
