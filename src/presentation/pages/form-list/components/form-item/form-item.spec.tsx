@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { FormModel } from '@/domain'
+import { FormModel, FormStatusEnum } from '@/domain'
 import { mockFormItemModel } from '@/domain/test'
 import { FormItem } from '@/presentation/pages/form-list/components'
 
@@ -7,8 +7,8 @@ type SutTypes = {
   formItemSpy: FormModel
 }
 
-const makeSut = (): SutTypes => {
-  const formItemSpy = mockFormItemModel()
+const makeSut = (status = FormStatusEnum.REVIEWED): SutTypes => {
+  const formItemSpy = mockFormItemModel(status)
   render(
     <table>
       <tbody>
@@ -33,5 +33,10 @@ describe('FormItem Component', () => {
     expect(screen.getByTestId('item-updated-at')).toHaveTextContent(
       formItemSpy.updatedAt.toUTCString()
     )
+  })
+
+  test('should present published state', () => {
+    makeSut(FormStatusEnum.PUBLISHED)
+    expect(screen.getByTestId('item-status')).toHaveTextContent('Published')
   })
 })
