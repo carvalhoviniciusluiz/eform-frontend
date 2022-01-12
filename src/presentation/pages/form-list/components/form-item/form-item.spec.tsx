@@ -39,4 +39,9 @@ describe('FormItem Component', () => {
     makeSut(FormStatusEnum.PUBLISHED)
     expect(screen.getByTestId('item-status')).toHaveTextContent('Published')
   })
+
+  test('should present removed state', () => {
+    makeSut(FormStatusEnum.REMOVED)
+    expect(screen.getByTestId('item-status')).toHaveTextContent('Removed')
+  })
 })
