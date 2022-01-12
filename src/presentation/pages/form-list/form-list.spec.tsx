@@ -26,7 +26,7 @@ describe('FormList Component', () => {
   test('should present skeleton on start', () => {
     makeSut()
     const tbody = screen.getByTestId('tbody')
-    expect(tbody.childNodes.length).toBe(1)
+    expect(tbody.children).toHaveLength(1)
     expect(tbody.querySelector('svg').getAttribute('role')).toBe('img')
   })
 
