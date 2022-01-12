@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { FormModel, LoadFormList } from '@/domain'
+import { FormModel, LoadFormList, UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
 import { FormList } from '@/presentation/pages'
 
@@ -16,8 +16,7 @@ type SutTypes = {
   loadFormListSpy: LoadFormListSpy
 }
 
-const makeSut = (): SutTypes => {
-  const loadFormListSpy = new LoadFormListSpy()
+const makeSut = (loadFormListSpy = new LoadFormListSpy()): SutTypes => {
   render(<FormList loadFormList={loadFormListSpy} />)
   return {
     loadFormListSpy
@@ -30,6 +29,7 @@ describe('FormList Component', () => {
     const tbody = screen.getByTestId('tbody')
     expect(tbody.children).toHaveLength(1)
     expect(tbody.querySelector('svg').getAttribute('role')).toBe('img')
+    expect(screen.queryByTestId('error')).not.toBeInTheDocument()
     await waitFor(() => tbody)
   })
 
@@ -45,5 +45,17 @@ describe('FormList Component', () => {
     const tbody = screen.getByTestId('tbody')
     await waitFor(() => tbody)
     expect(tbody.children).toHaveLength(3)
+    expect(screen.queryByTestId('error')).not.toBeInTheDocument()
+  })
+
+  test('should render error on failure', async () => {
+    const loadFormListSpy = new LoadFormListSpy()
+    const error = new UnexpectedError()
+    jest.spyOn(loadFormListSpy, 'loadAll').mockRejectedValueOnce(error)
+    makeSut(loadFormListSpy)
+    const tableResponsive = screen.getByTestId('table-responsive')
+    await waitFor(() => tableResponsive)
+    expect(screen.queryByTestId('table')).not.toBeInTheDocument()
+    expect(screen.getByTestId('error')).toHaveTextContent(error.message)
   })
 })
