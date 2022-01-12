@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { FormModel, FormStatusEnum } from '@/domain'
+import { FormAsset, FormModel, FormStatusEnum } from '@/domain'
 import { mockFormItemModel } from '@/domain/test'
 import { FormItem } from '@/presentation/pages/form-list/components'
 
@@ -7,8 +7,16 @@ type SutTypes = {
   formItemSpy: FormModel
 }
 
-const makeSut = (status = FormStatusEnum.REVIEWED): SutTypes => {
-  const formItemSpy = mockFormItemModel(status)
+type ConsumerProps = {
+  avatars: FormAsset[]
+  total: number
+}
+
+const makeSut = (
+  status = FormStatusEnum.REVIEWED,
+  consumers?: ConsumerProps
+): SutTypes => {
+  const formItemSpy = mockFormItemModel(status, consumers)
   render(
     <table>
       <tbody>
@@ -43,5 +51,14 @@ describe('FormItem Component', () => {
   test('should present removed state', () => {
     makeSut(FormStatusEnum.REMOVED)
     expect(screen.getByTestId('item-status')).toHaveTextContent('Removed')
+  })
+
+  test('should present 1 element on image group', () => {
+    const consumers = {
+      avatars: [],
+      total: 0
+    }
+    makeSut(FormStatusEnum.REVIEWED, consumers)
+    expect(screen.getByTestId('image-group').children).toHaveLength(1)
   })
 })
