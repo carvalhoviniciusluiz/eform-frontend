@@ -45,12 +45,16 @@ describe('FormItem Component', () => {
 
   test('should present published state', () => {
     makeSut(FormStatusEnum.PUBLISHED)
-    expect(screen.getByTestId('item-status')).toHaveTextContent('Published')
+    const el = screen.getByTestId('item-status')
+    expect(el).toHaveTextContent('Published')
+    expect(el.children).toHaveLength(1)
   })
 
   test('should present removed state', () => {
     makeSut(FormStatusEnum.REMOVED)
-    expect(screen.getByTestId('item-status')).toHaveTextContent('Removed')
+    const el = screen.getByTestId('item-status')
+    expect(el).toHaveTextContent('Removed')
+    expect(el.children).toHaveLength(1)
   })
 
   test('should present 1 element on image group', () => {
