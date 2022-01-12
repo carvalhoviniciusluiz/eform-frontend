@@ -1,10 +1,28 @@
 import * as faker from 'faker'
-import { FormModel } from '@/domain/models'
+import { FormModel, FormStatusEnum } from '@/domain'
 
-export const mockFormItemModel = (): FormModel => ({
+export const mockFormItemModel = (
+  status = FormStatusEnum.REVIEWED
+): FormModel => ({
   id: faker.datatype.uuid(),
   name: faker.random.words(),
-  updatedAd: faker.date.recent()
+  status,
+  consumers: {
+    avatars: [
+      faker.image.avatar(),
+      faker.image.avatar(),
+      faker.image.avatar(),
+      faker.image.avatar(),
+      {
+        char: 'N',
+        color: '#4fc9da',
+        backgroundColor: '#ddf8fc'
+      }
+    ],
+    total: 5
+  },
+  createdAt: faker.date.past(),
+  updatedAt: faker.date.recent()
 })
 
 export const mockFormListModel = (count = 1): FormModel[] =>

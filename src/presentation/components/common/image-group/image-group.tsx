@@ -1,36 +1,27 @@
+import { FormAsset } from '@/domain'
 import './image-group-styles.scss'
 
-type El = {
-  char: string
-  color: string
-  backgroundColor: string
-}
-
-type Asset = El | string
-
 type ImageGroupProps = {
-  assets: Asset[]
-  count: number
+  avatars: FormAsset[]
+  total: number
 }
 
-const ImageGroup = (props: ImageGroupProps) => {
-  const { assets, count } = props
-
+const ImageGroup = ({ avatars, total }: ImageGroupProps) => {
   return (
-    <div className='imageGroup min-w-180px'>
-      {assets.map((asset, i) => (
+    <div className='imageGroup min-w-180px' data-testid='image-group'>
+      {avatars.map((avatar, i) => (
         <div className='imageGroup__circle' key={i}>
-          {typeof asset === 'string' ? (
-            <img className='image' src={asset} alt='avatar' />
+          {typeof avatar === 'string' ? (
+            <img className='image' src={avatar} alt='avatar' />
           ) : (
             <div
               className='imageGroup__noneImage'
               style={{
-                backgroundColor: asset.backgroundColor,
-                color: asset.color
+                backgroundColor: avatar.backgroundColor,
+                color: avatar.color
               }}
             >
-              <span className='char'>{asset.char}</span>
+              <span className='char'>{avatar.char}</span>
             </div>
           )}
         </div>
@@ -38,7 +29,7 @@ const ImageGroup = (props: ImageGroupProps) => {
 
       <div className='imageGroup__circle'>
         <div className='imageGroup__remainingQuantity'>
-          <span className='number'>+{count}</span>
+          <span className='number'>+{total}</span>
         </div>
       </div>
     </div>
