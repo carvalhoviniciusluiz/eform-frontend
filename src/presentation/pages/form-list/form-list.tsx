@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { LoadFormList } from '@/domain'
+import { useEffect, useState } from 'react'
+import { FormModel, LoadFormList } from '@/domain'
 import { CodeSkeleton } from '@/presentation/assets'
 import {
   Header,
@@ -8,16 +8,19 @@ import {
   Card
 } from '@/presentation/components'
 import './form-list-styles.scss'
+import { FormItem } from './components'
 
 type FormListProps = {
   loadFormList: LoadFormList
 }
 
 const FormList = ({ loadFormList }: FormListProps) => {
+  const [state, setState] = useState({
+    forms: [] as FormModel[]
+  })
+
   useEffect(() => {
-    ;(async () => {
-      loadFormList.loadAll()
-    })()
+    loadFormList.loadAll().then((forms) => setState({ forms }))
   }, [])
 
   return (
@@ -58,11 +61,17 @@ const FormList = ({ loadFormList }: FormListProps) => {
                     </thead>
 
                     <tbody data-testid='tbody'>
-                      <tr>
-                        <td>
-                          <CodeSkeleton />
-                        </td>
-                      </tr>
+                      {state.forms.length ? (
+                        state.forms.map((form: FormModel) => (
+                          <FormItem key={form.id} item={form} />
+                        ))
+                      ) : (
+                        <tr>
+                          <td>
+                            <CodeSkeleton />
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
