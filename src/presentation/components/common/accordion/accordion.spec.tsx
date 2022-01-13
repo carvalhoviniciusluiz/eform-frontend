@@ -19,4 +19,13 @@ describe('Accordion Component', () => {
     expect(button).toHaveClass('active')
     expect(panel).toHaveClass('open')
   })
+
+  test('should close accordion', () => {
+    makeSut(true)
+    const button = screen.getByTestId('accordion-button')
+    const panel = screen.getByTestId('accordion-panel')
+    fireEvent.click(button)
+    expect(button).not.toHaveClass('active')
+    expect(panel).not.toHaveClass('open')
+  })
 })
