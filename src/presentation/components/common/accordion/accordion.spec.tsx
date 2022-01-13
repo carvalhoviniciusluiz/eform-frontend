@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import * as faker from 'faker'
 import { Accordion } from '@/presentation/components'
 
-const makeSut = (isOpen = false): void => {
+const makeSut = (isOpen?: boolean): void => {
   render(
     <Accordion title={faker.random.word()} isOpen={isOpen}>
       <div />
