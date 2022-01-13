@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { FormModel, LoadFormList, UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
 import { FormList } from '@/presentation/pages'
@@ -57,5 +57,18 @@ describe('FormList Component', () => {
     await waitFor(() => tableResponsive)
     expect(screen.queryByTestId('table')).not.toBeInTheDocument()
     expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+  })
+
+  test('should call LoadFormList on reload', async () => {
+    const loadFormListSpy = new LoadFormListSpy()
+    jest
+      .spyOn(loadFormListSpy, 'loadAll')
+      .mockRejectedValueOnce(new UnexpectedError())
+    makeSut(loadFormListSpy)
+    const tableResponsive = screen.getByTestId('table-responsive')
+    await waitFor(() => tableResponsive)
+    fireEvent.click(screen.getByTestId('reload'))
+    expect(loadFormListSpy.callsCount).toBe(1)
+    await waitFor(() => tableResponsive)
   })
 })
