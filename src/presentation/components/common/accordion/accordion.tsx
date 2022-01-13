@@ -19,10 +19,16 @@ const Accordion = ({ title, isOpen = false, children }: AccordionProps) => {
       <button
         className={`accordion ${open ? 'active' : ''}`}
         onClick={handleOpenClick}
+        data-testid='accordion-button'
       >
         {title}
       </button>
-      <div className={`panel ${open ? 'open' : ''}`}>{children}</div>
+      <div
+        className={`panel ${open ? 'open' : ''}`}
+        data-testid='accordion-panel'
+      >
+        {children}
+      </div>
     </>
   )
 }

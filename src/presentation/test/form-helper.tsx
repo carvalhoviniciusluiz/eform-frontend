@@ -14,7 +14,7 @@ export const populateField = (
 
 export const testStatusForField = (
   fieldName: string,
-  validationError = ''
+  validationError: string
 ): void => {
   expect(screen.getByTestId(fieldName)).toHaveAttribute('class', 'error')
   expect(screen.getByTestId(fieldName)).toHaveAttribute(
