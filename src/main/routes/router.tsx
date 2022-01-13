@@ -3,11 +3,11 @@ import {
   setCurrentAccountAdapter,
   getCurrentAccountAdapter
 } from '@/main/adapters'
+import { makeFormList as FormList } from '@/main/factories/pages/form-list/form-list-factory'
 import { makeLogin as Login } from '@/main/factories/pages/login/login-factory'
 import { makeSignUp as SignUp } from '@/main/factories/pages/signup/signup-factory'
 import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
-import { FormList } from '@/presentation/pages'
 
 const Router = () => {
   return (
