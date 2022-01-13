@@ -20,7 +20,8 @@ type FormListProps = {
 const FormList = ({ loadFormList }: FormListProps) => {
   const [state, setState] = useState({
     forms: [] as FormModel[],
-    error: ''
+    error: '',
+    reload: false
   })
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const FormList = ({ loadFormList }: FormListProps) => {
       .catch((error) =>
         setState((prevState) => ({ ...prevState, error: error.message }))
       )
-  }, [])
+  }, [state.reload])
 
   return (
     <div className='formListWrap'>
