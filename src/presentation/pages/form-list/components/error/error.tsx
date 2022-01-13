@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { Button } from '@/presentation/components'
 import { FormContext } from '@/presentation/pages/form-list/components'
 import './error-styles.scss'
 
@@ -12,9 +13,13 @@ const FormError = () => {
   return (
     <div className='error-wrap'>
       <span data-testid='error'>{state.error}</span>
-      <button onClick={handleReload} data-testid='reload'>
+      <Button
+        className='btn-danger'
+        onClick={handleReload}
+        data-testid='reload'
+      >
         Try again
-      </button>
+      </Button>
     </div>
   )
 }

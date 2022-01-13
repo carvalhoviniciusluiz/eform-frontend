@@ -1,0 +1,13 @@
+.error-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & > span {
+    color: #DB5437;
+    margin-bottom: 12px;
+    font-size: 1.3rem!important;
+    text-align: center;
+  }
+}

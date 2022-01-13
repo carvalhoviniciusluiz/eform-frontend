@@ -1,4 +1,5 @@
 import { Spinner } from '@/presentation/assets'
+import { Button } from '@/presentation/components'
 import './submit-button-styles.scss'
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -6,14 +7,13 @@ type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const { loading, disabled, children } = props
+  const { loading, children } = props
 
   return (
-    <button
+    <Button
       {...props}
       type='submit'
-      className='btn btn-lg btn-primary submit'
-      disabled={disabled}
+      className='btn-lg btn-primary submit'
       data-testid='submit'
     >
       {loading ? (
@@ -26,7 +26,7 @@ const SubmitButton = (props: SubmitButtonProps) => {
           {children}
         </span>
       )}
-    </button>
+    </Button>
   )
 }
 
