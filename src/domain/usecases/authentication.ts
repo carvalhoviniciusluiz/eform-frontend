@@ -1,12 +1,16 @@
 import { GrantType } from '@/domain/enums'
 import { AccountModel } from '@/domain/models'
 
-export type AuthenticationParams = {
-  grant_type: GrantType
-  credential: string
-  password: string
+export interface Authentication {
+  auth: (params: Authentication.Params) => Promise<Authentication.Model>
 }
 
-export interface Authentication {
-  auth: (params: AuthenticationParams) => Promise<AccountModel>
+export namespace Authentication {
+  export type Params = {
+    grant_type: GrantType
+    credential: string
+    password: string
+  }
+
+  export type Model = AccountModel
 }

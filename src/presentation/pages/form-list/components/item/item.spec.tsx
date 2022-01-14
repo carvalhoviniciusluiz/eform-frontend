@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react'
-import { FormAsset, FormModel, FormStatusEnum } from '@/domain'
 import { mockFormItemModel } from '@/domain/test'
+import { LoadFormList } from '@/domain/usecases'
 import { FormItem } from '@/presentation/pages/form-list/components'
 
 type SutTypes = {
-  formItemSpy: FormModel
+  formItemSpy: LoadFormList.Model
 }
 
 type ConsumerProps = {
-  avatars: FormAsset[]
+  avatars: LoadFormList.Avatar[]
   total: number
 }
 
 const makeSut = (
-  status = FormStatusEnum.REVIEWED,
+  status = LoadFormList.Status.REVIEWED,
   consumers?: ConsumerProps
 ): SutTypes => {
   const formItemSpy = mockFormItemModel(status, consumers)
@@ -44,14 +44,14 @@ describe('FormItem Component', () => {
   })
 
   test('should present published state', () => {
-    makeSut(FormStatusEnum.PUBLISHED)
+    makeSut(LoadFormList.Status.PUBLISHED)
     const el = screen.getByTestId('item-status')
     expect(el).toHaveTextContent('Published')
     expect(el.children).toHaveLength(1)
   })
 
   test('should present removed state', () => {
-    makeSut(FormStatusEnum.REMOVED)
+    makeSut(LoadFormList.Status.REMOVED)
     const el = screen.getByTestId('item-status')
     expect(el).toHaveTextContent('Removed')
     expect(el.children).toHaveLength(1)
@@ -62,7 +62,7 @@ describe('FormItem Component', () => {
       avatars: [],
       total: 0
     }
-    makeSut(FormStatusEnum.REVIEWED, consumers)
+    makeSut(LoadFormList.Status.REVIEWED, consumers)
     expect(screen.getByTestId('image-group').children).toHaveLength(1)
   })
 })

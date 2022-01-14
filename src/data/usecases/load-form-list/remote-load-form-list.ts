@@ -1,13 +1,13 @@
-import { FormModel, LoadFormList, UnexpectedError } from '@/domain'
+import { LoadFormList, UnexpectedError } from '@/domain'
 import { HttpGetClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteLoadFormList implements LoadFormList {
   constructor(
     private readonly url: string,
-    private readonly httpGetClient: HttpGetClient<FormModel[]>
+    private readonly httpGetClient: HttpGetClient<RemoteLoadFormList.Model[]>
   ) {}
 
-  async loadAll(): Promise<FormModel[]> {
+  async loadAll(): Promise<RemoteLoadFormList.Model[]> {
     const httpResponse = await this.httpGetClient.get({ url: this.url })
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
@@ -18,4 +18,8 @@ export class RemoteLoadFormList implements LoadFormList {
         throw new UnexpectedError()
     }
   }
+}
+
+export namespace RemoteLoadFormList {
+  export type Model = LoadFormList.Model
 }

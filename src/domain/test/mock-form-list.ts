@@ -1,8 +1,8 @@
 import * as faker from 'faker'
-import { FormModel, FormStatusEnum } from '@/domain'
+import { LoadFormList } from '@/domain/usecases'
 
 export const mockFormItemModel = (
-  status = FormStatusEnum.REVIEWED,
+  status = LoadFormList.Status.REVIEWED,
   consumers = {
     avatars: [
       faker.image.avatar(),
@@ -11,13 +11,13 @@ export const mockFormItemModel = (
       faker.image.avatar(),
       {
         char: 'N',
-        color: '#4fc9da',
-        backgroundColor: '#ddf8fc'
+        color: faker.internet.color(),
+        backgroundColor: faker.internet.color()
       }
     ],
     total: 5
   }
-): FormModel => ({
+): LoadFormList.Model => ({
   id: faker.datatype.uuid(),
   name: faker.random.words(),
   status,
@@ -26,5 +26,5 @@ export const mockFormItemModel = (
   updatedAt: faker.date.recent()
 })
 
-export const mockFormListModel = (count = 1): FormModel[] =>
+export const mockFormListModel = (count = 1): LoadFormList.Model[] =>
   [...Array(count).keys()].map(() => mockFormItemModel())

@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { FormModel, LoadFormList, UnexpectedError } from '@/domain'
+import { LoadFormList, UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
 import { FormList } from '@/presentation/pages'
 
 class LoadFormListSpy implements LoadFormList {
   callsCount = 0
   forms = mockFormListModel(3)
-  async loadAll(): Promise<FormModel[]> {
+  async loadAll(): Promise<LoadFormList.Model[]> {
     this.callsCount++
     return this.forms
   }

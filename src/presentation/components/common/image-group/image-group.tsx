@@ -1,8 +1,8 @@
-import { FormAsset } from '@/domain'
+import { LoadFormList } from '@/domain/usecases'
 import './image-group-styles.scss'
 
 type ImageGroupProps = {
-  avatars: FormAsset[]
+  avatars: LoadFormList.Avatar[]
   total: number
 }
 

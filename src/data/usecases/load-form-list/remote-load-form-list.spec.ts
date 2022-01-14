@@ -1,17 +1,17 @@
 import * as faker from 'faker'
-import { FormModel, UnexpectedError } from '@/domain'
+import { UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadFormList } from '@/data/usecases'
 
 type SutTypes = {
-  httpGetClientSpy: HttpGetClientSpy<FormModel[]>
+  httpGetClientSpy: HttpGetClientSpy<RemoteLoadFormList.Model[]>
   sut: RemoteLoadFormList
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpGetClientSpy = new HttpGetClientSpy<FormModel[]>()
+  const httpGetClientSpy = new HttpGetClientSpy<RemoteLoadFormList.Model[]>()
   const sut = new RemoteLoadFormList(url, httpGetClientSpy)
   return {
     sut,

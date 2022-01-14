@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FormModel, LoadFormList } from '@/domain'
+import { LoadFormList } from '@/domain'
 import {
   Header,
   Sidebar,
@@ -19,7 +19,7 @@ type FormListProps = {
 
 const FormList = ({ loadFormList }: FormListProps) => {
   const [state, setState] = useState({
-    forms: [] as FormModel[],
+    forms: [] as LoadFormList.Model[],
     error: '',
     reload: false
   })

@@ -1,11 +1,5 @@
 import * as faker from 'faker'
-import { AuthenticationParams, GrantType, AccountModel } from '@/domain'
-
-export const mockAuthentication = (): AuthenticationParams => ({
-  grant_type: GrantType.PASSWORD_GRANT,
-  credential: faker.internet.email(),
-  password: faker.internet.password()
-})
+import { AccountModel } from '@/domain'
 
 export const mockAccountModel = (): AccountModel => ({
   accessToken: faker.datatype.uuid(),

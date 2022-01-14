@@ -1,10 +1,10 @@
-import { FormModel, FormStatusEnum } from '@/domain'
+import { LoadFormList } from '@/domain/usecases'
 import { RightIcon } from '@/presentation/assets'
 import { ImageGroup } from '@/presentation/components'
 import './item-styles.scss'
 
 type FormItemProps = {
-  item: FormModel
+  item: LoadFormList.Model
 }
 
 const FormItem = (props: FormItemProps) => {
@@ -23,13 +23,13 @@ const FormItem = (props: FormItemProps) => {
         </div>
       </td>
       <td className='table-td-center' data-testid='item-status'>
-        {item.status === FormStatusEnum.REVIEWED && (
+        {item.status === LoadFormList.Status.REVIEWED && (
           <span className='badge badge-success'>Reviewed</span>
         )}
-        {item.status === FormStatusEnum.PUBLISHED && (
+        {item.status === LoadFormList.Status.PUBLISHED && (
           <span className='badge badge-primary'>Published</span>
         )}
-        {item.status === FormStatusEnum.REMOVED && (
+        {item.status === LoadFormList.Status.REMOVED && (
           <span className='badge badge-warning'>Removed</span>
         )}
       </td>

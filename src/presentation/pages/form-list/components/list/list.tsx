@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { FormModel } from '@/domain'
+import { LoadFormList } from '@/domain/usecases'
 import {
   FormContext,
   FormItem,
@@ -23,7 +23,7 @@ const FormListItems = () => {
 
       <tbody data-testid='tbody'>
         {state.forms.length ? (
-          state.forms.map((form: FormModel) => (
+          state.forms.map((form: LoadFormList.Model) => (
             <FormItem key={form.id} item={form} />
           ))
         ) : (
