@@ -1,7 +1,13 @@
 import { LoadFormList } from '@/domain/usecases'
 import { RemoteLoadFormList } from '@/data/usecases'
-import { makeApiUrl, makeAxiosHttpCLient } from '@/main/factories/http'
+import {
+  makeApiUrl,
+  makeAuthorizedHttpGetClientDecorator
+} from '@/main/factories'
 
 export const makeRemoteLoadFormList = (): LoadFormList => {
-  return new RemoteLoadFormList(makeApiUrl('/forms'), makeAxiosHttpCLient())
+  return new RemoteLoadFormList(
+    makeApiUrl('/forms'),
+    makeAuthorizedHttpGetClientDecorator()
+  )
 }

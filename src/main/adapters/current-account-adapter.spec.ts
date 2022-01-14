@@ -5,6 +5,7 @@ import {
   setCurrentAccountAdapter,
   getCurrentAccountAdapter
 } from '@/main/adapters'
+import { LOCAL_STORAGE_KEY } from '@/main/config/constants'
 
 jest.mock('@/infra/cache/local-storage-adapter')
 
@@ -13,7 +14,7 @@ describe('CurrentAccountAdapter', () => {
     const account = mockAccountModel()
     const setSpy = jest.spyOn(LocalStorageAdapter.prototype, 'set')
     setCurrentAccountAdapter(account)
-    expect(setSpy).toHaveBeenCalledWith('@eform:account', account)
+    expect(setSpy).toHaveBeenCalledWith(LOCAL_STORAGE_KEY, account)
   })
 
   test('should throw UnexpectedError', () => {
@@ -28,7 +29,7 @@ describe('CurrentAccountAdapter', () => {
       .spyOn(LocalStorageAdapter.prototype, 'get')
       .mockReturnValueOnce(account)
     const result = getCurrentAccountAdapter()
-    expect(getSpy).toHaveBeenCalledWith('@eform:account')
+    expect(getSpy).toHaveBeenCalledWith(LOCAL_STORAGE_KEY)
     expect(result).toEqual(account)
   })
 })

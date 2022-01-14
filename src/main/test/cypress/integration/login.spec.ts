@@ -1,4 +1,5 @@
 import * as faker from 'faker'
+import { LOCAL_STORAGE_KEY } from '../../../config/constants'
 import * as FormHelper from '../support/form-helper'
 import * as Http from '../support/login-mocks'
 
@@ -74,7 +75,7 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('not.exist')
     cy.getByTestId('spinner').should('not.exist')
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('@eform:account')
+    FormHelper.testLocalStorageItem(LOCAL_STORAGE_KEY)
   })
 
   it('should prevent multilple submit', () => {

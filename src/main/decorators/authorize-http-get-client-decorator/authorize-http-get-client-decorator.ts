@@ -12,7 +12,7 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
   ) {}
 
   async get(params: HttpGetParams): Promise<HttpResponse> {
-    const account = this.getStorage.get('account')
+    const account = this.getStorage.get('@eform:account')
     if (account?.accessToken) {
       Object.assign(params, {
         headers: Object.assign(params.headers || {}, {

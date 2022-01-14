@@ -28,7 +28,7 @@ describe('AuthorizeHttpGetClientDecorator', () => {
   test('should call GetStorage with correct value', () => {
     const { sut, getStorageSpy } = makeSut()
     sut.get(mockGetRequest())
-    expect(getStorageSpy.key).toBe('account')
+    expect(getStorageSpy.key).toBe('@eform:account')
   })
 
   test('should not add headers if GetStorage is invalid', async () => {
