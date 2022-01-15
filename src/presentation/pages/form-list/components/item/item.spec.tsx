@@ -34,12 +34,12 @@ describe('FormItem Component', () => {
     const { formItemSpy } = makeSut()
     expect(screen.getByTestId('item-name')).toHaveTextContent(formItemSpy.name)
     expect(screen.getByTestId('item-created-at')).toHaveTextContent(
-      formItemSpy.createdAt.toUTCString()
+      formItemSpy.createdAt.toString()
     )
     expect(screen.getByTestId('image-group').children).toHaveLength(6)
     expect(screen.getByTestId('item-status')).toHaveTextContent('Reviewed')
     expect(screen.getByTestId('item-updated-at')).toHaveTextContent(
-      formItemSpy.updatedAt.toUTCString()
+      formItemSpy.updatedAt.toString()
     )
   })
 

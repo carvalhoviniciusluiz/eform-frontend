@@ -18,7 +18,7 @@ const FormItem = (props: FormItemProps) => {
             {item.name}
           </strong>
           <span className='p' data-testid='item-created-at'>
-            {item.createdAt.toUTCString()}
+            {item.createdAt.toString()}
           </span>
         </div>
       </td>
@@ -42,7 +42,7 @@ const FormItem = (props: FormItemProps) => {
       <td className='table-td-right'>
         <div className='column min-w-180px p-l-0'>
           <strong className='text-dark' data-testid='item-updated-at'>
-            {item.updatedAt.toUTCString()}
+            {item.updatedAt.toString()}
           </strong>
           <span className='p'>Last update</span>
         </div>
