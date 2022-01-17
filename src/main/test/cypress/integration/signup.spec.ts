@@ -93,14 +93,14 @@ describe('Signup', () => {
     FormHelper.testUrl('/signup')
   })
 
-  it('should present UnexpectedError if invlaid data is returned', () => {
+  it('should present UnexpectedError if invalid data is returned', () => {
     Http.mockUnexpectedError()
     sumulateValidSubmit()
     FormHelper.testMainError('Something went wrong. Please try again soon')
     FormHelper.testUrl('/signup')
   })
 
-  it('should present UnexpectedError if invlaid data is returned', () => {
+  it('should present UnexpectedError if invalid data is returned', () => {
     Http.mockInvalidData()
     sumulateValidSubmit()
     FormHelper.testMainError('Something went wrong. Please try again soon')
