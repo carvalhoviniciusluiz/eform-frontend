@@ -1,14 +1,22 @@
-import {
-  CloseIcon,
-  PlusIcon,
-  Logo
-  // CodeSkeleton
-} from '@/presentation/assets'
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { CloseIcon, PlusIcon, Logo } from '@/presentation/assets'
 import { Accordion } from '@/presentation/components'
-
+import { ApiContext } from '@/presentation/contexts'
 import './sidebar-styles.scss'
 
 const SideBar = () => {
+  const navigate = useNavigate()
+  const { setCurrentAccount } = useContext(ApiContext)
+
+  const handleLogout = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): void => {
+    event.preventDefault()
+    setCurrentAccount(undefined)
+    navigate('/login')
+  }
+
   return (
     <>
       <input type='checkbox' id='menu-toggle' />
@@ -73,9 +81,9 @@ const SideBar = () => {
                     <span>Software Engineer</span>
                   </div>
 
-                  <a href='#'>
+                  <Link data-testid='logout' to='#' onClick={handleLogout}>
                     <CloseIcon fill='#968e7e' />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
