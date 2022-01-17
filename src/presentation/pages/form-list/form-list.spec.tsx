@@ -1,6 +1,9 @@
+import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { createMemoryHistory } from 'history'
 import { LoadFormList, UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
+import { ApiContext } from '@/presentation/contexts'
 import { FormList } from '@/presentation/pages'
 
 class LoadFormListSpy implements LoadFormList {
@@ -17,7 +20,16 @@ type SutTypes = {
 }
 
 const makeSut = (loadFormListSpy = new LoadFormListSpy()): SutTypes => {
-  render(<FormList loadFormList={loadFormListSpy} />)
+  const history = createMemoryHistory({
+    initialEntries: ['/']
+  })
+  render(
+    <Router navigator={history} location={history.location}>
+      <ApiContext.Provider value={{ setCurrentAccount: jest.fn() }}>
+        <FormList loadFormList={loadFormListSpy} />
+      </ApiContext.Provider>
+    </Router>
+  )
   return {
     loadFormListSpy
   }
