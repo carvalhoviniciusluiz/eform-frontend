@@ -5,5 +5,5 @@ export type AccountModel = {
   accessTokenExpiresIn: number
   refreshToken: string
   refreshTokenExpiresIn: number
-  user: UserModel
+  currentUser: UserModel
 }
