@@ -88,4 +88,17 @@ describe('RemoteAuthentication', () => {
     const account = await sut.auth(mockAuthentication())
     expect(account).toEqual(httpResult)
   })
+
+  test('should return an Authentication.Model if HttpPostClient returns 201', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const httpResult = mockAuthenticationModel()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.created,
+      body: {
+        data: httpResult
+      }
+    }
+    const account = await sut.auth(mockAuthentication())
+    expect(account).toEqual(httpResult)
+  })
 })
