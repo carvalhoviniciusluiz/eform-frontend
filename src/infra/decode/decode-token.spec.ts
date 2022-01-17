@@ -6,4 +6,9 @@ describe('DecodeToken', () => {
     const promise = DecodedToken.decode(undefined)
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
+
+  test('should present UnexpectedError if empty string', async () => {
+    const promise = DecodedToken.decode('')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
 })
