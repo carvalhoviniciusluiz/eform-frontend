@@ -1,7 +1,7 @@
 import { UserModel } from '@/domain/models'
 
 export interface DecodeToken {
-  decode: (token: string) => Promise<DecodeToken.Model>
+  decode: (token: string) => DecodeToken.Model
 }
 
 export namespace DecodeToken {
