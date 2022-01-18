@@ -2,7 +2,7 @@ import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { createMemoryHistory } from 'history'
 import { LoadFormList, UnexpectedError } from '@/domain'
-import { mockFormListModel } from '@/domain/test'
+import { mockAccountModel, mockFormListModel } from '@/domain/test'
 import { ApiContext } from '@/presentation/contexts'
 import { FormList } from '@/presentation/pages'
 
@@ -25,7 +25,12 @@ const makeSut = (loadFormListSpy = new LoadFormListSpy()): SutTypes => {
   })
   render(
     <Router navigator={history} location={history.location}>
-      <ApiContext.Provider value={{ setCurrentAccount: jest.fn() }}>
+      <ApiContext.Provider
+        value={{
+          setCurrentAccount: jest.fn(),
+          getCurrentAccount: () => mockAccountModel()
+        }}
+      >
         <FormList loadFormList={loadFormListSpy} />
       </ApiContext.Provider>
     </Router>
