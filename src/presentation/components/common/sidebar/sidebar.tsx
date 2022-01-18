@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CloseIcon, PlusIcon, Logo } from '@/presentation/assets'
 import { Accordion } from '@/presentation/components'
@@ -9,6 +9,10 @@ const SideBar = () => {
   const navigate = useNavigate()
   const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
 
+  const [state] = useState({
+    currentUser: getCurrentAccount().currentUser
+  })
+
   const handleLogout = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ): void => {
@@ -18,8 +22,7 @@ const SideBar = () => {
   }
 
   const handleUsername = () => {
-    const user = getCurrentAccount().currentUser
-    const username = `${user.firstName} ${user.lastName}`
+    const username = `${state.currentUser.firstName} ${state.currentUser.lastName}`
     return username
   }
 
@@ -44,8 +47,6 @@ const SideBar = () => {
             </div>
             <div className='aside-menu'>
               <Accordion title='Questionnaires' isOpen={true}>
-                {/* <CodeSkeleton></CodeSkeleton> */}
-
                 <div className='subMenu'>
                   <div className='subMenu__item'>
                     <a href='#'>Project1</a>
@@ -73,10 +74,7 @@ const SideBar = () => {
           </div>
           <footer className='aside-footer'>
             <div className='aside-user'>
-              <img
-                src='https://avatars.githubusercontent.com/u/22005684?v=4'
-                alt='avatar'
-              />
+              <img src={state.currentUser.avatar} alt='avatar' />
 
               <div className='aside-user-detail'>
                 <div className='user-detail'>
