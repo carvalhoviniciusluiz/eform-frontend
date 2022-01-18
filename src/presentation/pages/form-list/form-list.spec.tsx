@@ -1,7 +1,12 @@
 import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { createMemoryHistory } from 'history'
-import { LoadFormList, UnexpectedError } from '@/domain'
+import { createMemoryHistory, MemoryHistory } from 'history'
+import {
+  AccessDeniedError,
+  LoadFormList,
+  UnexpectedError,
+  AccountModel
+} from '@/domain'
 import { mockAccountModel, mockFormListModel } from '@/domain/test'
 import { ApiContext } from '@/presentation/contexts'
 import { FormList } from '@/presentation/pages'
@@ -17,17 +22,20 @@ class LoadFormListSpy implements LoadFormList {
 
 type SutTypes = {
   loadFormListSpy: LoadFormListSpy
+  history: MemoryHistory
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const makeSut = (loadFormListSpy = new LoadFormListSpy()): SutTypes => {
   const history = createMemoryHistory({
     initialEntries: ['/']
   })
+  const setCurrentAccountMock = jest.fn()
   render(
     <Router navigator={history} location={history.location}>
       <ApiContext.Provider
         value={{
-          setCurrentAccount: jest.fn(),
+          setCurrentAccount: setCurrentAccountMock,
           getCurrentAccount: () => mockAccountModel()
         }}
       >
@@ -36,7 +44,9 @@ const makeSut = (loadFormListSpy = new LoadFormListSpy()): SutTypes => {
     </Router>
   )
   return {
-    loadFormListSpy
+    loadFormListSpy,
+    history,
+    setCurrentAccountMock
   }
 }
 
@@ -65,7 +75,7 @@ describe('FormList Component', () => {
     expect(screen.queryByTestId('error')).not.toBeInTheDocument()
   })
 
-  test('should render error on failure', async () => {
+  test('should render error on UnexpectedError', async () => {
     const loadFormListSpy = new LoadFormListSpy()
     const error = new UnexpectedError()
     jest.spyOn(loadFormListSpy, 'loadAll').mockRejectedValueOnce(error)
@@ -74,6 +84,18 @@ describe('FormList Component', () => {
     await waitFor(() => tableResponsive)
     expect(screen.queryByTestId('table')).not.toBeInTheDocument()
     expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+  })
+
+  test('should logout on AccessDeniedError', async () => {
+    const loadFormListSpy = new LoadFormListSpy()
+    jest
+      .spyOn(loadFormListSpy, 'loadAll')
+      .mockRejectedValueOnce(new AccessDeniedError())
+    const { setCurrentAccountMock, history } = makeSut(loadFormListSpy)
+    const tableResponsive = screen.getByTestId('table-responsive')
+    await waitFor(() => tableResponsive)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
+    expect(history.location.pathname).toBe('/login')
   })
 
   test('should call LoadFormList on reload', async () => {
