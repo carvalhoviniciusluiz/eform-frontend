@@ -1,4 +1,4 @@
-import { LoadFormList, UnexpectedError } from '@/domain'
+import { AccessDeniedError, LoadFormList, UnexpectedError } from '@/domain'
 import { HttpGetClient, HttpStatusCode } from '@/data/protocols'
 
 export class RemoteLoadFormList implements LoadFormList {
@@ -12,6 +12,8 @@ export class RemoteLoadFormList implements LoadFormList {
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body?.data
+      case HttpStatusCode.forbidden:
+        throw new AccessDeniedError()
       case HttpStatusCode.noContent:
         return []
       default:
