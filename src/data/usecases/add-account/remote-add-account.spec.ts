@@ -80,11 +80,24 @@ describe('RemoteAddAccount', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
-  test('should return an AddAccount.Model if HttpPostClient returns 201', async () => {
+  test('should return an AddAccount.Model if HttpPostClient returns 200', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     const httpResult = mockAddAccountModel()
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.ok,
+      body: {
+        data: httpResult
+      }
+    }
+    const account = await sut.add(mockAddAccountParams())
+    expect(account).toEqual(httpResult)
+  })
+
+  test('should return an AddAccount.Model if HttpPostClient returns 201', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const httpResult = mockAddAccountModel()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.created,
       body: {
         data: httpResult
       }
