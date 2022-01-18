@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AddAccount, GrantType } from '@/domain'
 import {
@@ -6,7 +6,6 @@ import {
   PasswordField,
   TextField
 } from '@/presentation/components'
-import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import './signup-styles.scss'
 
@@ -36,7 +35,6 @@ type SignUpProps = {
 }
 
 const SignUp = ({ validation, addAccount }: SignUpProps) => {
-  const { setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
     isLoading: 0,
@@ -127,7 +125,7 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
     try {
       if (state.isLoading || state.isFormInvalid) return
       setState((prevState) => ({ ...prevState, isLoading: 1 }))
-      const account = await addAccount.add({
+      await addAccount.add({
         grant_type: GrantType.CREATE_CREDENTIALS,
         firstname: state.firstName,
         lastname: state.lastName,
@@ -136,8 +134,7 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
         email: state.email,
         password: state.password
       })
-      setCurrentAccount(account)
-      navigate('/')
+      navigate('/login')
     } catch (error) {
       setState((prevState) => ({
         ...prevState,

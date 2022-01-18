@@ -2,15 +2,13 @@ import { Router } from 'react-router-dom'
 import { fireEvent, render, waitFor, screen } from '@testing-library/react'
 import * as faker from 'faker'
 import { createMemoryHistory } from 'history'
-import { AddAccount, EmailInUseError } from '@/domain'
+import { EmailInUseError } from '@/domain'
 import { AddAccountSpy } from '@/domain/test'
-import { ApiContext } from '@/presentation/contexts'
 import { SignUp } from '@/presentation/pages'
 import { Helper, ValidationStub } from '@/presentation/test'
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy
-  setCurrentAccountMock: (account: AddAccount.Model) => void
 }
 
 type SutParams = {
@@ -24,17 +22,13 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const addAccountSpy = new AddAccountSpy()
-  const setCurrentAccountMock = jest.fn()
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-      <Router navigator={history} location={history.location}>
-        <SignUp validation={validationStub} addAccount={addAccountSpy} />
-      </Router>
-    </ApiContext.Provider>
+    <Router navigator={history} location={history.location}>
+      <SignUp validation={validationStub} addAccount={addAccountSpy} />
+    </Router>
   )
   return {
-    addAccountSpy,
-    setCurrentAccountMock
+    addAccountSpy
   }
 }
 
@@ -272,10 +266,9 @@ describe('SignUp Component', () => {
   })
 
   test('should call SaveAccessToken on success', async () => {
-    const { addAccountSpy, setCurrentAccountMock } = makeSut()
+    makeSut()
     await simulateValidSubmit()
-    expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account)
-    expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/login')
   })
 
   test('should go to login page', async () => {
