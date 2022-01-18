@@ -32,7 +32,7 @@ const TextField = (props: TextFieldProps) => {
   return (
     <div {...rest} className='textField__container' data-testid='textField'>
       {label && <label>{label}</label>}
-      <div>
+      <div className='input-wrap'>
         <input
           className={errorMessage ? `${classes} error` : classes}
           type={type}
