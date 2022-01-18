@@ -1,6 +1,6 @@
 import * as faker from 'faker'
-import { LOCAL_STORAGE_KEY } from '../../../config/constants'
-import * as FormHelper from '../support/form-helper'
+import * as FormHelper from '../support/form-helpers'
+import * as Helper from '../support/helpers'
 import * as Http from '../support/signup-mocks'
 
 const populateFields = (): void => {
@@ -90,45 +90,37 @@ describe('Signup', () => {
     sumulateValidSubmit()
     cy.getByTestId('main-error').should('exist')
     FormHelper.testMainError('this is the email already in use')
-    FormHelper.testUrl('/signup')
+    Helper.testUrl('/signup')
   })
 
   it('should present UnexpectedError if invalid data is returned', () => {
     Http.mockUnexpectedError()
     sumulateValidSubmit()
     FormHelper.testMainError('Something went wrong. Please try again soon')
-    FormHelper.testUrl('/signup')
+    Helper.testUrl('/signup')
   })
 
-  it('should present UnexpectedError if invalid data is returned', () => {
-    Http.mockInvalidData()
-    sumulateValidSubmit()
-    FormHelper.testMainError('Something went wrong. Please try again soon')
-    FormHelper.testUrl('/signup')
-  })
-
-  it('should present save accessToken if valid credentials are provided', () => {
-    Http.mockOK()
+  it('should present credentials is valid', () => {
+    Http.mockCreated()
     sumulateValidSubmit()
     cy.getByTestId('main-error').should('not.exist')
     cy.getByTestId('spinner').should('not.exist')
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem(LOCAL_STORAGE_KEY)
+    Helper.testUrl('/login')
   })
 
   it('should prevent multilple submit', () => {
-    Http.mockOK()
+    Http.mockCreated()
     populateFields()
     cy.getByTestId('submit').dblclick()
-    FormHelper.testHttpCallsCount(1)
+    Helper.testHttpCallsCount(1)
   })
 
   it('should not call submit if form is invalid', () => {
-    Http.mockOK()
+    Http.mockCreated()
     cy.getByTestId('firstName')
       .focus()
       .type(faker.name.firstName())
       .type('{enter}')
-    FormHelper.testHttpCallsCount(0)
+    Helper.testHttpCallsCount(0)
   })
 })

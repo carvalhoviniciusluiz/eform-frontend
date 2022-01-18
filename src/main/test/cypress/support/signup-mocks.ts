@@ -1,21 +1,14 @@
 import * as faker from 'faker'
-import * as Helper from '../support/http-mocks'
+import * as Http from '../support/http-mocks'
 
 export const mockEmailInUseError = (): void =>
-  Helper.mockEmailInUseError('/auth')
+  Http.mockForbiddenError('/auth', 'POST')
 
 export const mockUnexpectedError = (): void =>
-  Helper.mockUnexpectedError('/auth', 'POST')
+  Http.mockServerError('/auth', 'POST')
 
-export const mockInvalidData = (): void =>
-  Helper.mockOK('/auth', 'POST', {
-    data: {
-      invalidProperty: faker.datatype.uuid()
-    }
-  })
-
-export const mockOK = (): void =>
-  Helper.mockOK('/auth', 'POST', {
+export const mockCreated = (): void =>
+  Http.mockCreated('/auth', 'POST', {
     data: {
       accessToken: faker.datatype.uuid(),
       accessTokenExpiresIn: 19,
