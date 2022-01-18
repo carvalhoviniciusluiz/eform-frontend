@@ -27,6 +27,15 @@ describe('RemoteLoadFormList', () => {
     expect(httpGetClientSpy.url).toBe(url)
   })
 
+  test('should throw AccessDeniedError if HttpPostClient returns 401', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.unauthorized
+    }
+    const promise = sut.loadAll()
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
+  })
+
   test('should throw AccessDeniedError if HttpPostClient returns 403', async () => {
     const { sut, httpGetClientSpy } = makeSut()
     httpGetClientSpy.response = {
