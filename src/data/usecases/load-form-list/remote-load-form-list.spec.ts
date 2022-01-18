@@ -1,5 +1,5 @@
 import * as faker from 'faker'
-import { UnexpectedError } from '@/domain'
+import { AccessDeniedError, UnexpectedError } from '@/domain'
 import { mockFormListModel } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
@@ -27,13 +27,13 @@ describe('RemoteLoadFormList', () => {
     expect(httpGetClientSpy.url).toBe(url)
   })
 
-  test('should throw UnexpectedError if HttpPostClient returns 403', async () => {
+  test('should throw AccessDeniedError if HttpPostClient returns 403', async () => {
     const { sut, httpGetClientSpy } = makeSut()
     httpGetClientSpy.response = {
       statusCode: HttpStatusCode.forbidden
     }
     const promise = sut.loadAll()
-    await expect(promise).rejects.toThrow(new UnexpectedError())
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 
   test('should throw UnexpectedError if HttpPostClient returns 404', async () => {
