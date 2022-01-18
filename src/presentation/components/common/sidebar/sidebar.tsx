@@ -7,7 +7,7 @@ import './sidebar-styles.scss'
 
 const SideBar = () => {
   const navigate = useNavigate()
-  const { setCurrentAccount } = useContext(ApiContext)
+  const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
 
   const handleLogout = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -15,6 +15,12 @@ const SideBar = () => {
     event.preventDefault()
     setCurrentAccount(undefined)
     navigate('/login')
+  }
+
+  const handleUsername = () => {
+    const user = getCurrentAccount().currentUser
+    const username = `${user.firstName} ${user.lastName}`
+    return username
   }
 
   return (
@@ -66,8 +72,6 @@ const SideBar = () => {
             </div>
           </div>
           <footer className='aside-footer'>
-            {/* <CodeSkeleton></CodeSkeleton> */}
-
             <div className='aside-user'>
               <img
                 src='https://avatars.githubusercontent.com/u/22005684?v=4'
@@ -77,7 +81,7 @@ const SideBar = () => {
               <div className='aside-user-detail'>
                 <div className='user-detail'>
                   <div className='user-info'>
-                    <strong>Vinicius Carvalho</strong>
+                    <strong data-testid='username'>{handleUsername()}</strong>
                     <span>Software Engineer</span>
                   </div>
 
