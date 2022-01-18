@@ -2,20 +2,33 @@ import { Router } from 'react-router-dom'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import * as faker from 'faker'
 import { createMemoryHistory } from 'history'
-import { Authentication } from '@/domain'
+import { Authentication, UserModel } from '@/domain'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { AuthenticationSpy } from '@/domain/test'
+import { DecodeToken } from '@/infra/decode'
 import { ApiContext } from '@/presentation/contexts'
 import { Login } from '@/presentation/pages'
 import { ValidationStub, Helper } from '@/presentation/test'
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
+  decodedTokenSpy: DecodedTokenSpy
   setCurrentAccountMock: (account: Authentication.Model) => void
 }
 
 type SutParams = {
   validationError: string
+}
+
+class DecodedTokenSpy implements DecodeToken {
+  token: string
+  callsCount = 0
+  constructor(private readonly currentUser: UserModel) {}
+  decode(token: string): UserModel {
+    this.token = token
+    this.callsCount++
+    return this.currentUser
+  }
 }
 
 const history = createMemoryHistory({
@@ -25,17 +38,25 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const authenticationSpy = new AuthenticationSpy()
+  const decodedTokenSpy = new DecodedTokenSpy(
+    authenticationSpy.account.currentUser
+  )
   const setCurrentAccountMock = jest.fn()
   render(
     <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
       <Router navigator={history} location={history.location}>
-        <Login validation={validationStub} authentication={authenticationSpy} />
+        <Login
+          validation={validationStub}
+          authentication={authenticationSpy}
+          decodedToken={decodedTokenSpy}
+        />
       </Router>
     </ApiContext.Provider>
   )
   return {
     authenticationSpy,
-    setCurrentAccountMock
+    setCurrentAccountMock,
+    decodedTokenSpy
   }
 }
 
@@ -104,6 +125,20 @@ describe('Login component', () => {
     await simulateValidSubmit()
     expect(screen.queryByTestId('spinner')).toBeInTheDocument()
     expect(screen.getByTestId('label-wait')).toHaveTextContent('Please wait...')
+  })
+
+  test('should call DecodeToken with correct values', async () => {
+    const { decodedTokenSpy, authenticationSpy } = makeSut()
+    decodedTokenSpy.decode(authenticationSpy.account.accessToken)
+    await simulateValidSubmit()
+    expect(decodedTokenSpy.token).toEqual(authenticationSpy.account.accessToken)
+  })
+
+  test('should call DecodeToken only once', async () => {
+    const { decodedTokenSpy } = makeSut()
+    await simulateValidSubmit()
+    await simulateValidSubmit()
+    expect(decodedTokenSpy.callsCount).toBe(1)
   })
 
   test('should call Authentication with correct values', async () => {

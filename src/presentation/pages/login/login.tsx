@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Authentication, GrantType } from '@/domain'
+import { Authentication, Decode, GrantType } from '@/domain'
 import { SubmitButton, TextField } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
@@ -19,9 +19,10 @@ type StateProps = {
 type LoginProps = {
   validation: Validation
   authentication: Authentication
+  decodedToken: Decode
 }
 
-const Login = ({ validation, authentication }: LoginProps) => {
+const Login = ({ validation, authentication, decodedToken }: LoginProps) => {
   const { setCurrentAccount } = useContext(ApiContext)
   const navigate = useNavigate()
   const [state, setState] = useState<StateProps>({
@@ -66,7 +67,9 @@ const Login = ({ validation, authentication }: LoginProps) => {
         credential: state.credential,
         password: state.password
       })
-      setCurrentAccount(account)
+      const accessToken = account.accessToken
+      const currentUser = decodedToken.decode(accessToken)
+      setCurrentAccount({ ...account, currentUser })
       navigate('/')
     } catch (error) {
       setState((prevState) => ({

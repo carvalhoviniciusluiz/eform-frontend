@@ -1,6 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import { UnexpectedError, UserModel } from '@/domain'
-import { DecodeToken } from '@/domain/usecases'
+import * as jwtDecode from 'jwt-decode'
+import { Decode, UnexpectedError, UserModel } from '@/domain'
 
 type TokenDecoded = {
   email: string
@@ -9,16 +8,12 @@ type TokenDecoded = {
   avatar: string
 }
 
-export class DecodedToken implements DecodeToken {
-  decode: (token: string) => UserModel
-
-  private constructor() {}
-
-  static decode(token: string): UserModel {
+export class DecodeToken implements Decode {
+  decode(token: string): UserModel {
     if (!token) {
       throw new UnexpectedError()
     }
-    const decoded = jwtDecode<TokenDecoded>(token)
+    const decoded = jwtDecode.default<TokenDecoded>(token)
     return {
       email: decoded.email,
       firstName: decoded.firstname,
