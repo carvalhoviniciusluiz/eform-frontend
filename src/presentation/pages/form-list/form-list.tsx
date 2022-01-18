@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AccessDeniedError, LoadFormList } from '@/domain'
+import { useEffect, useState } from 'react'
+import { LoadFormList } from '@/domain'
 import {
   Header,
   Sidebar,
   CardNavigation,
   Card
 } from '@/presentation/components'
-import { ApiContext } from '@/presentation/contexts'
+import { useErrorHandler } from '@/presentation/hooks'
 import {
   FormContext,
   FormError,
@@ -20,8 +19,9 @@ type FormListProps = {
 }
 
 const FormList = ({ loadFormList }: FormListProps) => {
-  const navigate = useNavigate()
-  const { setCurrentAccount } = useContext(ApiContext)
+  const handleError = useErrorHandler((error: Error) => {
+    setState((prevState) => ({ ...prevState, error: error.message }))
+  })
 
   const [state, setState] = useState({
     forms: [] as LoadFormList.Model[],
@@ -33,14 +33,7 @@ const FormList = ({ loadFormList }: FormListProps) => {
     loadFormList
       .loadAll()
       .then((forms) => setState((prevState) => ({ ...prevState, forms })))
-      .catch((error) => {
-        if (error instanceof AccessDeniedError) {
-          setCurrentAccount(undefined)
-          navigate('/login')
-        } else {
-          setState((prevState) => ({ ...prevState, error: error.message }))
-        }
-      })
+      .catch(handleError)
   }, [state.reload])
 
   return (
