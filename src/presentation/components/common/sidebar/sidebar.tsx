@@ -1,24 +1,24 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { CloseIcon, PlusIcon, Logo } from '@/presentation/assets'
 import { Accordion } from '@/presentation/components'
 import { ApiContext } from '@/presentation/contexts'
+import { useLogout } from '@/presentation/hooks'
 import './sidebar-styles.scss'
 
 const SideBar = () => {
-  const navigate = useNavigate()
-  const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
+  const handleLogout = useLogout()
+  const { getCurrentAccount } = useContext(ApiContext)
 
   const [state] = useState({
     currentUser: getCurrentAccount().currentUser
   })
 
-  const handleLogout = (
+  const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ): void => {
     event.preventDefault()
-    setCurrentAccount(undefined)
-    navigate('/login')
+    handleLogout()
   }
 
   const handleUsername = () => {
@@ -83,7 +83,7 @@ const SideBar = () => {
                     <span>Software Engineer</span>
                   </div>
 
-                  <Link data-testid='logout' to='#' onClick={handleLogout}>
+                  <Link data-testid='logout' to='#' onClick={handleClick}>
                     <CloseIcon fill='#968e7e' />
                   </Link>
                 </div>
