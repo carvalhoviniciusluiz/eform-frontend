@@ -35,12 +35,17 @@ describe('FormList', () => {
   it('should present correct username', () => {
     Http.mockUnexpectedError()
     cy.visit('')
-
     const { currentUser } = Helper.getLocalStorageItem(LOCAL_STORAGE_KEY) as {
       currentUser: UserModel
     }
     const username = `${currentUser.firstName} ${currentUser.lastName}`
-
     cy.getByTestId('username').should('contain.text', username)
+  })
+
+  it('should logout on logout link click', () => {
+    Http.mockAccessDiniedError()
+    cy.visit('')
+    cy.getByTestId('logout').click()
+    Helper.testUrl('/login')
   })
 })
