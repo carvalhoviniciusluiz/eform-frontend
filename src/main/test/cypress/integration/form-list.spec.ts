@@ -24,4 +24,10 @@ describe('FormList', () => {
       'Something went wrong. Please try again soon'
     )
   })
+
+  it('should logout on AccessDiniedError', () => {
+    Http.mockAccessDiniedError()
+    cy.visit('')
+    Helper.testUrl('/login')
+  })
 })
