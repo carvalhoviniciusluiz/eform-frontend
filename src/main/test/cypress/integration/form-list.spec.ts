@@ -1,4 +1,5 @@
 import * as faker from 'faker'
+import { UserModel } from '../../../../domain/models'
 import { LOCAL_STORAGE_KEY } from '../../../config/constants'
 import * as Http from '../support/form-list-mocks'
 import * as Helper from '../support/helpers'
@@ -29,5 +30,17 @@ describe('FormList', () => {
     Http.mockAccessDiniedError()
     cy.visit('')
     Helper.testUrl('/login')
+  })
+
+  it('should present correct username', () => {
+    Http.mockUnexpectedError()
+    cy.visit('')
+
+    const { currentUser } = Helper.getLocalStorageItem(LOCAL_STORAGE_KEY) as {
+      currentUser: UserModel
+    }
+    const username = `${currentUser.firstName} ${currentUser.lastName}`
+
+    cy.getByTestId('username').should('contain.text', username)
   })
 })
