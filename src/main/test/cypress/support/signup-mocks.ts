@@ -10,10 +10,6 @@ export const mockUnexpectedError = (): void =>
 export const mockCreated = (): void =>
   Http.mockCreated('/auth', 'POST', {
     data: {
-      accessToken: faker.datatype.uuid(),
-      accessTokenExpiresIn: 19,
-      refreshToken: faker.datatype.uuid(),
-      refreshTokenExpiresIn: 84,
-      tokenType: 'bearer'
+      accessToken: faker.datatype.uuid()
     }
   })
