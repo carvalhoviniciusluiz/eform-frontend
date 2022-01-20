@@ -25,6 +25,15 @@ export const mockServerError = (url: string, method: Method): void => {
   }).as('request')
 }
 
+export const mockOk = (url: string, method: Method, body?: any): void => {
+  cy.intercept(method, url, (req) => {
+    req.reply({
+      statusCode: 200,
+      body
+    })
+  }).as('request')
+}
+
 export const mockCreated = (url: string, method: Method, body?: any): void => {
   cy.intercept(method, url, (req) => {
     req.reply({

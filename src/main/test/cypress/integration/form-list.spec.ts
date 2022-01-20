@@ -6,6 +6,13 @@ import * as Http from '../utils/http-mocks'
 const path = '/forms'
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
 const mockAccessDiniedError = (): void => Http.mockForbiddenError(path, 'GET')
+const mockSuccess = (): void => {
+  cy.fixture('form-list').then((data) => {
+    Http.mockOk(path, 'GET', {
+      data
+    })
+  })
+}
 
 describe('FormList', () => {
   beforeEach(() => {
@@ -21,6 +28,18 @@ describe('FormList', () => {
       'contain.text',
       'Something went wrong. Please try again soon'
     )
+  })
+
+  it('should relod on button click', () => {
+    mockUnexpectedError()
+    cy.visit('')
+    cy.getByTestId('error').should(
+      'contain.text',
+      'Something went wrong. Please try again soon'
+    )
+    mockSuccess()
+    cy.getByTestId('reload').click()
+    cy.get('tbody').children().should('have.length', 2)
   })
 
   it('should logout on AccessDiniedError', () => {
