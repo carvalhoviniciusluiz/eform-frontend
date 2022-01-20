@@ -64,4 +64,37 @@ describe('FormList', () => {
   //   cy.getByTestId('logout').click()
   //   Helper.testUrl('/login')
   // })
+
+  it('should present form items', () => {
+    mockSuccess()
+    cy.visit('')
+    cy.get('tbody > tr > td > svg').should('have.attr', 'role', 'img')
+    cy.get('tbody').children().should('have.length', 2)
+    cy.get('tr:nth-child(1)').then((tr) => {
+      assert.equal(
+        tr.find('[data-testid="item-created-at"]').text(),
+        '2021-12-11T17:44:15.212Z'
+      )
+      assert.equal(tr.find('[data-testid="item-name"]').text(), 'Form1')
+      assert.equal(tr.find('[data-testid="item-status"]').text(), 'Reviewed')
+      assert.equal(tr.find('[data-testid="image-group"]').children().length, 3)
+      assert.equal(
+        tr.find('[data-testid="item-updated-at"]').text(),
+        '2022-01-15T14:08:25.600Z'
+      )
+    })
+    cy.get('tr:nth-child(2)').then((tr) => {
+      assert.equal(
+        tr.find('[data-testid="item-created-at"]').text(),
+        '2021-12-11T17:44:15.212Z'
+      )
+      assert.equal(tr.find('[data-testid="item-name"]').text(), 'Form2')
+      assert.equal(tr.find('[data-testid="item-status"]').text(), 'Reviewed')
+      assert.equal(tr.find('[data-testid="image-group"]').children().length, 4)
+      assert.equal(
+        tr.find('[data-testid="item-updated-at"]').text(),
+        '2022-01-15T14:08:25.600Z'
+      )
+    })
+  })
 })
