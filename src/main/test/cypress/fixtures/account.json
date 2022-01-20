@@ -1,0 +1,9 @@
+{
+  "accessToken": "any_token",
+  "currentUser": {
+    "email": "any_email",
+    "firstname": "any_firstname",
+    "lastname": "any_lastname",
+    "avatar": "any_avatar"
+  }
+}

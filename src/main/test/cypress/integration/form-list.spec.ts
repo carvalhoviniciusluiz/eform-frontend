@@ -1,24 +1,21 @@
-import * as faker from 'faker'
 import { UserModel } from '../../../../domain/models'
 import { LOCAL_STORAGE_KEY } from '../../../config/constants'
-import * as Http from '../support/form-list-mocks'
-import * as Helper from '../support/helpers'
+import * as Helper from '../utils/helpers'
+import * as Http from '../utils/http-mocks'
+
+const path = '/forms'
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
+const mockAccessDiniedError = (): void => Http.mockForbiddenError(path, 'GET')
 
 describe('FormList', () => {
   beforeEach(() => {
-    Helper.setLocalStorageItem(LOCAL_STORAGE_KEY, {
-      accessToken: faker.datatype.uuid(),
-      currentUser: {
-        email: faker.internet.email(),
-        firstname: faker.name.firstName(),
-        lastname: faker.name.lastName(),
-        avatar: faker.internet.avatar()
-      }
+    cy.fixture('account').then((account) => {
+      Helper.setLocalStorageItem(LOCAL_STORAGE_KEY, account)
     })
   })
 
   it('should present error on UnexpectedError', () => {
-    Http.mockUnexpectedError()
+    mockUnexpectedError()
     cy.visit('')
     cy.getByTestId('error').should(
       'contain.text',
@@ -27,13 +24,13 @@ describe('FormList', () => {
   })
 
   it('should logout on AccessDiniedError', () => {
-    Http.mockAccessDiniedError()
+    mockAccessDiniedError()
     cy.visit('')
     Helper.testUrl('/login')
   })
 
   it('should present correct username', () => {
-    Http.mockUnexpectedError()
+    mockUnexpectedError()
     cy.visit('')
     const { currentUser } = Helper.getLocalStorageItem(LOCAL_STORAGE_KEY) as {
       currentUser: UserModel
@@ -42,10 +39,10 @@ describe('FormList', () => {
     cy.getByTestId('username').should('contain.text', username)
   })
 
-  it('should logout on logout link click', () => {
-    Http.mockAccessDiniedError()
-    cy.visit('')
-    cy.getByTestId('logout').click()
-    Helper.testUrl('/login')
-  })
+  // it('should logout on logout link click', () => {
+  //   mockAccessDiniedError()
+  //   cy.visit('')
+  //   cy.getByTestId('logout').click()
+  //   Helper.testUrl('/login')
+  // })
 })

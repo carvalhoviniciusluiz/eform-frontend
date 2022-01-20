@@ -1,7 +1,17 @@
 import * as faker from 'faker'
-import * as FormHelper from '../support/form-helpers'
-import * as Helper from '../support/helpers'
-import * as Http from '../support/signup-mocks'
+import * as FormHelper from '../utils/form-helpers'
+import * as Helper from '../utils/helpers'
+import * as Http from '../utils/http-mocks'
+
+const path = '/auth'
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+const mockSuccess = (): void =>
+  Http.mockCreated(path, 'POST', {
+    data: {
+      accessToken: faker.datatype.uuid()
+    }
+  })
 
 const populateFields = (): void => {
   const password = faker.random.alphaNumeric(8)
@@ -86,7 +96,7 @@ describe('Signup', () => {
   })
 
   it('should present InvalidCredentialsError on 403', () => {
-    Http.mockEmailInUseError()
+    mockEmailInUseError()
     sumulateValidSubmit()
     cy.getByTestId('main-error').should('exist')
     FormHelper.testMainError('this is the email already in use')
@@ -94,14 +104,14 @@ describe('Signup', () => {
   })
 
   it('should present UnexpectedError if invalid data is returned', () => {
-    Http.mockUnexpectedError()
+    mockUnexpectedError()
     sumulateValidSubmit()
     FormHelper.testMainError('Something went wrong. Please try again soon')
     Helper.testUrl('/signup')
   })
 
   it('should present credentials is valid', () => {
-    Http.mockCreated()
+    mockSuccess()
     sumulateValidSubmit()
     cy.getByTestId('main-error').should('not.exist')
     cy.getByTestId('spinner').should('not.exist')
@@ -109,14 +119,14 @@ describe('Signup', () => {
   })
 
   it('should prevent multilple submit', () => {
-    Http.mockCreated()
+    mockSuccess()
     populateFields()
     cy.getByTestId('submit').dblclick()
     Helper.testHttpCallsCount(1)
   })
 
   it('should not call submit if form is invalid', () => {
-    Http.mockCreated()
+    mockSuccess()
     cy.getByTestId('firstName')
       .focus()
       .type(faker.name.firstName())
