@@ -6,4 +6,4 @@ dist-ssr
 *.log
 .tool-versions
 coverage
-./cypress/
+cypress/

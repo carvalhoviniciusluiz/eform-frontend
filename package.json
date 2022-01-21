@@ -14,7 +14,8 @@
     "test:clear": "jest --clearCache",
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --coverage",
-    "test:cypress": "cypress open",
+    "test:cypress": "export NODE_OPTIONS=--openssl-legacy-provider && cypress open",
+    "test:cypress:run": "export NODE_OPTIONS=--openssl-legacy-provider && cypress run",
     "update:packages": "yarn ncu -u",
     "lint": "eslint 'src/**' --fix"
   },
