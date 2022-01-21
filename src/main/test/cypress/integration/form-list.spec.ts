@@ -45,6 +45,7 @@ describe('FormList', () => {
   it('should logout on AccessDiniedError', () => {
     mockAccessDiniedError()
     cy.visit('')
+    cy.wait('@request')
     Helper.testUrl('/login')
   })
 
@@ -69,6 +70,7 @@ describe('FormList', () => {
     mockSuccess()
     cy.visit('')
     cy.get('tbody > tr > td > svg').should('have.attr', 'role', 'img')
+    cy.wait('@request')
     cy.get('tbody').children().should('have.length', 2)
     cy.get('tr:nth-child(1)').then((tr) => {
       assert.equal(
