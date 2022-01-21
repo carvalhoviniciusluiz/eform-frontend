@@ -57,6 +57,34 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
   })
 
   useEffect(() => {
+    validate('firstName')
+  }, [state.firstName])
+
+  useEffect(() => {
+    validate('lastName')
+  }, [state.lastName])
+
+  useEffect(() => {
+    validate('documentNumber')
+  }, [state.documentNumber])
+
+  useEffect(() => {
+    validate('phone')
+  }, [state.phone])
+
+  useEffect(() => {
+    validate('email')
+  }, [state.email])
+
+  useEffect(() => {
+    validate('password')
+  }, [state.password])
+
+  useEffect(() => {
+    validate('passwordConfirmation')
+  }, [state.passwordConfirmation])
+
+  const validate = (field: string): void => {
     const {
       firstName,
       lastName,
@@ -75,44 +103,22 @@ const SignUp = ({ validation, addAccount }: SignUpProps) => {
       password,
       passwordConfirmation
     }
-    const firstNameError = validation.validate('firstName', formData)
-    const lastNameError = validation.validate('lastName', formData)
-    const documentNumberError = validation.validate('documentNumber', formData)
-    const phoneError = validation.validate('phone', formData)
-    const emailError = validation.validate('email', formData)
-    const passwordError = validation.validate('password', formData)
-    const passwordConfirmationError = validation.validate(
-      'passwordConfirmation',
-      formData
-    )
-
     setState((prevState) => ({
       ...prevState,
-      firstNameError,
-      lastNameError,
-      documentNumberError,
-      phoneError,
-      emailError,
-      passwordError,
-      passwordConfirmationError,
-      isFormInvalid:
-        !!firstNameError ||
-        !!lastNameError ||
-        !!documentNumberError ||
-        !!phoneError ||
-        !!emailError ||
-        !!passwordError ||
-        !!passwordConfirmationError
+      [`${field}Error`]: validation.validate(field, formData)
     }))
-  }, [
-    state.firstName,
-    state.lastName,
-    state.documentNumber,
-    state.phone,
-    state.email,
-    state.password,
-    state.passwordConfirmation
-  ])
+    setState((prevState) => ({
+      ...prevState,
+      isFormInvalid:
+        !!prevState.firstNameError ||
+        !!prevState.lastNameError ||
+        !!prevState.documentNumberError ||
+        !!prevState.phoneError ||
+        !!prevState.emailError ||
+        !!prevState.passwordError ||
+        !!prevState.passwordConfirmationError
+    }))
+  }
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({

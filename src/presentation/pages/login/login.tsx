@@ -36,18 +36,25 @@ const Login = ({ validation, authentication, decodedToken }: LoginProps) => {
   })
 
   useEffect(() => {
+    validate('credential')
+  }, [state.credential])
+
+  useEffect(() => {
+    validate('password')
+  }, [state.password])
+
+  const validate = (field: string): void => {
     const { credential, password } = state
     const formData = { credential, password }
-    const credentialError = validation.validate('credential', formData)
-    const passwordError = validation.validate('password', formData)
-
     setState((prevState) => ({
       ...prevState,
-      credentialError,
-      passwordError,
-      isFormInvalid: !!credentialError || !!passwordError
+      [`${field}Error`]: validation.validate(field, formData)
     }))
-  }, [state.credential, state.password])
+    setState((prevState) => ({
+      ...prevState,
+      isFormInvalid: !!prevState.credentialError || !!prevState.passwordError
+    }))
+  }
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) =>
     setState((prevState) => ({
