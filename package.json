@@ -14,8 +14,9 @@
     "test:clear": "jest --clearCache",
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --coverage",
-    "test:cypress": "export NODE_OPTIONS=--openssl-legacy-provider && cypress open",
-    "test:cypress:run": "export NODE_OPTIONS=--openssl-legacy-provider && cypress run",
+    "test:cypress": "NODE_OPTIONS=--openssl-legacy-provider cypress open",
+    "test:cypress:run": "NODE_OPTIONS=--openssl-legacy-provider cypress run",
+    "test:cypress:ci": "NODE_OPTIONS=--openssl-legacy-provider start-server-and-test 'yarn dev' http-get://localhost:3000 'yarn test:cypress:run'",
     "update:packages": "yarn ncu -u",
     "lint": "eslint 'src/**' --fix"
   },
@@ -60,6 +61,7 @@
     "jest-localstorage-mock": "^2.4.18",
     "prettier": "^2.5.1",
     "sass": "^1.49.0",
+    "start-server-and-test": "^1.14.0",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.5",
     "vite": "^2.7.13"
