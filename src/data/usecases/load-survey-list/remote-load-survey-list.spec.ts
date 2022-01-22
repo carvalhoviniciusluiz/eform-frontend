@@ -1,4 +1,6 @@
 import * as faker from 'faker'
+import { AccessDeniedError } from '@/domain'
+import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadSurveyList } from '@/data/usecases'
 
@@ -22,5 +24,14 @@ describe('RemoteLoadSurveyList', () => {
     const { sut, httpGetClientSpy } = makeSut(url)
     await sut.loadAll()
     expect(httpGetClientSpy.url).toBe(url)
+  })
+
+  test('should throw AccessDeniedError if HttpGetClient returns 401', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.unauthorized
+    }
+    const promise = sut.loadAll()
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 })
