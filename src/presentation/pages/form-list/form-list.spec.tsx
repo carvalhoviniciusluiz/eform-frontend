@@ -7,13 +7,13 @@ import {
   UnexpectedError,
   AccountModel
 } from '@/domain'
-import { mockAccountModel, mockFormListModel } from '@/domain/test'
+import { mockAccountModel, mockRemoteFormListModel } from '@/domain/test'
 import { ApiContext } from '@/presentation/contexts'
 import { FormList } from '@/presentation/pages'
 
 class LoadFormListSpy implements LoadFormList {
   callsCount = 0
-  forms = mockFormListModel(3)
+  forms = mockRemoteFormListModel(3)
   async loadAll(): Promise<LoadFormList.Model[]> {
     this.callsCount++
     return this.forms

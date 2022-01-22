@@ -25,5 +25,7 @@ export class RemoteLoadFormList implements LoadFormList {
 }
 
 export namespace RemoteLoadFormList {
+  export type Avatar = LoadFormList.Avatar
   export type Model = LoadFormList.Model
+  export import Status = LoadFormList.Status
 }

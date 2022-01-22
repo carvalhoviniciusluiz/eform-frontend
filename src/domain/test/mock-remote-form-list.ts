@@ -1,8 +1,8 @@
 import * as faker from 'faker'
-import { LoadFormList } from '@/domain/usecases'
+import { RemoteLoadFormList } from '@/data/usecases'
 
-export const mockFormItemModel = (
-  status = LoadFormList.Status.REVIEWED,
+export const mockRemoteFormItemModel = (
+  status = RemoteLoadFormList.Status.REVIEWED,
   consumers = {
     avatars: [
       faker.image.avatar(),
@@ -17,7 +17,7 @@ export const mockFormItemModel = (
     ],
     total: 5
   }
-): LoadFormList.Model => ({
+): RemoteLoadFormList.Model => ({
   id: faker.datatype.uuid(),
   name: faker.random.words(),
   status,
@@ -26,5 +26,7 @@ export const mockFormItemModel = (
   updatedAt: faker.date.recent()
 })
 
-export const mockFormListModel = (count = 1): LoadFormList.Model[] =>
-  [...Array(count).keys()].map(() => mockFormItemModel())
+export const mockRemoteFormListModel = (
+  count = 3
+): RemoteLoadFormList.Model[] =>
+  [...Array(count).keys()].map(() => mockRemoteFormItemModel())

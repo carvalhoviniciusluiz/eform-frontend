@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { mockFormItemModel } from '@/domain/test'
+import { mockRemoteFormItemModel } from '@/domain/test'
 import { LoadFormList } from '@/domain/usecases'
 import { FormItem } from '@/presentation/pages/form-list/components'
 
@@ -16,7 +16,7 @@ const makeSut = (
   status = LoadFormList.Status.REVIEWED,
   consumers?: ConsumerProps
 ): SutTypes => {
-  const formItemSpy = mockFormItemModel(status, consumers)
+  const formItemSpy = mockRemoteFormItemModel(status, consumers)
   render(
     <table>
       <tbody>

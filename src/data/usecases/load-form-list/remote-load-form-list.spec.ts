@@ -1,6 +1,6 @@
 import * as faker from 'faker'
 import { AccessDeniedError, UnexpectedError } from '@/domain'
-import { mockFormListModel } from '@/domain/test'
+import { mockRemoteFormListModel } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadFormList } from '@/data/usecases'
@@ -65,7 +65,7 @@ describe('RemoteLoadFormList', () => {
 
   test('should return a list of FormModels if HttpGetClient returns 201', async () => {
     const { sut, httpGetClientSpy } = makeSut()
-    const httpResult = mockFormListModel()
+    const httpResult = mockRemoteFormListModel()
     httpGetClientSpy.response = {
       statusCode: HttpStatusCode.ok,
       body: {
