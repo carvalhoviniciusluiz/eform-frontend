@@ -34,4 +34,13 @@ describe('RemoteLoadSurveyList', () => {
     const promise = sut.loadAll()
     await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
+
+  test('should throw AccessDeniedError if HttpGetClient returns 403', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden
+    }
+    const promise = sut.loadAll()
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
+  })
 })
