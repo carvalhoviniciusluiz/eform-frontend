@@ -72,8 +72,8 @@ describe('RemoteLoadFormList', () => {
         data: httpResult
       }
     }
-    const formList = await sut.loadAll()
-    expect(formList).toEqual(httpResult)
+    const httpResponse = await sut.loadAll()
+    expect(httpResponse).toEqual(httpResult)
   })
 
   test('should return an empty list of FormModels if HttpGetClient returns 204', async () => {
@@ -81,7 +81,7 @@ describe('RemoteLoadFormList', () => {
     httpGetClientSpy.response = {
       statusCode: HttpStatusCode.noContent
     }
-    const formList = await sut.loadAll()
-    expect(formList).toEqual([])
+    const httpResponse = await sut.loadAll()
+    expect(httpResponse).toEqual([])
   })
 })
