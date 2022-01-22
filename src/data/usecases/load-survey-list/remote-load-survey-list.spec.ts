@@ -1,6 +1,6 @@
 import * as faker from 'faker'
 import { AccessDeniedError, UnexpectedError } from '@/domain'
-import { mockRemoteFormListModel } from '@/domain/test'
+import { mockRemoteSurveyListModel } from '@/domain/test'
 import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test'
 import { RemoteLoadSurveyList } from '@/data/usecases'
@@ -65,7 +65,7 @@ describe('RemoteLoadSurveyList', () => {
 
   test('should return a SurveyList on 200', async () => {
     const { sut, httpGetClientSpy } = makeSut()
-    const httpResult = mockRemoteFormListModel()
+    const httpResult = mockRemoteSurveyListModel()
     httpGetClientSpy.response = {
       statusCode: HttpStatusCode.ok,
       body: {
