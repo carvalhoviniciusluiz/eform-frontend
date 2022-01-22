@@ -6,7 +6,7 @@ export namespace LoadSurveyList {
   export type Model = {
     id: string
     name: string
-    children: Omit<Model, 'children'>
+    children: Array<Omit<Model, 'children'>>
     updatedAt: Date
   }
 }
