@@ -16,6 +16,8 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
         throw new AccessDeniedError()
       case HttpStatusCode.unauthorized:
         throw new AccessDeniedError()
+      case HttpStatusCode.noContent:
+        return []
       default:
         throw new UnexpectedError()
     }
